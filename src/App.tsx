@@ -25,7 +25,7 @@ const App: React.FC = () => {
           <Menu />
           <IonRouterOutlet id="main">
             <Route path="/:name" component={Page} exact />
-            <Redirect exact path="/" to="/login" />
+            <Redirect exact path="/" to="/search" />
           </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>
