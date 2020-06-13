@@ -1,0 +1,7 @@
+{
+  "name": "experienceInterCityJourney",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
