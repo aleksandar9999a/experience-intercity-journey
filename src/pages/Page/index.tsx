@@ -1,12 +1,12 @@
 import { IonContent, IonPage, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle } from '@ionic/react';
 import React from 'react';
 import { useParams } from 'react-router';
-import route_config from './../../config/route_config';
 import { Toast } from '../../components/Toast';
+import CurrentPage from '../CurrentPage';
 
 const Page: React.FC = () => {
     const { name } = useParams<{ name: string; }>();
-    
+
     return (
         <IonPage>
             <IonHeader>
@@ -24,7 +24,7 @@ const Page: React.FC = () => {
                         <IonTitle size="large">{name}</IonTitle>
                     </IonToolbar>
                 </IonHeader>
-                {route_config[name]()}
+                <CurrentPage name={name}/>
                 <Toast />
             </IonContent>
         </IonPage>
