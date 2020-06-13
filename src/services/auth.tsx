@@ -23,5 +23,5 @@ export function submitLogin(email: string, password: string) {
 }
 
 export function logOut() {
-    return auth.signOut().catch(err => submitMessage(err.message));
+    return auth.signOut().then(res => submitMessage('Successful Logout!')).catch(err => submitMessage(err.message));
 }
