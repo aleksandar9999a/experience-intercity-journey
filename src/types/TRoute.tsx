@@ -1,5 +1,5 @@
 type TRoute = {
-    [key: string]: React.FC
+    [key: string]: Function
 }
 
 export default TRoute
