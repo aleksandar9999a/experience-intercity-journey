@@ -1,11 +1,8 @@
 import React from 'react';
 import './style.css';
+import IContainerProps from '../../interfaces/IContainerProps';
 
-interface ContainerProps {
-  name: string;
-}
-
-const ExploreContainer: React.FC<ContainerProps> = ({ name }) => {
+const ExploreContainer: React.FC<IContainerProps> = ({ name }) => {
   return (
     <div className="container">
       <strong>{name}</strong>

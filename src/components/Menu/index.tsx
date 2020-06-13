@@ -1,16 +1,10 @@
-import {
-  IonContent,
-  IonList,
-  IonListHeader,
-  IonMenu,
-  IonNote,
-} from '@ionic/react';
-
+import { IonContent, IonList, IonListHeader, IonMenu, IonNote } from '@ionic/react';
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import './style.css';
 import appPages from '../../config/appPages';
 import MenuItem from '../MenuItem';
+import './style.css';
+
 
 const Menu: React.FC = () => {
   const location = useLocation();
