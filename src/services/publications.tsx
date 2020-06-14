@@ -9,8 +9,7 @@ export function setPublication(data: IPublication) {
         .then(([user]) => {
             if (!user) { return Promise.reject(new Error('You must be registered to share posts!')); }
             if (newData.creatorId && user.uid !== newData.creatorId) { return Promise.reject(new Error('This is not your post!')); }
-            if (!newData.id) { newData.id = uid(); }
-            if (!newData.creatorId) { newData.creatorId = user.uid; }
+            if (!newData.id || !newData.creatorId) { newData.id = uid(); newData.creatorId = user.uid; }
             return firestore.collection('publications').doc(newData.id).set(newData);
         })
         .then(res => submitMessage('Successful created!'))
