@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IonItem, IonLabel, IonInput, IonDatetime, IonSlides, IonSlide, IonButton, IonIcon } from '@ionic/react';
+import { IonItem, IonLabel, IonInput, IonDatetime, IonSlides, IonSlide, IonButton, IonIcon, IonSelect, IonSelectOption } from '@ionic/react';
 import './style.css';
 import { arrowForward } from 'ionicons/icons';
 import TCreateState from '../../types/TCreateState';
@@ -12,13 +12,15 @@ const CreatePublication: React.FC = () => {
   const [to, setTo] = useState<string>('');
   const [date, setDate] = useState<string>('');
   const [time, setTime] = useState<string>('');
+  const [type, setType] = useState<string>('');
 
   function handleChanges(type: string, value: string) {
     const types: TCreateState = {
       from: setFrom,
       to: setTo,
       date: setDate,
-      time: setTime
+      time: setTime,
+      type: setType
     }
 
     if (typeof types[type] === 'function') { types[type](value); return; }
@@ -29,6 +31,7 @@ const CreatePublication: React.FC = () => {
   function handleTo(e: any) { return handleChanges('to', e.target.value); }
   function handleDate(e: any) { return handleChanges('date', e.target.value); }
   function handleTime(e: any) { return handleChanges('time', e.target.value); }
+  function handleType(e: any) { return handleChanges('type', e.target.value); }
 
   function validate() {
     if (from.length < 3 || to.length < 3) { submitMessage('Invalid locations. Minimum chars are 3!'); return false; }
@@ -36,7 +39,7 @@ const CreatePublication: React.FC = () => {
     return true;
   }
 
-  function submit() {  if(!validate()) { return; } setPublication({ from, to, date, time }); }
+  function submit() { if (!validate()) { return; } setPublication({ from, to, date, time, type }); }
 
   return (
     <IonSlides>
@@ -47,20 +50,11 @@ const CreatePublication: React.FC = () => {
             <IonLabel position="floating">From</IonLabel>
             <IonInput type="text" value={from} onIonChange={handleFrom} />
           </IonItem>
-          <p>Enter your starting location!</p>
-          <div className='slide-right'>
-            <p>Slide Right</p>
-          </div>
-        </div>
-      </IonSlide>
-      <IonSlide>
-        <div className="slide">
-          <img src="https://www.kindpng.com/picc/m/65-652552_clipart-bee-signboard-cartoon-sign-board-png-transparent.png" alt="create-publicatio" />
           <IonItem >
             <IonLabel position="floating">To</IonLabel>
             <IonInput type="text" value={to} onIonChange={handleTo} />
           </IonItem>
-          <p>Enter your end location!</p>
+          <p>Enter your start and end location!</p>
           <div className='slide-right'>
             <p>Slide Right</p>
           </div>
@@ -78,6 +72,22 @@ const CreatePublication: React.FC = () => {
             <IonDatetime placeholder="Select Time" display-format="h:mm A" picker-format="h:mm A" value={time} onIonChange={handleTime}></IonDatetime>
           </IonItem>
           <p>Enter the date you will travel!</p>
+          <div className='slide-right'>
+            <p>Slide Right</p>
+          </div>
+        </div>
+      </IonSlide>
+      <IonSlide>
+        <div className="slide">
+          <img src="https://www.kindpng.com/picc/m/65-652552_clipart-bee-signboard-cartoon-sign-board-png-transparent.png" alt="create-publicatio" />
+          <IonItem >
+            <IonLabel>Search</IonLabel>
+            <IonSelect interface="action-sheet" value={type} onIonChange={handleType}>
+              <IonSelectOption value="transport">Transport</IonSelectOption>
+              <IonSelectOption value="drive">To Drive</IonSelectOption>
+            </IonSelect>
+          </IonItem>
+          <p>Choose type of search!</p>
           <div className='slide-right'>
             <p>Slide Right</p>
           </div>

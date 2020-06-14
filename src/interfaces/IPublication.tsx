@@ -4,5 +4,6 @@ export default interface IPublication {
     from: string,
     to: string,
     date: string,
-    time: string
+    time: string,
+    type: string
 }
