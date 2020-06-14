@@ -1,4 +1,4 @@
-import { searchSharp, searchOutline, albumsSharp, albumsOutline, chatbubblesSharp, chatbubblesOutline, personOutline, personSharp } from 'ionicons/icons';
+import { searchSharp, searchOutline, albumsSharp, albumsOutline, personOutline, personSharp, chatbubbleEllipsesOutline, chatbubbleEllipsesSharp, optionsSharp } from 'ionicons/icons';
 import IAppPage from '../interfaces/IAppPage';
 
 const menu_config: IAppPage[] = [
@@ -9,22 +9,28 @@ const menu_config: IAppPage[] = [
         mdIcon: searchSharp
     },
     {
-        title: 'Publications',
-        url: '/publications',
-        iosIcon: albumsOutline,
-        mdIcon: albumsSharp
+        title: 'Messages',
+        url: '/messages',
+        iosIcon: chatbubbleEllipsesOutline,
+        mdIcon: chatbubbleEllipsesSharp
     },
     {
         title: 'Contacts',
         url: '/contacts',
-        iosIcon: chatbubblesOutline,
-        mdIcon: chatbubblesSharp
+        iosIcon: albumsOutline,
+        mdIcon: albumsSharp
     },
     {
         title: 'Account',
         url: '/account',
         iosIcon: personOutline,
         mdIcon: personSharp
+    },
+    {
+        title: 'Settings',
+        url: '/settings',
+        iosIcon: optionsSharp,
+        mdIcon: optionsSharp
     }
 ];
 
