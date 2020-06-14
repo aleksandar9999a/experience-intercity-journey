@@ -1,4 +1,4 @@
-import { IonContent, IonPage, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle, IonLoading } from '@ionic/react';
+import { IonContent, IonPage, IonHeader, IonToolbar, IonTitle, IonLoading } from '@ionic/react';
 import React from 'react';
 import { useParams } from 'react-router';
 import { Toast } from '../../components/Toast';
@@ -6,15 +6,13 @@ import CurrentPage from '../CurrentPage';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from './../../config/firebase';
 import { submitMessage } from '../../services/toast';
+import FabMenu from '../../components/FabMenu';
 
 const Page: React.FC = () => {
     const { name } = useParams<{ name: string; }>();
     const [user, loading, error] = useAuthState(auth);
 
-    if (error) {
-        submitMessage(error.message);
-    }
-
+    if (error) { submitMessage(error.message); }
     if (loading) {
         return (
             <IonContent>
@@ -26,7 +24,6 @@ const Page: React.FC = () => {
             </IonContent>
         )
     }
-
     if (!user && name !== 'login' && name !== 'register') {
         return (
             <IonPage>
@@ -37,7 +34,6 @@ const Page: React.FC = () => {
             </IonPage>
         )
     }
-
     if (!user && (name === 'login' || name === 'register')) {
         return (
             <IonPage>
@@ -51,14 +47,7 @@ const Page: React.FC = () => {
 
     return (
         <IonPage>
-            <IonHeader>
-                <IonToolbar>
-                    <IonButtons slot="start">
-                        <IonMenuButton />
-                    </IonButtons>
-                    <IonTitle>{name}</IonTitle>
-                </IonToolbar>
-            </IonHeader>
+            <FabMenu />
 
             <IonContent>
                 <IonHeader collapse="condense">
