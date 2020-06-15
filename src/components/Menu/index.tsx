@@ -6,9 +6,10 @@ import MenuItem from '../MenuItem';
 import './style.css';
 import { chevronBackOutline, chevronBackSharp } from 'ionicons/icons';
 import { logOut } from './../../services/auth';
+import assets from './../../config/assets';
+import IMenu from '../../interfaces/IMenu';
 
-
-const Menu: React.FC = () => {
+const Menu: React.FC<IMenu> = ({ firstName = 'unknown', lastName = 'unknown', image = assets.anonym }) => {
   const location = useLocation();
   const [list, setList] = useState<JSX.Element[]>([]);
 
@@ -23,15 +24,19 @@ const Menu: React.FC = () => {
     <IonMenu contentId="main" type="overlay">
       <IonContent>
         <IonList id="inbox-list">
-          <IonListHeader>Inbox</IonListHeader>
-          <IonNote>hi@ionicframework.com</IonNote>
+          <IonListHeader>
+            <img src={image} className="menu-avatar" alt="avatar" />
+          </IonListHeader>
+          <IonNote className="menu-info">
+            <p>{firstName} {lastName}</p>
+          </IonNote>
           {list}
           <IonMenuToggle autoHide={false}>
             <IonItem routerDirection="none" lines="none" detail={false} onClick={out}>
-                <IonIcon slot="start" ios={chevronBackOutline} md={chevronBackSharp} />
-                <IonLabel>Log Out</IonLabel>
+              <IonIcon slot="start" ios={chevronBackOutline} md={chevronBackSharp} />
+              <IonLabel>Log Out</IonLabel>
             </IonItem>
-        </IonMenuToggle>
+          </IonMenuToggle>
         </IonList>
       </IonContent>
     </IonMenu>

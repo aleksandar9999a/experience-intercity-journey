@@ -111,3 +111,15 @@ ion-note {
 ion-item.selected {
   --color: var(--ion-color-primary);
 } 
+
+.menu-avatar {
+  width: 130px;
+  height: 130px;
+  margin: auto;
+  object-fit: cover;
+}
+
+.menu-info {
+  width: 100%;
+  text-align: center;
+}
