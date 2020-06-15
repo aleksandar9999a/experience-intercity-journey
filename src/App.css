@@ -4,3 +4,12 @@
     font-family: 'Saira Semi Condensed', sans-serif !important;
 }
 
+.error-page {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+}
+
+.error-page h1 {
+    margin: auto;
+}
