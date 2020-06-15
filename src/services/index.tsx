@@ -1,5 +1,9 @@
+import { submitRegistered, submitLogin, logOut } from './auth';
 import { setPublication } from './publications';
 
 export {
-    setPublication
+    setPublication,
+    submitRegistered, 
+    submitLogin, 
+    logOut
 }
