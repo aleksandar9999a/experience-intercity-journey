@@ -15,6 +15,7 @@ import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 import './theme/variables.css';
+import './App.css';
 import Page from './pages/Page';
 
 const App: React.FC = () => {
