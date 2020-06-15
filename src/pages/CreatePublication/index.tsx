@@ -34,8 +34,10 @@ const CreatePublication: React.FC = () => {
   function handleType(e: any) { return handleChanges('type', e.target.value); }
 
   function validate() {
+    const typesOfTransport = ['transport', 'drive'];
     if (from.length < 3 || to.length < 3) { submitMessage('Invalid locations. Minimum chars are 3!'); return false; }
     if (!isAfter(date)) { submitMessage('You must enter a date after today!'); return false; }
+    if (!typesOfTransport.includes(type)) { submitMessage('Invalid type of transport!'); return false; }
     return true;
   }
 
