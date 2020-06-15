@@ -4,10 +4,12 @@ import './style.css';
 import { submitLogin } from '../../services/auth';
 import { submitMessage } from '../../services/toast';
 import isEmail from 'validator/lib/isEmail';
+import { Redirect } from 'react-router';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [redirect, setRedirect] = useState<boolean>(false);
 
   function validate() {
     if (!isEmail(email)) {
@@ -21,9 +23,11 @@ const Login: React.FC = () => {
     return true;
   }
 
-  function submit() { if (!validate()) { return; } submitLogin(email, password); }
+  function submit() { if (!validate()) { return; } submitLogin(email, password).then(res => setRedirect(true)); }
   function handleEmail(e: any) { setEmail(e.target.value); }
   function handlePassword(e: any) { setPassword(e.target.value); }
+
+  if(redirect) { return <Redirect exact to="/search" />}
 
   return (
     <IonCard color="light">

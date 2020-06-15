@@ -8,17 +8,22 @@ import { chevronBackOutline, chevronBackSharp } from 'ionicons/icons';
 import { logOut } from './../../services/auth';
 import assets from './../../config/assets';
 import IMenu from '../../interfaces/IMenu';
+import { Redirect } from 'react-router';
+
 
 const Menu: React.FC<IMenu> = ({ firstName = 'unknown', lastName = 'unknown', image = assets.anonym }) => {
   const location = useLocation();
   const [list, setList] = useState<JSX.Element[]>([]);
+  const [redirect, setRedirect] = useState<boolean>(false);
 
   useEffect(() => {
     const newList = menu_config.map((appPage, index) => <MenuItem key={index} page={appPage} location={location} />);
     setList(newList);
   }, [location])
 
-  function out() { logOut(); }
+  function out() { logOut().then(() => setRedirect(true)); }
+
+  if(redirect) { return <Redirect exact to="/login" />}
 
   return (
     <IonMenu contentId="main" type="overlay">
