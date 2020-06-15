@@ -1,6 +1,6 @@
 import Menu from './components/Menu';
 import React, { useEffect, useState } from 'react';
-import { IonApp, IonRouterOutlet, IonSplitPane, IonContent, IonLoading, IonPage } from '@ionic/react';
+import { IonApp, IonRouterOutlet, IonSplitPane, IonPage, IonContent, IonLoading } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
 
@@ -21,9 +21,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, firestore } from './config/firebase';
 import IUser from './interfaces/IUser';
 import { submitMessage } from './services/toast';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import FabMenu from './components/FabMenu';
+
 
 const App: React.FC = () => {
   const [user, loading, error] = useAuthState(auth);
@@ -38,54 +36,32 @@ const App: React.FC = () => {
     }
   }, [user])
 
-  if (error) {
-    return (
-      <IonApp>
-        <IonSplitPane contentId="main">
-          <IonPage>
-            <IonContent>
-              <div className="error-page">
-                <h1>{error}</h1>
-              </div>
-            </IonContent>
-          </IonPage>
-        </IonSplitPane>
-      </IonApp>
-    );
-  }
-
   if (loading) {
     return (
       <IonApp>
-        <IonSplitPane contentId="main">
-          <IonPage>
-            <IonContent>
-              <IonLoading
-                cssClass='my-custom-class'
-                isOpen={loading}
-                message={'Please wait...'}
-              />
-            </IonContent>
-          </IonPage>
-        </IonSplitPane>
+        <IonPage>
+          <IonContent>
+            <IonLoading
+              cssClass='my-custom-class'
+              isOpen={loading}
+              message={'Please wait...'}
+            />
+          </IonContent>
+        </IonPage>
       </IonApp>
     )
   }
 
-  if (!user) {
+  if(error) {
     return (
       <IonApp>
-        <IonReactRouter>
-          <IonSplitPane contentId="main">
-            <IonRouterOutlet id="main">
-              <IonContent>
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/register" component={Register} />
-                <Redirect exact path="*" to="/login" />
-              </IonContent>
-            </IonRouterOutlet>
-          </IonSplitPane>
-        </IonReactRouter>
+        <IonPage>
+          <IonContent>
+            <div className="error-page">
+              <h1>{error}</h1>
+            </div>
+          </IonContent>
+        </IonPage>
       </IonApp>
     )
   }
@@ -94,17 +70,11 @@ const App: React.FC = () => {
     <IonApp>
       <IonReactRouter>
         <IonSplitPane contentId="main">
-          <IonPage>
-            <IonContent>
-              <Menu firstName={userdata?.firstName} lastName={userdata?.lastName} image={userdata?.image} />
-              <FabMenu />
-              <IonRouterOutlet id="main">
-                <Route path="/:name" component={Page} exact />
-                <Redirect exact path="/login" to="/search" />
-                <Redirect exact path="/register" to="/search" />
-              </IonRouterOutlet>
-            </IonContent>
-          </IonPage>
+          {!!user && <Menu firstName={userdata?.firstName} lastName={userdata?.lastName} image={userdata?.image} />}
+          <IonRouterOutlet id="main">
+            <Route path="/:name" render={() => <Page isAuth={!!user} />} exact />
+            <Redirect exact path="/" to="/search" />
+          </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>
     </IonApp>
