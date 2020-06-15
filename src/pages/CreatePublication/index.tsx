@@ -62,6 +62,9 @@ const CreatePublication: React.FC = () => {
               <IonInput type="text" value={to} onIonChange={handleTo} />
             </IonItem>
           </div>
+          <div className="slide-info">
+            <p>It is recommended that you enter your current location and the one you will reach.</p>
+          </div>
           <div className='slide-right'>
             <p>Slide Right</p>
           </div>
@@ -83,6 +86,9 @@ const CreatePublication: React.FC = () => {
               <IonDatetime placeholder="Select Time" display-format="h:mm A" picker-format="h:mm A" value={time} onIonChange={handleTime}></IonDatetime>
             </IonItem>
           </div>
+          <div className="slide-info">
+            <p>On this page you must enter the date and time at which you will travel.</p>
+          </div>
           <div className='slide-right'>
             <p>Slide Right</p>
           </div>
@@ -102,6 +108,14 @@ const CreatePublication: React.FC = () => {
                 <IonSelectOption value="drive">To Drive</IonSelectOption>
               </IonSelect>
             </IonItem>
+          </div>
+          <div className="slide-info">
+            <p>Select type of your search.
+              <br /><br />
+              Transport - If you have transport and looking for people to travel with you.
+              <br /><br />
+              Too Drive - If you do not have transport and are looking for one.
+            </p>
           </div>
           <div className='slide-right'>
             <p>Slide Right</p>
