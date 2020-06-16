@@ -2,6 +2,7 @@ import { auth, firestore } from './../config/firebase';
 import IPublication from '../interfaces/IPublication';
 import uid from 'uid';
 import { submitMessage } from './toast';
+import IGetPublications from '../interfaces/IGetPublications';
 
 export function setPublication(data: IPublication) {
     let newData = { ...data };
@@ -14,4 +15,8 @@ export function setPublication(data: IPublication) {
         })
         .then(res => submitMessage('Successful created!'))
         .catch(err => submitMessage(err.message));
+}
+
+export function getPublications({ to = '' }: IGetPublications) {
+    return firestore.collection('publications').where('to', ">=", to).get();
 }
