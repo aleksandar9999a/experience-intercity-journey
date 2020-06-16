@@ -7,6 +7,7 @@ import TRoute from "../types/TRoute";
 import CreatePublication from "../pages/CreatePublication";
 import Settings from "../pages/Settings";
 import Messages from "../pages/Messages";
+import Details from "../pages/Details";
 
 const route_config: TRoute = {
     account: Account,
@@ -16,7 +17,8 @@ const route_config: TRoute = {
     search: Search,
     createPublication: CreatePublication,
     settings: Settings,
-    messages: Messages
+    messages: Messages,
+    details: Details
 }
 
 export default route_config;
