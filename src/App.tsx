@@ -28,12 +28,11 @@ const App: React.FC = () => {
   const [userdata, setUserdata] = useState<IUser>();
 
   useEffect(() => {
-    if (user) {
-      firestore.collection('users').doc(user.uid).onSnapshot(doc => {
-        if (!doc.exists) { submitMessage('No information about user!'); return; }
-        setUserdata(doc.data() as IUser);
-      })
-    }
+    if (!user) {  return; }
+    firestore.collection('users').doc(user.uid).onSnapshot(doc => {
+      if (!doc.exists) { submitMessage('No information about user!'); return; }
+      setUserdata(doc.data() as IUser);
+    })
   }, [user])
 
   if (loading) {
@@ -52,7 +51,7 @@ const App: React.FC = () => {
     )
   }
 
-  if(error) {
+  if (error) {
     return (
       <IonApp>
         <IonPage>
@@ -73,7 +72,7 @@ const App: React.FC = () => {
           {!!user && <Menu firstName={userdata?.firstName} lastName={userdata?.lastName} image={userdata?.image} />}
           <IonRouterOutlet id="main">
             <Route path="/:name" render={() => <Page isAuth={!!user} />} exact />
-            <Redirect exact path="/" to="/search" />
+            <Redirect exact path="/" to={!!user ? '/search' : '/login'} />
           </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>
