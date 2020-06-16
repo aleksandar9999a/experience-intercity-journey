@@ -1,0 +1,18 @@
+.list-item-first {
+    width: 20%;
+}
+
+.list-item-second {
+    width: 30%;
+    padding-left: 20px;
+}
+
+.list-item-third {
+    width: 50%;
+    text-align: right;
+}
+
+.list-item-preview-img {
+    object-fit: cover;
+    border-radius: 10px;
+}
