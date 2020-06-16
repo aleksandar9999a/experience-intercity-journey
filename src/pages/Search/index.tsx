@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { IonSearchbar, IonToolbar, IonList, IonSegment, IonSegmentButton, IonLabel, IonItem, IonSelect, IonSelectOption, IonHeader } from '@ionic/react';
+import { IonSearchbar, IonToolbar, IonList, IonSegment, IonSegmentButton, IonLabel, IonSelect, IonSelectOption, IonHeader } from '@ionic/react';
 import { getPublications } from '../../services';
 import IPublication from '../../interfaces/IPublication';
 import PublicationListItem from '../../components/PublicationListItem';
@@ -18,7 +18,7 @@ const Search: React.FC = () => {
   }, [items])
 
   useEffect(() => {
-    getPublications({ search, opStr, searchBy }).then(extractSnapshot);
+    getPublications({ search, opStr, searchBy }).then(snapshot => snapshot.forEach(pushToItems));
   }, [search, opStr, searchBy])
 
   function pushToItems(doc: firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>) {
@@ -27,10 +27,6 @@ const Search: React.FC = () => {
       newItems.push(doc.data() as IPublication);
       return newItems;
     })
-  }
-
-  function extractSnapshot(snapshot: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>) {
-    snapshot.forEach(pushToItems);
   }
 
   function handleSearch(e: any) { setItems([]); setSearch(e.target.value); }
