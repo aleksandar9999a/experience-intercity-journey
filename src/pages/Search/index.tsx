@@ -37,7 +37,7 @@ const Search: React.FC = () => {
     <div>
       <IonHeader>
         <IonToolbar>
-          <IonSearchbar placeholder="Where will you travel?" inputmode="text" showCancelButton="focus" debounce={1000} onIonChange={handleSearch}></IonSearchbar>
+          <IonSearchbar className="custom-searchbar" placeholder="Where will you travel?" inputmode="text" showCancelButton="focus" debounce={1000} onIonChange={handleSearch}></IonSearchbar>
         </IonToolbar>
         <IonToolbar>
           <IonSegment onIonChange={handleSearchBy} value={searchBy}>
