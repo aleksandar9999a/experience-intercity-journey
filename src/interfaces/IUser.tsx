@@ -4,5 +4,6 @@ export default interface IUser {
     city: string,
     uid: string,
     image?: string,
-    email: string
+    email: string,
+    darkMode: boolean
 }

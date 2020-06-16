@@ -10,7 +10,8 @@ export function submitRegistered(data: IRegistered) {
                 email: data.email,
                 city: data.city,
                 firstName: data.firstName,
-                lastName: data.lastName
+                lastName: data.lastName,
+                darkMode: false
             }
             return firestore.collection('users').doc(res.user?.uid).set(userdata);
         })

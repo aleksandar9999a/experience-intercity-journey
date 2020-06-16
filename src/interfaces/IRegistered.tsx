@@ -3,5 +3,6 @@ export default interface IRegistered {
     password: string,
     city: string,
     firstName: string,
-    lastName: string
+    lastName: string,
+    darkMode?: boolean
 }
