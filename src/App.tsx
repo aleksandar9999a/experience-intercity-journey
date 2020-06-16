@@ -21,6 +21,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, firestore } from './config/firebase';
 import IUser from './interfaces/IUser';
 import { submitMessage } from './services/toast';
+import Details from './pages/Details';
 
 
 const App: React.FC = () => {
@@ -72,6 +73,7 @@ const App: React.FC = () => {
           {!!user && <Menu firstName={userdata?.firstName} lastName={userdata?.lastName} image={userdata?.image} />}
           <IonRouterOutlet id="main">
             <Route path="/:name" render={() => <Page isAuth={!!user} />} exact />
+            <Route path="/:name/:id" render={() => <Page isAuth={!!user} />} exact />
             <Redirect exact path="/" to={!!user ? '/search' : '/login'} />
           </IonRouterOutlet>
         </IonSplitPane>
