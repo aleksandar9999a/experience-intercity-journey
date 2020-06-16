@@ -1,3 +1,5 @@
 export default interface IGetPublications {
-    to?: string
+    search?: string,
+    opStr?: firebase.firestore.WhereFilterOp,
+    searchBy?: string
 }

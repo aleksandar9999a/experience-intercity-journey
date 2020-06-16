@@ -17,6 +17,6 @@ export function setPublication(data: IPublication) {
         .catch(err => submitMessage(err.message));
 }
 
-export function getPublications({ to = '' }: IGetPublications) {
-    return firestore.collection('publications').where('to', ">=", to).get();
+export function getPublications({ search = '', opStr = '>=', searchBy = 'to' }: IGetPublications) {
+    return firestore.collection('publications').where(searchBy, opStr, search).get();
 }
