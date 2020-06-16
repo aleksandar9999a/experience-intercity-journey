@@ -21,7 +21,6 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, firestore } from './config/firebase';
 import IUser from './interfaces/IUser';
 import { submitMessage } from './services/toast';
-import Details from './pages/Details';
 
 
 const App: React.FC = () => {
