@@ -33,7 +33,12 @@ const Login: React.FC = () => {
 
   return (
     <div className="login-page">
-      <img src={assets.kindOfTransport} className="login-logo" alt="logo" />
+      <div className="login-logo-wrapper">
+        <img src={assets.kindOfTransport} className="login-logo" alt="logo" />
+        <div className="login-logo-text">
+          <h1>InterCity Journey</h1>
+        </div>
+      </div>
       <div className="login-inputs-wrapper">
         <IonItem color="light">
           <IonLabel position="floating">Email</IonLabel>

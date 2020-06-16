@@ -3,10 +3,10 @@
     width: 100vw;
 }
 
-.login-logo {
+.login-logo-wrapper {
     height: 50vh;
     width: 100vw;
-    object-fit: cover;
+    display: flex;
 }
 
 .login-inputs-wrapper {
@@ -37,4 +37,28 @@
     width: 8rem;
     --border-width: 0;
     font-size: 20px;
+}
+
+.login-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: contrast(60%);
+}
+
+.login-logo-text {
+    position: absolute;
+    display: flex;
+    width: 100vw;
+    height: 50vh;
+}
+
+.login-logo-text h1 {
+    margin: auto;
+    width: 70%;
+    color: white;
+    text-align: center;
+    background-color: #202020;
+    border-radius: 50px;
+    padding: 25px;
 }
