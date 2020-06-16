@@ -35,6 +35,12 @@ const App: React.FC = () => {
     })
   }, [user])
 
+  useEffect(() => { 
+    if(!userdata) { return; }
+    document.body.classList.toggle('dark-mode', userdata.darkMode); 
+  }, [userdata])
+
+
   if (loading) {
     return (
       <IonApp>
@@ -69,7 +75,7 @@ const App: React.FC = () => {
     <IonApp>
       <IonReactRouter>
         <IonSplitPane contentId="main">
-          {!!user && <Menu firstName={userdata?.firstName} lastName={userdata?.lastName} image={userdata?.image} />}
+          {!!userdata && <Menu firstName={userdata.firstName} lastName={userdata.lastName} image={userdata.image} />}
           <IonRouterOutlet id="main">
             <Route path="/:name" render={() => <Page isAuth={!!user} />} exact />
             <Route path="/:name/:id" render={() => <Page isAuth={!!user} />} exact />
