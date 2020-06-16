@@ -13,13 +13,12 @@ const PublicationListItem: React.FC<{ data: IPublication }> = ({ data }) => {
     useEffect(() => {
         getImageByPlace(data.to).then((res) => {
             if (!res) { return; }
-            const item = res.data.hits[Math.floor(Math.random() * res.data.hits.length)];
-            setImage(item)
+            setImage(res.data.hits[0])
         })
     }, [data.to])
 
     return (
-        <IonItem>
+        <IonItem routerLink={`/details/${data.id}`}>
             <div className="list-item-first">
                 {!!image && <img src={image?.previewURL} className="list-item-preview-img" alt="preview-img" />}
             </div>
