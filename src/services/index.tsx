@@ -1,5 +1,5 @@
 import { submitRegistered, submitLogin, logOut } from './auth';
-import { setPublication, getPublications } from './publications';
+import { setPublication, getPublications, deletePublication } from './publications';
 import { getImageByPlace } from './pixabay';
 
 export {
@@ -8,5 +8,6 @@ export {
     submitRegistered, 
     submitLogin, 
     logOut,
-    getImageByPlace
+    getImageByPlace,
+    deletePublication
 }

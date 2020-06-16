@@ -13,10 +13,16 @@ export function setPublication(data: IPublication) {
             if (!newData.id || !newData.creatorId) { newData.id = uid(); newData.creatorId = user.uid; }
             return firestore.collection('publications').doc(newData.id).set(newData);
         })
-        .then(res => submitMessage('Successful created!'))
+        .then(res => submitMessage('Successful submited!'))
         .catch(err => submitMessage(err.message));
 }
 
 export function getPublications({ search = '', opStr = '>=', searchBy = 'to' }: IGetPublications) {
     return firestore.collection('publications').where(searchBy, opStr, search).get();
+}
+
+export function deletePublication(id: string) {
+    return firestore.collection('publications').doc(id).delete()
+        .then(res => submitMessage('Successfull deleted!'))
+        .catch(err => submitMessage(err.message));
 }
