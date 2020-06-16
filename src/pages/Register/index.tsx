@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { IonCard, IonCardContent, IonItem, IonLabel, IonInput, IonButton } from '@ionic/react';
+import { IonItem, IonLabel, IonInput, IonButton } from '@ionic/react';
 import isEmail from 'validator/lib/isEmail';
 import { submitMessage } from '../../services/toast';
 import TRegisterState from '../../types/TRegisterState';
 import { submitRegistered } from '../../services/auth';
+import './style.css';
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -46,8 +47,8 @@ const Register: React.FC = () => {
   function handleLastName(e: any) { handleChanges('lastName', e.target.value); }
 
   return (
-    <IonCard color="light">
-      <IonCardContent>
+    <div className="register-page">
+      <div className="register-inputs-wrapper">
         <IonItem color="light">
           <IonLabel position="floating">Email</IonLabel>
           <IonInput type="email" pattern="email" value={email} onIonChange={handleEmail}></IonInput>
@@ -72,14 +73,16 @@ const Register: React.FC = () => {
           <IonLabel position="floating">Last Name</IonLabel>
           <IonInput type="text" value={lastName} onIonChange={handleLastName}></IonInput>
         </IonItem>
-        <div className="ion-padding">
-          <IonButton expand="block" fill="solid" color="success" onClick={submit}>Registered</IonButton>
-        </div>
+      </div>
+      <div className="register-btn-wrapper">
+        <IonButton fill="outline" color="success" className="register-btn" onClick={submit}>Registered</IonButton>
+      </div>
+      <div className="register-route-wrapper">
         <IonItem routerLink="/login" className="register-route" color="light">
           <IonLabel color="secondary">Do you have an account? Login</IonLabel>
         </IonItem>
-      </IonCardContent>
-    </IonCard>
+      </div>
+    </div>
   );
 };
 

@@ -1,0 +1,24 @@
+.register-page {
+    height: 100vh;
+}
+
+.register-inputs-wrapper {
+    height: 55vh;
+}
+
+.register-btn-wrapper {
+    height: 35vh;
+    display: flex;
+}
+
+.register-route-wrapper {
+    height: 10vh;
+}
+
+.register-btn {
+    margin: auto;
+    height: 4.5rem;
+    width: 8rem;
+    --border-width: 0;
+    font-size: 20px;
+}
