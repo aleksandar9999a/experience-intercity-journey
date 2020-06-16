@@ -7,6 +7,7 @@ import { submitMessage } from '../../services/toast';
 import isAfter from 'validator/lib/isAfter';
 import { setPublication } from '../../services';
 import assets from './../../config/assets';
+import { Redirect } from 'react-router';
 
 const CreatePublication: React.FC = () => {
   const [from, setFrom] = useState<string>('');
@@ -14,6 +15,7 @@ const CreatePublication: React.FC = () => {
   const [date, setDate] = useState<string>('');
   const [time, setTime] = useState<string>('');
   const [type, setType] = useState<string>('');
+  const [redirect, setRedirect] = useState<boolean>(false);
 
   function handleChanges(type: string, value: string) {
     const types: TCreateState = {
@@ -42,7 +44,9 @@ const CreatePublication: React.FC = () => {
     return true;
   }
 
-  function submit() { if (!validate()) { return; } setPublication({ from, to, date, time, type }); }
+  function submit() { if (!validate()) { return; } setPublication({ from, to, date, time, type }).then(() => setRedirect(true)); }
+
+  if (redirect) { return <Redirect exact to="/search" /> }
 
   return (
     <IonSlides>
