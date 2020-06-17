@@ -1,0 +1,24 @@
+.profile-img {
+    height: 40vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+}
+
+.profile-img img {
+    object-fit: cover;
+}
+
+.custom-input {
+    opacity: 0;
+    position: absolute;
+}
+
+.profile-edit-btn-wrapper {
+    height: 15vh;
+    display: flex;
+}
+
+.profile-edit-btn {
+    margin: auto;
+}
