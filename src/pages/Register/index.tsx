@@ -20,7 +20,7 @@ const Register: React.FC = () => {
     if (rePassword !== password) { submitMessage('Passwords not match!'); return false; }
     if (city.length < 3 || city.length > 20) { submitMessage('City is invalid.'); return false; }
     if (firstName.length < 4 || firstName.length > 20) { submitMessage('First name is invalid. Minimum length is 4 chars, max - 20 chars.'); return false; }
-    if (lastName.length < 4 || password.length > 20) { submitMessage('Last name is invalid. Minimum length is 4 chars, max - 20 chars.'); return false; }
+    if (lastName.length < 4 || lastName.length > 20) { submitMessage('Last name is invalid. Minimum length is 4 chars, max - 20 chars.'); return false; }
     return true;
   }
 
