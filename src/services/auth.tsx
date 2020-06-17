@@ -26,3 +26,7 @@ export function submitLogin(email: string, password: string) {
 export function logOut() {
     return auth.signOut().then(res => submitMessage('Successful Logout!')).catch(err => submitMessage(err.message));
 }
+
+export function getUserdata(id: string) {
+    return firestore.collection('users').doc(id);
+}
