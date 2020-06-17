@@ -2,11 +2,14 @@
     height: 40vh;
     width: 100vw;
     display: flex;
-    justify-content: center;
 }
 
 .profile-img img {
     object-fit: cover;
+    margin: auto;
+    height: 30vh;
+    width: 30vh;
+    border-radius: 50%;
 }
 
 .custom-input {
