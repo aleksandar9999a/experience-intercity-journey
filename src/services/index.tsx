@@ -1,7 +1,8 @@
-import { submitRegistered, submitLogin, logOut, getUserdata } from './auth';
+import { submitRegistered, submitLogin, logOut, getUserdata, getMultiplyUserdata } from './auth';
 import { setPublication, getPublications, deletePublication } from './publications';
 import { getImageByPlace } from './pixabay';
 import { uploadImage } from './images';
+import { getMessageBoxState, createNewChat, closeMessageBox, submitMessageBox } from './messageBox';
 import { updateOneField, updateOneFieldFromMyProfile, updateMultiplyFieldsFromMyProfile } from './database';
 
 export {
@@ -16,5 +17,10 @@ export {
     uploadImage,
     updateOneField,
     updateOneFieldFromMyProfile,
-    updateMultiplyFieldsFromMyProfile
+    updateMultiplyFieldsFromMyProfile,
+    getMessageBoxState,
+    createNewChat,
+    closeMessageBox,
+    getMultiplyUserdata,
+    submitMessageBox
 }
