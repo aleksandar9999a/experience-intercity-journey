@@ -2,8 +2,9 @@ import { submitRegistered, submitLogin, logOut, getUserdata, getMultiplyUserdata
 import { setPublication, getPublications, deletePublication } from './publications';
 import { getImageByPlace } from './pixabay';
 import { uploadImage } from './images';
-import { getMessageBoxState, createNewChat, closeMessageBox, submitMessageBox } from './messageBox';
+import { getMessageBoxState, closeMessageBox, submitMessageBox, openMessageBox } from './messageBox';
 import { updateOneField, updateOneFieldFromMyProfile, updateMultiplyFieldsFromMyProfile } from './database';
+import { getAllMessages } from './messages';
 
 export {
     setPublication,
@@ -19,8 +20,9 @@ export {
     updateOneFieldFromMyProfile,
     updateMultiplyFieldsFromMyProfile,
     getMessageBoxState,
-    createNewChat,
     closeMessageBox,
     getMultiplyUserdata,
-    submitMessageBox
+    submitMessageBox,
+    getAllMessages,
+    openMessageBox
 }
