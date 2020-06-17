@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { IonSearchbar, IonToolbar, IonList, IonSegment, IonSegmentButton, IonLabel, IonSelect, IonSelectOption, IonHeader } from '@ionic/react';
+import { IonSearchbar, IonToolbar, IonList, IonSegment, IonSegmentButton, IonLabel, IonSelect, IonSelectOption, IonHeader, IonFab, IonFabButton, IonIcon, IonSpinner } from '@ionic/react';
 import { getPublications } from '../../services';
 import IPublication from '../../interfaces/IPublication';
 import PublicationListItem from '../../components/PublicationListItem';
 import './style.css';
+import { refreshOutline } from 'ionicons/icons';
 
 const Search: React.FC = () => {
   const [list, setList] = useState<JSX.Element[]>([]);
@@ -17,9 +18,11 @@ const Search: React.FC = () => {
     setList(newList);
   }, [items])
 
-  useEffect(() => {
-    getPublications({ search, opStr, searchBy }).then(snapshot => snapshot.forEach(pushToItems));
-  }, [search, opStr, searchBy])
+  useEffect(() => { getManuallyPublications() }, [search, opStr, searchBy])
+
+  function getManuallyPublications() {
+    return getPublications({ search, opStr, searchBy }).then(snapshot => snapshot.forEach(pushToItems));
+  }
 
   function pushToItems(doc: firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>) {
     setItems((oldItems) => {
@@ -32,6 +35,7 @@ const Search: React.FC = () => {
   function handleSearch(e: any) { setItems([]); setSearch(e.target.value); }
   function handleSearchBy(e: any) { setItems([]); setSearchBy(e.detail.value); }
   function handleOpStr(e: any) { setItems([]); setOpStr(e.detail.value); }
+  function handleRefresh() { setItems([]); getManuallyPublications(); }
 
   return (
     <div>
@@ -56,9 +60,12 @@ const Search: React.FC = () => {
           </IonSelect>
         </IonToolbar>
       </IonHeader>
-      <IonList>
-        {list}
-      </IonList>
+      <IonList>{list}</IonList>
+      <IonFab vertical="bottom" horizontal="start">
+        <IonFabButton onClick={handleRefresh}>
+          <IonIcon ios={refreshOutline} md={refreshOutline}></IonIcon>
+        </IonFabButton>
+      </IonFab>
     </div>
   );
 };
