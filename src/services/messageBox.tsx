@@ -2,7 +2,7 @@ import { BehaviorSubject } from "rxjs";
 import IMessageBoxState from "../interfaces/IMessageBoxState";
 import uid from "uid";
 import { auth, firestore } from './../config/firebase';
-import { submitMessage } from "./toast";
+import { submitMessage, submitError } from "./toast";
 import IChatItem from "../interfaces/IChatItem";
 import ISubmitMessage from "../interfaces/ISubmitMessage";
 import IOpenMessageBox from "../interfaces/IOpenMessageBox";
@@ -43,7 +43,7 @@ export function openMessageBox(data: IOpenMessageBox) {
             submitChat(snapshot.docs[0].data() as IChatItem);
             return;
         })
-        .catch(err => submitMessage(err.message))
+        .catch(submitError)
 }
 
 export function submitMessageBox({ id, members, creatorId, message, firstName, lastName, to }: ISubmitMessage) {
@@ -56,5 +56,5 @@ export function submitMessageBox({ id, members, creatorId, message, firstName, l
             submitMessage('Successful sended!');
             return res;
         })
-        .catch(err => submitMessage(err.message))
+        .catch(submitError)
 }

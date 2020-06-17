@@ -1,7 +1,7 @@
 import { auth, firestore } from './../config/firebase';
 import IPublication from '../interfaces/IPublication';
 import uid from 'uid';
-import { submitMessage } from './toast';
+import { submitMessage, submitError } from './toast';
 import IGetPublications from '../interfaces/IGetPublications';
 
 export function setPublication(data: IPublication) {
@@ -14,7 +14,7 @@ export function setPublication(data: IPublication) {
             return firestore.collection('publications').doc(newData.id).set(newData);
         })
         .then(res => submitMessage('Successful submited!'))
-        .catch(err => submitMessage(err.message));
+        .catch(submitError);
 }
 
 export function getPublications({ search = '', opStr = '>=', searchBy = 'to' }: IGetPublications) {
@@ -24,5 +24,5 @@ export function getPublications({ search = '', opStr = '>=', searchBy = 'to' }: 
 export function deletePublication(id: string) {
     return firestore.collection('publications').doc(id).delete()
         .then(res => submitMessage('Successfull deleted!'))
-        .catch(err => submitMessage(err.message));
+        .catch(submitError);
 }
