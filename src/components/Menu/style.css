@@ -117,6 +117,7 @@ ion-item.selected {
   height: 130px;
   margin: auto;
   object-fit: cover;
+  border-radius: 50%;
 }
 
 .menu-info {
