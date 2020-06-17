@@ -25,3 +25,17 @@
 .details-btns {
     margin: auto;
 }
+
+.creator-info {
+    padding: 10px;
+}
+
+.creator-info p {
+    margin: 7px;
+}
+
+.details-creator-img {
+    object-fit: cover;
+    width: 30vw;
+    height: 20vh;
+}

@@ -4,12 +4,14 @@ import { auth, firestore } from './../../config/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import IPublication from '../../interfaces/IPublication';
 import IPixabayImage from '../../interfaces/IPixabayImage';
-import { getImageByPlace, setPublication, deletePublication } from '../../services';
+import { getImageByPlace, setPublication, deletePublication, getUserdata, createNewChat } from '../../services';
 import './style.css';
 import { IonItem, IonLabel, IonInput, IonDatetime, IonSelect, IonSelectOption, IonButton } from '@ionic/react';
 import TCreateState from '../../types/TCreateState';
 import { submitMessage } from '../../services/toast';
 import isAfter from 'validator/lib/isAfter';
+import IUser from '../../interfaces/IUser';
+import assets from '../../config/assets';
 
 
 const Details: React.FC = () => {
@@ -25,6 +27,7 @@ const Details: React.FC = () => {
     const [time, setTime] = useState<string>('');
     const [type, setType] = useState<string>('');
     const [creatorId, setCreatorId] = useState<string | undefined>('');
+    const [creatorData, setCreatorData] = useState<IUser>();
 
     function handleChanges(type: string, value: string) {
         const types: TCreateState = {
@@ -55,7 +58,7 @@ const Details: React.FC = () => {
 
     function submit() { if (!validate()) { return; } setPublication({ id, creatorId, from, to, date, time, type }); }
     function remove() {
-        if(!isAuth) { submitMessage('Sorry, but this post is not your. You can not delete it!'); return; }
+        if (!isAuth) { submitMessage('Sorry, but this post is not your. You can not delete it!'); return; }
         deletePublication(id).then(() => setRedirect(true));
     }
 
@@ -77,7 +80,14 @@ const Details: React.FC = () => {
         })
     }, [id, to])
 
-    if(redirect) { return <Redirect exact to="/search" /> }
+    useEffect(() => {
+        if (!creatorId) { return; }
+        getUserdata(creatorId).onSnapshot(doc => { setCreatorData(doc.data() as IUser); });
+    }, [creatorId])
+
+    function openChatBox() { if(!creatorId) { return; } createNewChat([creatorId]); }
+
+    if (redirect) { return <Redirect exact to="/search" /> }
 
     return (
         <div>
@@ -91,7 +101,7 @@ const Details: React.FC = () => {
                 </IonItem>
                 <IonItem className="details-item" disabled={!isAuth}>
                     <IonLabel position="floating">To</IonLabel>
-                    <IonInput type="text" value={to} onIonChange={handleTo} debounce={1000}/>
+                    <IonInput type="text" value={to} onIonChange={handleTo} debounce={1000} />
                 </IonItem>
                 <IonItem className="details-item" disabled={!isAuth}>
                     <IonLabel>Date</IonLabel>
@@ -115,6 +125,16 @@ const Details: React.FC = () => {
                     <IonButton color="danger" fill="outline" onClick={remove}>Delete</IonButton>
                 </div>
             </div>}
+            {!isAuth && !!creatorData && <IonItem>
+                <div>
+                    <img src={creatorData.image || assets.anonym} className="details-creator-img" alt="creator" />
+                </div>
+                <div className="creator-info">
+                    <p>Name: {creatorData.firstName} {creatorData.lastName}</p>
+                    <p>City: {creatorData.city}</p>
+                    <IonButton color="success" fill="solid" onClick={openChatBox}>Write message</IonButton>
+                </div>
+            </IonItem>}
         </div>
     );
 };
