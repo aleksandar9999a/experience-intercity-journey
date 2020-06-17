@@ -8,7 +8,7 @@ import { submitMessage } from '../../services/toast';
 
 
 const MessageBox: React.FC = () => {
-    const [state, setState] = useState<IMessageBoxState>({ isOpen: false, members: [], creatorId: '', id: '' });
+    const [state, setState] = useState<IMessageBoxState>({ isOpen: false, members: [], creatorId: '', id: '', lastName: '', firstName: '', to: '' });
     const [list, setList] = useState<JSX.Element[]>([]);
     const [message, setMessage] = useState<string>('');
 
@@ -26,7 +26,7 @@ const MessageBox: React.FC = () => {
         })
     }, [state])
 
-    function close() { closeMessageBox(); }
+    function close() { setMessage(''); closeMessageBox(); }
 
     function validate() {
         if (!state.isOpen) { submitMessage('Form is not open!'); return false; }
@@ -44,7 +44,10 @@ const MessageBox: React.FC = () => {
             id: state.id,
             creatorId: state.creatorId,
             members: state.members,
-            message
+            message,
+            firstName: state.firstName,
+            lastName: state.lastName,
+            to: state.to
         }
         submitMessageBox(data).then(() => { closeMessageBox(); });
     }
@@ -52,7 +55,7 @@ const MessageBox: React.FC = () => {
     function handleMessage(e: any) { setMessage(e.target.value); }
 
     return (
-        <IonModal isOpen={state.isOpen}>
+        <IonModal isOpen={!!state.isOpen}>
             <IonList>
                 <IonListHeader>Members</IonListHeader>
                 {list}

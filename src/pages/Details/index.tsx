@@ -4,7 +4,7 @@ import { auth, firestore } from './../../config/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import IPublication from '../../interfaces/IPublication';
 import IPixabayImage from '../../interfaces/IPixabayImage';
-import { getImageByPlace, setPublication, deletePublication, getUserdata, createNewChat } from '../../services';
+import { getImageByPlace, setPublication, deletePublication, getUserdata, openMessageBox } from '../../services';
 import './style.css';
 import { IonItem, IonLabel, IonInput, IonDatetime, IonSelect, IonSelectOption, IonButton } from '@ionic/react';
 import TCreateState from '../../types/TCreateState';
@@ -85,7 +85,15 @@ const Details: React.FC = () => {
         getUserdata(creatorId).onSnapshot(doc => { setCreatorData(doc.data() as IUser); });
     }, [creatorId])
 
-    function openChatBox() { if(!creatorId) { return; } createNewChat([creatorId]); }
+    function openChatBox() { 
+        if(!creatorId || !creatorData) { return; } 
+        openMessageBox({ 
+            members: [creatorId], 
+            firstName: creatorData.firstName,
+            lastName: creatorData.lastName,
+            to: to
+        }); 
+    }
 
     if (redirect) { return <Redirect exact to="/search" /> }
 
