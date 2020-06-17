@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { IonSearchbar, IonToolbar, IonList, IonSegment, IonSegmentButton, IonLabel, IonSelect, IonSelectOption, IonHeader, IonFab, IonFabButton, IonIcon, IonSpinner } from '@ionic/react';
+import { IonSearchbar, IonToolbar, IonList, IonSegment, IonSegmentButton, IonLabel, IonSelect, IonSelectOption, IonHeader, IonFab, IonFabButton, IonIcon } from '@ionic/react';
 import { getPublications } from '../../services';
 import IPublication from '../../interfaces/IPublication';
 import PublicationListItem from '../../components/PublicationListItem';
