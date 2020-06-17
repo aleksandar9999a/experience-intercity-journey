@@ -1,13 +1,20 @@
-import { submitRegistered, submitLogin, logOut } from './auth';
+import { submitRegistered, submitLogin, logOut, getUserdata } from './auth';
 import { setPublication, getPublications, deletePublication } from './publications';
 import { getImageByPlace } from './pixabay';
+import { uploadImage } from './images';
+import { updateOneField, updateOneFieldFromMyProfile, updateMultiplyFieldsFromMyProfile } from './database';
 
 export {
     setPublication,
     getPublications,
-    submitRegistered, 
-    submitLogin, 
+    submitRegistered,
+    submitLogin,
     logOut,
     getImageByPlace,
-    deletePublication
+    deletePublication,
+    getUserdata,
+    uploadImage,
+    updateOneField,
+    updateOneFieldFromMyProfile,
+    updateMultiplyFieldsFromMyProfile
 }
