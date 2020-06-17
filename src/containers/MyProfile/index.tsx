@@ -30,7 +30,8 @@ const MyProfile: React.FC<{ uid: string }> = ({ uid }) => {
 
     useEffect(() => {
         if (!file || !file.type.includes('image')) { return; }
-        uploadImage(file).then(url => handleImmediatelyUpdatedField('image', url))
+        setUploading(true);
+        uploadImage(file).then(url => handleImmediatelyUpdatedField('image', url)).finally(() => setUploading(false));
     }, [file])
 
     function handleChanges(type: string, value: string) {
