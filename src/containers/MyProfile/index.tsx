@@ -92,7 +92,7 @@ const MyProfile: React.FC<{ uid: string }> = ({ uid }) => {
     }
 
     if (loading || uploading) { return <IonLoading cssClass='my-custom-class' isOpen={loading || uploading} message={'Please wait...'} /> }
-    if (error) { return <div className="error-page"> <h1>{error}</h1> </div> }
+    if (error) { return <div className="error-page"> <h1>{error.message}</h1> </div> }
 
     return (
         <div>
