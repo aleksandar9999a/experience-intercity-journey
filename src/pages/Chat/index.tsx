@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router';
 import { useDocumentData, useCollectionData } from 'react-firebase-hooks/firestore';
 import { getChat, getMessages, getMultiplyUserdata, submitNewMessage } from '../../services';
 import IUser from '../../interfaces/IUser';
 import IChatItem from '../../interfaces/IChatItem';
 import IMessage from '../../interfaces/IMessage';
-import { IonList, IonListHeader, IonLoading, IonItem, IonInput, IonIcon } from '@ionic/react';
+import { IonList, IonLoading, IonItem, IonInput, IonIcon, IonHeader, IonToolbar, IonTitle } from '@ionic/react';
 import Message from '../../components/Message';
 import './style.css';
 import { sendOutline } from 'ionicons/icons';
@@ -13,6 +13,7 @@ import { sendOutline } from 'ionicons/icons';
 
 const Chat: React.FC = () => {
     const { id } = useParams()
+    const chatListEnd = useRef(null);
     const [chatInfo, loadingChatInfo, errChatInfo] = useDocumentData<IChatItem>(getChat(id))
     const [messages, loadingMessages, errMessages] = useCollectionData<IMessage>(getMessages(id));
     const [users, setUsers] = useState<IUser[]>([]);
@@ -33,10 +34,15 @@ const Chat: React.FC = () => {
         setList(newList);
     }, [messages, users])
 
+    useEffect(() => {
+        if (!chatListEnd || !chatListEnd.current) { return; }
+        (chatListEnd.current as any).scrollIntoView({ behavior: "smooth" })
+    }, [list])
+
     function handleNewMessage(e: any) { setNewMessage(e.target.value); }
 
     function sendMessage() {
-        if(newMessage.length === 0) { return; }
+        if (newMessage.length === 0) { return; }
         submitNewMessage(id, newMessage).then(() => setNewMessage(''));
     }
 
@@ -49,18 +55,21 @@ const Chat: React.FC = () => {
     }
 
     return (
-        <IonList className="chat">
-            <IonListHeader>
-                <h2 className="chat-box-title">Chat</h2>
-            </IonListHeader>
-            <div>
+        <div className="chat">
+            <IonHeader className="chat-header" >
+                <IonToolbar>
+                    <IonTitle className="chat-title">{users.map(user => `${user.firstName} ${user.lastName}`).join(', ')}</IonTitle>
+                </IonToolbar>
+            </IonHeader>
+            <IonList>
                 {list}
-            </div>
+                <div ref={chatListEnd}></div>
+            </IonList>
             <IonItem className="message-input" color="primary">
                 <IonInput type="text" placeholder="Write message!" value={newMessage} onIonChange={handleNewMessage} />
-                <IonIcon md={sendOutline} ios={sendOutline} onClick={sendMessage}/>
+                <IonIcon md={sendOutline} ios={sendOutline} onClick={sendMessage} />
             </IonItem>
-        </IonList>
+        </div>
     );
 };
 
