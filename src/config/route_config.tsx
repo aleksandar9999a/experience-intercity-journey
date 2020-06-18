@@ -6,6 +6,7 @@ import TRoute from "../types/TRoute";
 import CreatePublication from "../pages/CreatePublication";
 import Messages from "../pages/Messages";
 import Details from "../pages/Details";
+import Chat from "../pages/Chat";
 
 const route_config: TRoute = {
     account: Account,
@@ -14,7 +15,8 @@ const route_config: TRoute = {
     search: Search,
     createPublication: CreatePublication,
     messages: Messages,
-    details: Details
+    details: Details,
+    chat: Chat
 }
 
 export default route_config;
