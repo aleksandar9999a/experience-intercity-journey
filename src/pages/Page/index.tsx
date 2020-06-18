@@ -12,7 +12,7 @@ const Page: React.FC<{ isAuth: boolean }> = ({ isAuth }) => {
     return (
         <IonPage>
             <IonContent>
-                {isAuth && <FabMenu />}
+                {isAuth && name !=='chat' && <FabMenu />}
                 <CurrentPage name={name} />
                 <MessageBox />
                 <Toast />
