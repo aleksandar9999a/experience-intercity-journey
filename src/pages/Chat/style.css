@@ -1,0 +1,9 @@
+.message-input {
+    position: absolute;
+    bottom: 0;
+    width: 100vw;
+}
+
+.chat {
+    height: 100vh;
+}
