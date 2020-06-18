@@ -4,7 +4,7 @@ import { getImageByPlace } from './pixabay';
 import { uploadImage } from './images';
 import { getMessageBoxState, closeMessageBox, submitMessageBox, openMessageBox } from './messageBox';
 import { updateOneField, updateOneFieldFromMyProfile, updateMultiplyFieldsFromMyProfile } from './database';
-import { getAllMessages } from './messages';
+import { getAllMessages, getChat, getMessages, submitNewMessage } from './messages';
 
 export {
     setPublication,
@@ -24,5 +24,8 @@ export {
     getMultiplyUserdata,
     submitMessageBox,
     getAllMessages,
-    openMessageBox
+    openMessageBox,
+    getChat,
+    getMessages,
+    submitNewMessage
 }
