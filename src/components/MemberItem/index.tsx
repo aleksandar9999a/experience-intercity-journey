@@ -1,8 +1,9 @@
 import assets from "../../config/assets"
 import React from 'react';
 import { IonItem, IonAvatar, IonLabel } from "@ionic/react"
+import IMemberItems from "../../interfaces/IMemberItems";
 
-const MemberItem: React.FC<{ image?: string, firstName: string, lastName: string }> = ({ image = assets.anonym, firstName, lastName }) => {
+const MemberItem: React.FC<IMemberItems> = ({ image = assets.anonym, firstName, lastName }) => {
     return (
         <IonItem>
             <IonAvatar slot="start">

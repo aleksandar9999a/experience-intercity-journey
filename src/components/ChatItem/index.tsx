@@ -1,28 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { IonItem, IonAvatar, IonLabel } from '@ionic/react';
-import IChatItem from '../../interfaces/IChatItem';
-import { getImageByPlace } from '../../services';
+import assets from '../../config/assets';
+import IChatMessage from '../../interfaces/IChatMessage';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../../config/firebase';
 
+const ChatItem: React.FC<IChatMessage> = ({ chat, user }) => {
+    const [iUser, loading, error] = useAuthState(auth);
 
-const ChatItem: React.FC<{ data: IChatItem }> = ({ data }) => {
-    const [image, setImage] = useState<string>();
-
-    useEffect(() => {
-        if (!data) { return; }
-        getImageByPlace(data.to).then(res => {
-            if (!res) { return; }
-            setImage(res.data.hits[0].previewURL);
-        })
-    }, [data])
+    if (loading) { return <div className="error-page"> <h1>Loading...</h1> </div> }
+    if (error) { return <div className="error-page"> <h1>{error.message}</h1> </div> }
 
     return (
-        <IonItem routerLink={`/chat/${data.id}`}>
-            <IonAvatar slot="start">
-                {!!image && <img src={image} className="chat-img" alt="chat-img" />}
+        <IonItem>
+            <IonAvatar slot={iUser?.uid !== user.uid ? 'start' : 'end'}>
+                <img src={user.image || assets.anonym} className="chat-img" alt="chat-img" />
             </IonAvatar>
-            <IonLabel>
-                <h2>{data.firstName} {data.lastName}</h2>
-                <h3>To: {data.to}</h3>
+            <IonLabel style={iUser?.uid !== user.uid ? { textAlign: 'left' } : { textAlign: 'right' }}>
+                {iUser?.uid !== user.uid && <h5>{user.firstName} {user.lastName}</h5>}
+                <h3>{chat.message}</h3>
             </IonLabel>
         </IonItem>
     );

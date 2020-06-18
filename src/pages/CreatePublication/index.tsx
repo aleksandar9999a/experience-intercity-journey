@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { IonItem, IonLabel, IonInput, IonDatetime, IonSlides, IonSlide, IonButton, IonIcon, IonSelect, IonSelectOption } from '@ionic/react';
-import './style.css';
 import { arrowForward } from 'ionicons/icons';
 import TCreateState from '../../types/TCreateState';
 import { submitMessage } from '../../services/toast';
@@ -8,6 +7,7 @@ import isAfter from 'validator/lib/isAfter';
 import { setPublication } from '../../services';
 import assets from './../../config/assets';
 import { Redirect } from 'react-router';
+import './style.css';
 
 const CreatePublication: React.FC = () => {
   const [from, setFrom] = useState<string>('');

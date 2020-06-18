@@ -1,20 +1,25 @@
 import { IonContent, IonPage } from '@ionic/react';
 import React from 'react';
-import { useParams } from 'react-router';
+import { useParams, Redirect } from 'react-router';
 import { Toast } from '../../components/Toast';
-import CurrentPage from '../CurrentPage';
 import FabMenu from '../../components/FabMenu';
-import MessageBox from '../../containers/MessageBox';
+import route_config from '../../config/route_config';
+import IPage from '../../interfaces/IPage';
 
-const Page: React.FC<{ isAuth: boolean }> = ({ isAuth }) => {
+const Page: React.FC<IPage> = ({ isAuth }) => {
     let { name } = useParams<{ name: string; }>();
+    const unauthorizedPages = ['register', 'login'];
+    if(!isAuth && !unauthorizedPages.includes(name)) {
+        return <Redirect to="/login" />
+    }
+
+    const Component = route_config[name];
 
     return (
         <IonPage>
             <IonContent>
                 {isAuth && name !=='chat' && <FabMenu />}
-                <CurrentPage name={name} />
-                <MessageBox />
+                <Component />
                 <Toast />
             </IonContent>
         </IonPage>

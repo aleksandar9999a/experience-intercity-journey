@@ -1,15 +1,11 @@
 .message-input {
-    position: sticky;
+    position: fixed;
     bottom: 0;
     width: 100vw;
 }
 
 .chat {
     height: 100vh;
-}
-
-.chat-header {
-    position: fixed;
 }
 
 .chat-title {

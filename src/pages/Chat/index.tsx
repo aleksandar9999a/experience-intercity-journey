@@ -6,10 +6,9 @@ import IUser from '../../interfaces/IUser';
 import IChatItem from '../../interfaces/IChatItem';
 import IMessage from '../../interfaces/IMessage';
 import { IonList, IonLoading, IonItem, IonInput, IonIcon, IonHeader, IonToolbar, IonTitle } from '@ionic/react';
-import Message from '../../components/Message';
-import './style.css';
 import { sendOutline } from 'ionicons/icons';
-
+import ChatItem from '../../components/ChatItem';
+import './style.css';
 
 const Chat: React.FC = () => {
     const { id } = useParams()
@@ -30,7 +29,7 @@ const Chat: React.FC = () => {
 
     useEffect(() => {
         if (!messages || users.length < 2) { return; }
-        const newList = messages.map(x => <Message key={x.id} chat={x} user={users.find(y => y.uid === x.creatorId) as IUser} />)
+        const newList = messages.map(x => <ChatItem key={x.id} chat={x} user={users.find(y => y.uid === x.creatorId) as IUser} />)
         setList(newList);
     }, [messages, users])
 
@@ -61,7 +60,7 @@ const Chat: React.FC = () => {
                     <IonTitle className="chat-title">{users.map(user => `${user.firstName} ${user.lastName}`).join(', ')}</IonTitle>
                 </IonToolbar>
             </IonHeader>
-            <IonList>
+            <IonList className="chat-list">
                 {list}
                 <div ref={chatListEnd}></div>
             </IonList>

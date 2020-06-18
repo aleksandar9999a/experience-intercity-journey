@@ -18,28 +18,27 @@ import './theme/variables.css';
 import './App.css';
 import Page from './pages/Page';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, firestore } from './config/firebase';
+import { auth } from './config/firebase';
 import IUser from './interfaces/IUser';
 import { submitMessage } from './services/toast';
-
+import { getUserdata } from './services';
 
 const App: React.FC = () => {
   const [user, loading, error] = useAuthState(auth);
   const [userdata, setUserdata] = useState<IUser>();
 
   useEffect(() => {
-    if (!user) {  return; }
-    firestore.collection('users').doc(user.uid).onSnapshot(doc => {
-      if (!doc.exists) { submitMessage('No information about user!'); return; }
-      setUserdata(doc.data() as IUser);
+    if (!user) { return; }
+    getUserdata(user.uid).onSnapshot(doc => {
+      if (!doc.exists) { submitMessage('User document does not exist!'); return; }
+      setUserdata(doc.data() as IUser)
     })
   }, [user])
 
-  useEffect(() => { 
-    if(!userdata) { return; }
-    document.body.classList.toggle('dark-mode', userdata.darkMode); 
+  useEffect(() => {
+    if (!userdata) { return; }
+    document.body.classList.toggle('dark-mode', userdata.darkMode);
   }, [userdata])
-
 
   if (loading) {
     return (

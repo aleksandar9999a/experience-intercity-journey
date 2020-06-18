@@ -5,6 +5,7 @@ import { submitMessage } from '../../services/toast';
 import TRegisterState from '../../types/TRegisterState';
 import { submitRegistered } from '../../services/auth';
 import './style.css';
+import { Redirect } from 'react-router';
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -13,6 +14,7 @@ const Register: React.FC = () => {
   const [city, setCity] = useState<string>('');
   const [firstName, setFirstName] = useState<string>('');
   const [lastName, setLastName] = useState<string>('');
+  const [redirect, setRedirect] = useState<boolean>(false);
 
   function validate() {
     if (!isEmail(email)) { submitMessage('Email format is invalid!'); return false; }
@@ -38,13 +40,19 @@ const Register: React.FC = () => {
     submitMessage('Invalid input format!');
   }
 
-  function submit() { if (!validate()) { return; } submitRegistered({ email, password, city, firstName, lastName }); }
+  function submit() {
+    if (!validate()) { return; }
+    submitRegistered({ email, password, city, firstName, lastName }).then(() => setRedirect(true));
+  }
+
   function handleEmail(e: any) { handleChanges('email', e.target.value); }
   function handlePassword(e: any) { handleChanges('password', e.target.value); }
   function handleRePassword(e: any) { handleChanges('rePassword', e.target.value); }
   function handleCity(e: any) { handleChanges('city', e.target.value); }
   function handleFirstName(e: any) { handleChanges('firstName', e.target.value); }
   function handleLastName(e: any) { handleChanges('lastName', e.target.value); }
+
+  if (redirect) { return <Redirect to="/login" /> }
 
   return (
     <div className="register-page">

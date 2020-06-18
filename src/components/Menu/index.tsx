@@ -3,13 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import menu_config from '../../config/menu_config';
 import MenuItem from '../MenuItem';
-import './style.css';
 import { chevronBackOutline, chevronBackSharp } from 'ionicons/icons';
 import { logOut } from './../../services/auth';
 import assets from './../../config/assets';
 import IMenu from '../../interfaces/IMenu';
 import { Redirect } from 'react-router';
-
+import './style.css';
 
 const Menu: React.FC<IMenu> = ({ firstName = 'unknown', lastName = 'unknown', image = assets.anonym }) => {
   const location = useLocation();

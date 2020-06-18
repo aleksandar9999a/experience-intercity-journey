@@ -4,15 +4,14 @@ import { auth, firestore } from './../../config/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import IPublication from '../../interfaces/IPublication';
 import IPixabayImage from '../../interfaces/IPixabayImage';
-import { getImageByPlace, setPublication, deletePublication, getUserdata, openMessageBox } from '../../services';
-import './style.css';
+import { getImageByPlace, setPublication, deletePublication, getUserdata, openChatByMembers } from '../../services';
 import { IonItem, IonLabel, IonInput, IonDatetime, IonSelect, IonSelectOption, IonButton } from '@ionic/react';
 import TCreateState from '../../types/TCreateState';
 import { submitMessage } from '../../services/toast';
 import isAfter from 'validator/lib/isAfter';
 import IUser from '../../interfaces/IUser';
 import assets from '../../config/assets';
-
+import './style.css';
 
 const Details: React.FC = () => {
     const [user] = useAuthState(auth);
@@ -28,6 +27,8 @@ const Details: React.FC = () => {
     const [type, setType] = useState<string>('');
     const [creatorId, setCreatorId] = useState<string | undefined>('');
     const [creatorData, setCreatorData] = useState<IUser>();
+
+    const [redirectToChat, setRedirectChat] = useState<string>();
 
     function handleChanges(type: string, value: string) {
         const types: TCreateState = {
@@ -86,16 +87,12 @@ const Details: React.FC = () => {
     }, [creatorId])
 
     function openChatBox() { 
-        if(!creatorId || !creatorData) { return; } 
-        openMessageBox({ 
-            members: [creatorId], 
-            firstName: creatorData.firstName,
-            lastName: creatorData.lastName,
-            to: to
-        }); 
+        if(!creatorId || !creatorData || !user) { return; } 
+        openChatByMembers([user.uid, creatorId]).then(data => setRedirectChat(data.id));
     }
 
     if (redirect) { return <Redirect exact to="/search" /> }
+    if (!!redirectToChat) { return <Redirect exact to={`/chat/${redirectToChat}`}/> }
 
     return (
         <div>

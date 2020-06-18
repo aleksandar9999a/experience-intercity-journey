@@ -2,7 +2,7 @@ import { firestore, auth } from "../config/firebase";
 import { submitMessage } from "./toast";
 import IField from "../interfaces/IField";
 
-export function updateOneField(collection: string, doc: string, field: string, value: string | boolean) {
+export function updateOneField(collection: string, doc: string, field: string, value: string | boolean | Date) {
     return firestore.collection(collection).doc(doc).update({ [field]: value });
 }
 
@@ -16,7 +16,7 @@ export function updateOneFieldFromMyProfile(field: string, value: string | boole
 
 export function updateMultiplyFieldsFromMyProfile(fields: IField[]) {
     return Promise
-    .all(fields.map(field => updateOneFieldFromMyProfile(field.field, field.value)))
-    .then(() => submitMessage('Successful Updated!'))
-    .catch(err => submitMessage(err.message))
+        .all(fields.map(field => updateOneFieldFromMyProfile(field.field, field.value)))
+        .then(() => submitMessage('Successful Updated!'))
+        .catch(err => submitMessage(err.message))
 }

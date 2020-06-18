@@ -3,10 +3,10 @@ import { useDocument } from 'react-firebase-hooks/firestore';
 import { getUserdata, uploadImage, updateOneFieldFromMyProfile, updateMultiplyFieldsFromMyProfile } from '../../services';
 import { IonLoading, IonItem, IonLabel, IonInput, IonToggle, IonButton } from '@ionic/react';
 import IUser from '../../interfaces/IUser';
-import './style.css';
 import assets from '../../config/assets';
 import { submitMessage } from '../../services/toast';
 import TProfileState from '../../types/TProfileState';
+import './style.css';
 
 const MyProfile: React.FC<{ uid: string }> = ({ uid }) => {
     const [value, loading, error] = useDocument(getUserdata(uid))

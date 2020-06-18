@@ -7,7 +7,7 @@ export const Toast: React.FC = () => {
   const [state, setState] = useState<IToastStore>();
 
   useEffect(() => {
-    const sub = getToastStore().subscribe(data => setState(data));
+    const sub = getToastStore().subscribe(setState);
     return () => { sub.unsubscribe(); }
   }, [])
 
