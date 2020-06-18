@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { IonItem, IonLabel } from '@ionic/react';
+import { IonItem, IonLabel, IonAvatar } from '@ionic/react';
 import IPublication from '../../interfaces/IPublication';
-import './style.css';
 import { getImageByPlace } from '../../services';
 import IPixabayImage from '../../interfaces/IPixabayImage';
 
@@ -19,17 +18,17 @@ const PublicationListItem: React.FC<{ data: IPublication }> = ({ data }) => {
 
     return (
         <IonItem routerLink={`/details/${data.id}`}>
-            <div className="list-item-first">
-                {!!image && <img src={image?.previewURL} className="list-item-preview-img" alt="preview-img" />}
-            </div>
-            <div className="list-item-second">
+            <IonAvatar slot="start">
+                {!!image && <img src={image?.previewURL} alt="preview-img" />}
+            </IonAvatar>
+            <IonLabel>
                 <IonLabel>From: {data.from}</IonLabel>
                 <IonLabel>To: {data.to}</IonLabel>
-            </div>
-            <div className="list-item-third">
+            </IonLabel>
+            <IonLabel>
                 <IonLabel>Type: {data.type}</IonLabel>
                 <IonLabel>Date: {date}</IonLabel>
-            </div>
+            </IonLabel>
         </IonItem>
     );
 };
