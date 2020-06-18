@@ -1,4 +1,4 @@
-import { searchSharp, searchOutline, personOutline, personSharp, chatbubbleEllipsesOutline, chatbubbleEllipsesSharp } from 'ionicons/icons';
+import { searchSharp, searchOutline, personOutline, personSharp, chatbubbleEllipsesOutline, chatbubbleEllipsesSharp, addOutline, addSharp } from 'ionicons/icons';
 import IAppPage from '../interfaces/IAppPage';
 
 const menu_config: IAppPage[] = [
@@ -7,6 +7,12 @@ const menu_config: IAppPage[] = [
         url: '/search',
         iosIcon: searchOutline,
         mdIcon: searchSharp
+    },
+    {
+        title: 'Create Publication',
+        url: '/createPublication',
+        iosIcon: addOutline,
+        mdIcon: addSharp
     },
     {
         title: 'Messages',
