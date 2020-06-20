@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { IonPage, IonItem, IonLabel, IonInput, IonToggle, IonButton, IonContent } from '@ionic/react';
+import { IonPage, IonItem, IonLabel, IonInput, IonToggle, IonButton, IonContent, IonList } from '@ionic/react';
 import { uploadImage, updateOneFieldFromMyProfile, updateMultiplyFieldsFromMyProfile, myUserdata } from '../../services';
 import TProfileState from '../../types/TProfileState';
 import { submitMessage } from '../../services/toast';
@@ -99,7 +99,7 @@ const Account: React.FC = () => {
         <div className="profile-img">
           <img src={image || assets.anonym} alt="preview" />
         </div>
-        <div>
+        <IonList>
           <IonItem>
             <IonLabel>Select new profile image!</IonLabel>
             <input className="ion-input custom-input" type="file" onChange={handleFile} />
@@ -120,7 +120,7 @@ const Account: React.FC = () => {
             <IonLabel>Dark Mode</IonLabel>
             <IonToggle color="primary" checked={darkMode} onIonChange={handleDarkMode} />
           </IonItem>
-        </div>
+        </IonList>
         <div className="profile-edit-btn-wrapper">
           <IonButton className="profile-edit-btn" color="success" fill="outline" onClick={submit}>Submit</IonButton>
         </div>

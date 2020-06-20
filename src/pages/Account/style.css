@@ -1,15 +1,6 @@
 .profile-img {
-    height: 40vh;
-    width: 100vw;
-    display: flex;
-}
-
-.profile-img img {
+    height: 50vh;
     object-fit: cover;
-    margin: auto;
-    height: 30vh;
-    width: 30vh;
-    border-radius: 50%;
 }
 
 .custom-input {
