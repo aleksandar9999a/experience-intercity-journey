@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { IonLoading, IonPage, IonItem, IonLabel, IonInput, IonToggle, IonButton } from '@ionic/react';
+import { IonPage, IonItem, IonLabel, IonInput, IonToggle, IonButton, IonContent } from '@ionic/react';
 import { uploadImage, updateOneFieldFromMyProfile, updateMultiplyFieldsFromMyProfile, myUserdata } from '../../services';
 import TProfileState from '../../types/TProfileState';
 import { submitMessage } from '../../services/toast';
 import assets from '../../config/assets';
 import './style.css';
+import LoadingPage from '../LoadingPage';
 
 const Account: React.FC = () => {
   const [firstName, setFirstName] = useState<string>('');
@@ -90,38 +91,40 @@ const Account: React.FC = () => {
     ]).finally(() => setUploading(false));
   }
 
-  if (uploading) { return <IonLoading cssClass='my-custom-class' isOpen={uploading} message={'Please wait...'} /> }
+  if (uploading) { return <LoadingPage isOpen={uploading} /> }
 
   return (
     <IonPage>
-      <div className="profile-img">
-        <img src={image || assets.anonym} alt="preview" />
-      </div>
-      <div>
-        <IonItem>
-          <IonLabel>Select new profile image!</IonLabel>
-          <input className="ion-input custom-input" type="file" onChange={handleFile} />
-        </IonItem>
-        <IonItem>
-          <IonLabel position="floating">First Name</IonLabel>
-          <IonInput type="text" value={firstName} onIonChange={handleFirstName} />
-        </IonItem>
-        <IonItem>
-          <IonLabel position="floating">Last Name</IonLabel>
-          <IonInput type="text" value={lastName} onIonChange={handleLastName} />
-        </IonItem>
-        <IonItem>
-          <IonLabel position="floating">City</IonLabel>
-          <IonInput type="text" value={city} onIonChange={handleCity} />
-        </IonItem>
-        <IonItem>
-          <IonLabel>Dark Mode</IonLabel>
-          <IonToggle color="primary" checked={darkMode} onIonChange={handleDarkMode} />
-        </IonItem>
-      </div>
-      <div className="profile-edit-btn-wrapper">
-        <IonButton className="profile-edit-btn" color="success" fill="outline" onClick={submit}>Submit</IonButton>
-      </div>
+      <IonContent>
+        <div className="profile-img">
+          <img src={image || assets.anonym} alt="preview" />
+        </div>
+        <div>
+          <IonItem>
+            <IonLabel>Select new profile image!</IonLabel>
+            <input className="ion-input custom-input" type="file" onChange={handleFile} />
+          </IonItem>
+          <IonItem>
+            <IonLabel position="floating">First Name</IonLabel>
+            <IonInput type="text" value={firstName} onIonChange={handleFirstName} />
+          </IonItem>
+          <IonItem>
+            <IonLabel position="floating">Last Name</IonLabel>
+            <IonInput type="text" value={lastName} onIonChange={handleLastName} />
+          </IonItem>
+          <IonItem>
+            <IonLabel position="floating">City</IonLabel>
+            <IonInput type="text" value={city} onIonChange={handleCity} />
+          </IonItem>
+          <IonItem>
+            <IonLabel>Dark Mode</IonLabel>
+            <IonToggle color="primary" checked={darkMode} onIonChange={handleDarkMode} />
+          </IonItem>
+        </div>
+        <div className="profile-edit-btn-wrapper">
+          <IonButton className="profile-edit-btn" color="success" fill="outline" onClick={submit}>Submit</IonButton>
+        </div>
+      </IonContent>
     </IonPage>
   );
 };
