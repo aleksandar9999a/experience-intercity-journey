@@ -1,29 +1,26 @@
 import React, { useEffect } from 'react';
-import { IonApp, IonRouterOutlet, IonContent } from '@ionic/react';
+import { IonApp, IonContent } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { Redirect, Route } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from './config/firebase';
-import { getUserdata } from './services';
-import route_config from './config/route_config';
+import { myUserdata } from './services';
 import MenuContainer from './containers/MenuContainer';
 import ErrorPage from './pages/ErrorPage';
 import LoadingPage from './pages/LoadingPage';
+import Outlet from './containers/Outlet';
 import './Styles';
 
-const routeList = route_config.map(({ path, component }, index) => <Route key={index} path={path} component={component} exact />)
-
 const App: React.FC = () => {
-  const [user, loading, error] = useAuthState(auth);
+  const [_, loading, error] = useAuthState(auth);
 
   useEffect(() => {
-    if (!user) { return; }
-    getUserdata(user.uid).onSnapshot(doc => {
-      const data = doc.data();
-      if (!data) { return; }
-      document.body.classList.toggle('dark-mode', data.darkMode);
+    const sub = myUserdata.subscribe((userdata) => {
+      if (!userdata) { return; };
+      document.body.classList.toggle('dark-mode', userdata.darkMode);
     })
-  }, [user])
+
+    return () => { sub.unsubscribe(); }
+  }, [])
 
   if (loading) { return <LoadingPage isOpen={loading} /> }
   if (error) { return <ErrorPage message={error.message} /> }
@@ -33,10 +30,7 @@ const App: React.FC = () => {
       <IonReactRouter>
         <IonContent>
           <MenuContainer />
-          <IonRouterOutlet id="main">
-            {routeList}
-            <Redirect exact path="/" to={!!user ? '/search' : '/login'} />
-          </IonRouterOutlet>
+          <Outlet />
         </IonContent>
       </IonReactRouter>
     </IonApp>
