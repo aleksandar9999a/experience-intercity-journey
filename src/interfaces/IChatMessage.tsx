@@ -3,5 +3,6 @@ import IUser from "./IUser";
 
 export default interface IChatMessage {
     chat: IMessage
-    user: IUser
+    user: IUser,
+    slot: string
 }
