@@ -15,7 +15,7 @@ const MenuContainer: React.FC = () => {
         return () => { sub.unsubscribe(); }
     }, [])
 
-    if (!user) { return null; }
+    if (!user) { return <Toast />; }
 
     return (
         <div>
