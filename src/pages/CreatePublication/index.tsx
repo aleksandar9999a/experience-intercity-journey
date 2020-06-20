@@ -6,7 +6,7 @@ import { submitMessage } from '../../services/toast';
 import isAfter from 'validator/lib/isAfter';
 import { setPublication } from '../../services';
 import assets from './../../config/assets';
-import { Redirect } from 'react-router';
+import { useHistory } from 'react-router';
 import './style.css';
 
 const CreatePublication: React.FC = () => {
@@ -15,7 +15,7 @@ const CreatePublication: React.FC = () => {
   const [date, setDate] = useState<string>('');
   const [time, setTime] = useState<string>('');
   const [type, setType] = useState<string>('');
-  const [redirect, setRedirect] = useState<boolean>(false);
+  const history = useHistory();
 
   function handleChanges(type: string, value: string) {
     const types: TCreateState = {
@@ -44,9 +44,7 @@ const CreatePublication: React.FC = () => {
     return true;
   }
 
-  function submit() { if (!validate()) { return; } setPublication({ from, to, date, time, type }).then(() => setRedirect(true)); }
-
-  if (redirect) { return <Redirect exact to="/search" /> }
+  function submit() { if (!validate()) { return; } setPublication({ from, to, date, time, type }).then(() => history.push("/search")); }
 
   return (
     <IonPage>

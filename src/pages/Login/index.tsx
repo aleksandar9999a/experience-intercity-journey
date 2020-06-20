@@ -3,15 +3,16 @@ import { IonInput, IonLabel, IonItem, IonButton, IonIcon, IonPage, IonContent, I
 import { submitLogin } from '../../services/auth';
 import { submitMessage } from '../../services/toast';
 import isEmail from 'validator/lib/isEmail';
-import { Redirect } from 'react-router';
 import { arrowForward } from 'ionicons/icons';
 import Logo from '../../components/Logo';
+import { useHistory } from 'react-router';
 import './style.css';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [redirect, setRedirect] = useState<boolean>(false);
+
+  const history = useHistory();
 
   function validate() {
     if (!isEmail(email)) {
@@ -25,11 +26,9 @@ const Login: React.FC = () => {
     return true;
   }
 
-  function submit() { if (!validate()) { return; } submitLogin(email, password).then(res => setRedirect(true)); }
+  function submit() { if (!validate()) { return; } submitLogin(email, password).then(res => history.push(`/search`)); }
   function handleEmail(e: any) { setEmail(e.target.value); }
   function handlePassword(e: any) { setPassword(e.target.value); }
-
-  if (redirect) { return <Redirect exact to="/search" /> }
 
   return (
     <IonPage>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Redirect } from 'react-router';
+import { useParams, useHistory } from 'react-router';
 import { auth, firestore } from './../../config/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import IPublication from '../../interfaces/IPublication';
@@ -18,7 +18,6 @@ const Details: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const [image, setImage] = useState<IPixabayImage>();
     const [isAuth, setIsAuth] = useState<boolean>(false);
-    const [redirect, setRedirect] = useState<boolean>(false);
 
     const [from, setFrom] = useState<string>('');
     const [to, setTo] = useState<string>('');
@@ -28,7 +27,7 @@ const Details: React.FC = () => {
     const [creatorId, setCreatorId] = useState<string | undefined>('');
     const [creatorData, setCreatorData] = useState<IUser>();
 
-    const [redirectToChat, setRedirectChat] = useState<string>();
+    const history = useHistory();
 
     function handleChanges(type: string, value: string) {
         const types: TCreateState = {
@@ -60,7 +59,7 @@ const Details: React.FC = () => {
     function submit() { if (!validate()) { return; } setPublication({ id, creatorId, from, to, date, time, type }); }
     function remove() {
         if (!isAuth) { submitMessage('Sorry, but this post is not your. You can not delete it!'); return; }
-        deletePublication(id).then(() => setRedirect(true));
+        deletePublication(id).then(() => history.push(`/search`));
     }
 
     useEffect(() => {
@@ -88,11 +87,8 @@ const Details: React.FC = () => {
 
     function openChatBox() {
         if (!creatorId || !creatorData || !user) { return; }
-        openChatByMembers([user.uid, creatorId]).then(data => setRedirectChat(data.id));
+        openChatByMembers([user.uid, creatorId]).then(data => history.push(`/chat/${data.id}`));
     }
-
-    if (redirect) { return <Redirect exact to="/search" /> }
-    if (!!redirectToChat) { return <Redirect exact to={`/chat/${redirectToChat}`} /> }
 
     return (
         <IonPage>
