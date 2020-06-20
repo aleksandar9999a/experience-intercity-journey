@@ -5,7 +5,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import IPublication from '../../interfaces/IPublication';
 import IPixabayImage from '../../interfaces/IPixabayImage';
 import { getImageByPlace, setPublication, deletePublication, getUserdata, openChatByMembers } from '../../services';
-import { IonItem, IonLabel, IonInput, IonDatetime, IonSelect, IonSelectOption, IonButton } from '@ionic/react';
+import { IonItem, IonLabel, IonInput, IonDatetime, IonSelect, IonSelectOption, IonButton, IonPage } from '@ionic/react';
 import TCreateState from '../../types/TCreateState';
 import { submitMessage } from '../../services/toast';
 import isAfter from 'validator/lib/isAfter';
@@ -86,16 +86,16 @@ const Details: React.FC = () => {
         getUserdata(creatorId).onSnapshot(doc => { setCreatorData(doc.data() as IUser); });
     }, [creatorId])
 
-    function openChatBox() { 
-        if(!creatorId || !creatorData || !user) { return; } 
+    function openChatBox() {
+        if (!creatorId || !creatorData || !user) { return; }
         openChatByMembers([user.uid, creatorId]).then(data => setRedirectChat(data.id));
     }
 
     if (redirect) { return <Redirect exact to="/search" /> }
-    if (!!redirectToChat) { return <Redirect exact to={`/chat/${redirectToChat}`}/> }
+    if (!!redirectToChat) { return <Redirect exact to={`/chat/${redirectToChat}`} /> }
 
     return (
-        <div>
+        <IonPage>
             <div className="details-preview">
                 {!!image && <img src={image.largeImageURL} alt="preview" />}
             </div>
@@ -140,7 +140,7 @@ const Details: React.FC = () => {
                     <IonButton color="success" fill="solid" onClick={openChatBox}>Write message</IonButton>
                 </div>
             </IonItem>}
-        </div>
+        </IonPage>
     );
 };
 

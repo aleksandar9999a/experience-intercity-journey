@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IonItem, IonLabel, IonInput, IonButton } from '@ionic/react';
+import { IonItem, IonLabel, IonInput, IonButton, IonPage } from '@ionic/react';
 import isEmail from 'validator/lib/isEmail';
 import { submitMessage } from '../../services/toast';
 import TRegisterState from '../../types/TRegisterState';
@@ -55,42 +55,44 @@ const Register: React.FC = () => {
   if (redirect) { return <Redirect to="/login" /> }
 
   return (
-    <div className="register-page">
-      <div className="register-inputs-wrapper">
-        <IonItem color="light">
-          <IonLabel position="floating">Email</IonLabel>
-          <IonInput type="email" pattern="email" value={email} onIonChange={handleEmail}></IonInput>
-        </IonItem>
-        <IonItem color="light">
-          <IonLabel position="floating">Password</IonLabel>
-          <IonInput type="password" value={password} onIonChange={handlePassword}></IonInput>
-        </IonItem>
-        <IonItem color="light">
-          <IonLabel position="floating">Repeat Password</IonLabel>
-          <IonInput type="password" value={rePassword} onIonChange={handleRePassword}></IonInput>
-        </IonItem>
-        <IonItem color="light">
-          <IonLabel position="floating">City</IonLabel>
-          <IonInput type="text" value={city} onIonChange={handleCity}></IonInput>
-        </IonItem>
-        <IonItem color="light">
-          <IonLabel position="floating">First Name</IonLabel>
-          <IonInput type="text" value={firstName} onIonChange={handleFirstName}></IonInput>
-        </IonItem>
-        <IonItem color="light">
-          <IonLabel position="floating">Last Name</IonLabel>
-          <IonInput type="text" value={lastName} onIonChange={handleLastName}></IonInput>
-        </IonItem>
+    <IonPage>
+      <div className="register-page">
+        <div className="register-inputs-wrapper">
+          <IonItem color="light">
+            <IonLabel position="floating">Email</IonLabel>
+            <IonInput type="email" pattern="email" value={email} onIonChange={handleEmail}></IonInput>
+          </IonItem>
+          <IonItem color="light">
+            <IonLabel position="floating">Password</IonLabel>
+            <IonInput type="password" value={password} onIonChange={handlePassword}></IonInput>
+          </IonItem>
+          <IonItem color="light">
+            <IonLabel position="floating">Repeat Password</IonLabel>
+            <IonInput type="password" value={rePassword} onIonChange={handleRePassword}></IonInput>
+          </IonItem>
+          <IonItem color="light">
+            <IonLabel position="floating">City</IonLabel>
+            <IonInput type="text" value={city} onIonChange={handleCity}></IonInput>
+          </IonItem>
+          <IonItem color="light">
+            <IonLabel position="floating">First Name</IonLabel>
+            <IonInput type="text" value={firstName} onIonChange={handleFirstName}></IonInput>
+          </IonItem>
+          <IonItem color="light">
+            <IonLabel position="floating">Last Name</IonLabel>
+            <IonInput type="text" value={lastName} onIonChange={handleLastName}></IonInput>
+          </IonItem>
+        </div>
+        <div className="register-btn-wrapper">
+          <IonButton fill="outline" color="success" className="register-btn" onClick={submit}>Registered</IonButton>
+        </div>
+        <div className="register-route-wrapper">
+          <IonItem routerLink="/login" className="register-route" color="light">
+            <IonLabel color="secondary">Do you have an account? Login</IonLabel>
+          </IonItem>
+        </div>
       </div>
-      <div className="register-btn-wrapper">
-        <IonButton fill="outline" color="success" className="register-btn" onClick={submit}>Registered</IonButton>
-      </div>
-      <div className="register-route-wrapper">
-        <IonItem routerLink="/login" className="register-route" color="light">
-          <IonLabel color="secondary">Do you have an account? Login</IonLabel>
-        </IonItem>
-      </div>
-    </div>
+    </IonPage>
   );
 };
 

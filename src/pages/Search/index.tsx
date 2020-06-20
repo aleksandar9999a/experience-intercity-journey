@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { IonSearchbar, IonToolbar, IonList, IonSegment, IonSegmentButton, IonLabel, IonSelect, IonSelectOption, IonHeader, IonFab, IonFabButton, IonIcon } from '@ionic/react';
+import { IonSearchbar, IonToolbar, IonList, IonSegment, IonSegmentButton, IonLabel, IonSelect, IonSelectOption, IonHeader, IonFab, IonFabButton, IonIcon, IonPage, IonContent } from '@ionic/react';
 import { getPublications } from '../../services';
 import IPublication from '../../interfaces/IPublication';
 import PublicationListItem from '../../components/PublicationListItem';
@@ -38,35 +38,37 @@ const Search: React.FC = () => {
   function handleRefresh() { setItems([]); getManuallyPublications(); }
 
   return (
-    <div>
-      <IonHeader>
-        <IonToolbar>
-          <IonSearchbar className="custom-searchbar" placeholder="Where will you travel?" inputmode="text" showCancelButton="focus" debounce={1000} onIonChange={handleSearch}></IonSearchbar>
-        </IonToolbar>
-        <IonToolbar>
-          <IonSegment onIonChange={handleSearchBy} value={searchBy}>
-            <IonSegmentButton value="from">
-              <IonLabel>From</IonLabel>
-            </IonSegmentButton>
-            <IonSegmentButton value="to">
-              <IonLabel>To</IonLabel>
-            </IonSegmentButton>
-          </IonSegment>
-        </IonToolbar>
-        <IonToolbar>
-          <IonSelect interface="action-sheet" onIonChange={handleOpStr} value={opStr} className="search-options-select">
-            <IonSelectOption value="==" className="search-option">Exactly entered text</IonSelectOption>
-            <IonSelectOption value=">=" className="search-option">Similar to the entered text</IonSelectOption>
-          </IonSelect>
-        </IonToolbar>
-      </IonHeader>
-      <IonList>{list}</IonList>
-      <IonFab vertical="bottom" horizontal="start">
-        <IonFabButton onClick={handleRefresh}>
-          <IonIcon ios={refreshOutline} md={refreshOutline}></IonIcon>
-        </IonFabButton>
-      </IonFab>
-    </div>
+    <IonPage>
+      <IonContent>
+        <IonHeader>
+          <IonToolbar>
+            <IonSearchbar placeholder="Where will you travel?" inputmode="text" showCancelButton="focus" debounce={1000} onIonChange={handleSearch}></IonSearchbar>
+          </IonToolbar>
+          <IonToolbar>
+            <IonSegment onIonChange={handleSearchBy} value={searchBy}>
+              <IonSegmentButton value="from">
+                <IonLabel>From</IonLabel>
+              </IonSegmentButton>
+              <IonSegmentButton value="to">
+                <IonLabel>To</IonLabel>
+              </IonSegmentButton>
+            </IonSegment>
+          </IonToolbar>
+          <IonToolbar>
+            <IonSelect interface="action-sheet" onIonChange={handleOpStr} value={opStr} className="search-options-select">
+              <IonSelectOption value="==" className="search-option">Exactly entered text</IonSelectOption>
+              <IonSelectOption value=">=" className="search-option">Similar to the entered text</IonSelectOption>
+            </IonSelect>
+          </IonToolbar>
+        </IonHeader>
+        <IonList>{list}</IonList>
+        <IonFab vertical="bottom" horizontal="start">
+          <IonFabButton onClick={handleRefresh}>
+            <IonIcon ios={refreshOutline} md={refreshOutline}></IonIcon>
+          </IonFabButton>
+        </IonFab>
+      </IonContent>
+    </IonPage>
   );
 };
 

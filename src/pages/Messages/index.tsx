@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getAllMessages } from '../../services';
-import { IonList, IonListHeader } from '@ionic/react';
+import { IonList, IonListHeader, IonPage, IonContent } from '@ionic/react';
 import './style.css';
 import MessageItem from '../../components/MessageItem';
 
@@ -16,12 +16,16 @@ const Messages: React.FC = () => {
     }, [])
 
     return (
-        <IonList>
-            <IonListHeader>
-                <h2 className="chat-box-title">Messages</h2>
-            </IonListHeader>
-            {list}
-        </IonList>
+        <IonPage>
+            <IonContent>
+                <IonList>
+                    <IonListHeader>
+                        <h2 className="chat-box-title">Messages</h2>
+                    </IonListHeader>
+                    {list}
+                </IonList>
+            </IonContent>
+        </IonPage>
     );
 };
 

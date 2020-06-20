@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IonInput, IonLabel, IonItem, IonButton, IonIcon } from '@ionic/react';
+import { IonInput, IonLabel, IonItem, IonButton, IonIcon, IonPage, IonContent } from '@ionic/react';
 import './style.css';
 import { submitLogin } from '../../services/auth';
 import { submitMessage } from '../../services/toast';
@@ -32,35 +32,39 @@ const Login: React.FC = () => {
   if (redirect) { return <Redirect exact to="/search" /> }
 
   return (
-    <div className="login-page">
-      <div className="login-logo-wrapper">
-        <img src={assets.kindOfTransport} className="login-logo" alt="logo" />
-        <div className="login-logo-text">
-          <h1>InterCity Journey</h1>
-        </div>
-      </div>
-      <div className="login-inputs-wrapper">
-        <IonItem color="light">
-          <IonLabel position="floating">Email</IonLabel>
-          <IonInput type="email" value={email} onIonChange={handleEmail}></IonInput>
-        </IonItem>
-        <IonItem color="light">
-          <IonLabel position="floating">Password</IonLabel>
-          <IonInput type="password" value={password} onIonChange={handlePassword}></IonInput>
-        </IonItem>
-      </div>
-      <div className="login-button-wrapper">
-        <IonButton color="success" fill="outline" className="login-btn" onClick={submit}>
-          LogIn
+    <IonPage>
+      <IonContent>
+        <div className="login-page">
+          <div className="login-logo-wrapper">
+            <img src={assets.kindOfTransport} className="login-logo" alt="logo" />
+            <div className="login-logo-text">
+              <h1>InterCity Journey</h1>
+            </div>
+          </div>
+          <div className="login-inputs-wrapper">
+            <IonItem color="light">
+              <IonLabel position="floating">Email</IonLabel>
+              <IonInput type="email" value={email} onIonChange={handleEmail}></IonInput>
+            </IonItem>
+            <IonItem color="light">
+              <IonLabel position="floating">Password</IonLabel>
+              <IonInput type="password" value={password} onIonChange={handlePassword}></IonInput>
+            </IonItem>
+          </div>
+          <div className="login-button-wrapper">
+            <IonButton color="success" fill="outline" className="login-btn" onClick={submit}>
+              LogIn
             <IonIcon slot="end" ios={arrowForward} md={arrowForward} />
-        </IonButton>
-      </div>
-      <div className="register-route-wrapper">
-        <IonItem routerLink="/register" className="register-route">
-          <IonLabel color="secondary">Don't have an account? Register</IonLabel>
-        </IonItem>
-      </div>
-    </div>
+            </IonButton>
+          </div>
+          <div className="register-route-wrapper">
+            <IonItem routerLink="/register" className="register-route">
+              <IonLabel color="secondary">Don't have an account? Register</IonLabel>
+            </IonItem>
+          </div>
+        </div>
+      </IonContent>
+    </IonPage>
   );
 };
 

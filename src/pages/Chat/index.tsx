@@ -5,7 +5,7 @@ import { getChat, getMessages, getMultiplyUserdata, submitNewMessage } from '../
 import IUser from '../../interfaces/IUser';
 import IChatItem from '../../interfaces/IChatItem';
 import IMessage from '../../interfaces/IMessage';
-import { IonList, IonLoading, IonItem, IonInput, IonIcon, IonHeader, IonToolbar, IonTitle } from '@ionic/react';
+import { IonList, IonLoading, IonItem, IonInput, IonIcon, IonHeader, IonToolbar, IonTitle, IonPage, IonContent } from '@ionic/react';
 import { sendOutline } from 'ionicons/icons';
 import ChatItem from '../../components/ChatItem';
 import './style.css';
@@ -54,21 +54,23 @@ const Chat: React.FC = () => {
     }
 
     return (
-        <div className="chat">
-            <IonHeader className="chat-header" >
-                <IonToolbar>
-                    <IonTitle className="chat-title">{users.map(user => `${user.firstName} ${user.lastName}`).join(', ')}</IonTitle>
-                </IonToolbar>
-            </IonHeader>
-            <IonList className="chat-list">
-                {list}
-                <div ref={chatListEnd}></div>
-            </IonList>
-            <IonItem className="message-input" color="primary">
-                <IonInput type="text" placeholder="Write message!" value={newMessage} onIonChange={handleNewMessage} />
-                <IonIcon md={sendOutline} ios={sendOutline} onClick={sendMessage} />
-            </IonItem>
-        </div>
+        <IonPage className="chat">
+            <IonContent>
+                <IonHeader className="chat-header" >
+                    <IonToolbar>
+                        <IonTitle className="chat-title">{users.map(user => `${user.firstName} ${user.lastName}`).join(', ')}</IonTitle>
+                    </IonToolbar>
+                </IonHeader>
+                <IonList className="chat-list">
+                    {list}
+                    <div ref={chatListEnd}></div>
+                </IonList>
+                <IonItem className="message-input" color="primary">
+                    <IonInput type="text" placeholder="Write message!" value={newMessage} onIonChange={handleNewMessage} />
+                    <IonIcon md={sendOutline} ios={sendOutline} onClick={sendMessage} />
+                </IonItem>
+            </IonContent>
+        </IonPage>
     );
 };
 

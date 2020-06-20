@@ -1,6 +1,6 @@
 import Menu from './components/Menu';
 import React, { useEffect, useState } from 'react';
-import { IonApp, IonRouterOutlet, IonSplitPane, IonPage, IonContent, IonLoading } from '@ionic/react';
+import { IonApp, IonRouterOutlet, IonPage, IonContent, IonLoading } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
 
@@ -16,12 +16,16 @@ import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import './App.css';
-import Page from './pages/Page';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from './config/firebase';
 import IUser from './interfaces/IUser';
 import { submitMessage } from './services/toast';
 import { getUserdata } from './services';
+import route_config from './config/route_config';
+import { Toast } from './components/Toast';
+import FabMenu from './components/FabMenu';
+
+const routeList = route_config.map(({ path, component }, index) => <Route key={index} path={path} component={component} exact />)
 
 const App: React.FC = () => {
   const [user, loading, error] = useAuthState(auth);
@@ -73,14 +77,15 @@ const App: React.FC = () => {
   return (
     <IonApp>
       <IonReactRouter>
-        <IonSplitPane contentId="main">
+        <IonContent>
           {!!userdata && <Menu firstName={userdata.firstName} lastName={userdata.lastName} image={userdata.image} />}
           <IonRouterOutlet id="main">
-            <Route path="/:name" render={() => <Page isAuth={!!user} />} exact />
-            <Route path="/:name/:id" render={() => <Page isAuth={!!user} />} exact />
+            {routeList}
             <Redirect exact path="/" to={!!user ? '/search' : '/login'} />
           </IonRouterOutlet>
-        </IonSplitPane>
+          <FabMenu />
+          <Toast />
+        </IonContent>
       </IonReactRouter>
     </IonApp>
   );
