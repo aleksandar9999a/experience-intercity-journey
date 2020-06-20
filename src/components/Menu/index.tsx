@@ -7,20 +7,18 @@ import { chevronBackOutline, chevronBackSharp } from 'ionicons/icons';
 import { logOut } from './../../services/auth';
 import assets from './../../config/assets';
 import IMenu from '../../interfaces/IMenu';
-import { useHistory } from 'react-router';
 import './style.css';
 
 const Menu: React.FC<IMenu> = ({ firstName = 'unknown', lastName = 'unknown', image = assets.anonym }) => {
   const location = useLocation();
   const [list, setList] = useState<JSX.Element[]>([]);
-  const history = useHistory();
 
   useEffect(() => {
     const newList = menu_config.map((appPage, index) => <MenuItem key={index} page={appPage} location={location} />);
     setList(newList);
   }, [location])
 
-  function out() { logOut().then(() => history.push(`/login`)); }
+  function out() { logOut(); }
 
   return (
     <IonMenu contentId="main" type="overlay">

@@ -5,7 +5,6 @@ import { submitMessage } from '../../services/toast';
 import TRegisterState from '../../types/TRegisterState';
 import { submitRegistered } from '../../services/auth';
 import './style.css';
-import { useHistory } from 'react-router';
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -14,7 +13,6 @@ const Register: React.FC = () => {
   const [city, setCity] = useState<string>('');
   const [firstName, setFirstName] = useState<string>('');
   const [lastName, setLastName] = useState<string>('');
-  const history = useHistory();
 
   function validate() {
     if (!isEmail(email)) { submitMessage('Email format is invalid!'); return false; }
@@ -42,7 +40,7 @@ const Register: React.FC = () => {
 
   function submit() {
     if (!validate()) { return; }
-    submitRegistered({ email, password, city, firstName, lastName }).then(() => history.push(`/login`));
+    submitRegistered({ email, password, city, firstName, lastName });
   }
 
   function handleEmail(e: any) { handleChanges('email', e.target.value); }

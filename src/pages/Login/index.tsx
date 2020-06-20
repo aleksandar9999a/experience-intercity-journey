@@ -5,14 +5,11 @@ import { submitMessage } from '../../services/toast';
 import isEmail from 'validator/lib/isEmail';
 import { arrowForward } from 'ionicons/icons';
 import Logo from '../../components/Logo';
-import { useHistory } from 'react-router';
 import './style.css';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-
-  const history = useHistory();
 
   function validate() {
     if (!isEmail(email)) {
@@ -26,7 +23,7 @@ const Login: React.FC = () => {
     return true;
   }
 
-  function submit() { if (!validate()) { return; } submitLogin(email, password).then(res => history.push(`/search`)); }
+  function submit() { if (!validate()) { return; } submitLogin(email, password); }
   function handleEmail(e: any) { setEmail(e.target.value); }
   function handlePassword(e: any) { setPassword(e.target.value); }
 
