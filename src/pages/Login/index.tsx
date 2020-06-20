@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { IonInput, IonLabel, IonItem, IonButton, IonIcon, IonPage, IonContent } from '@ionic/react';
-import './style.css';
+import { IonInput, IonLabel, IonItem, IonButton, IonIcon, IonPage, IonContent, IonList } from '@ionic/react';
 import { submitLogin } from '../../services/auth';
 import { submitMessage } from '../../services/toast';
 import isEmail from 'validator/lib/isEmail';
 import { Redirect } from 'react-router';
-import assets from '../../config/assets';
 import { arrowForward } from 'ionicons/icons';
+import Logo from '../../components/Logo';
+import './style.css';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -34,35 +34,24 @@ const Login: React.FC = () => {
   return (
     <IonPage>
       <IonContent>
-        <div className="login-page">
-          <div className="login-logo-wrapper">
-            <img src={assets.kindOfTransport} className="login-logo" alt="logo" />
-            <div className="login-logo-text">
-              <h1>InterCity Journey</h1>
-            </div>
-          </div>
-          <div className="login-inputs-wrapper">
-            <IonItem color="light">
-              <IonLabel position="floating">Email</IonLabel>
-              <IonInput type="email" value={email} onIonChange={handleEmail}></IonInput>
-            </IonItem>
-            <IonItem color="light">
-              <IonLabel position="floating">Password</IonLabel>
-              <IonInput type="password" value={password} onIonChange={handlePassword}></IonInput>
-            </IonItem>
-          </div>
-          <div className="login-button-wrapper">
-            <IonButton color="success" fill="outline" className="login-btn" onClick={submit}>
-              LogIn
-            <IonIcon slot="end" ios={arrowForward} md={arrowForward} />
-            </IonButton>
-          </div>
-          <div className="register-route-wrapper">
-            <IonItem routerLink="/register" className="register-route">
-              <IonLabel color="secondary">Don't have an account? Register</IonLabel>
-            </IonItem>
-          </div>
-        </div>
+        <Logo height="50vh" />
+        <IonList className="login-list">
+          <IonItem color="light">
+            <IonLabel position="floating">Email</IonLabel>
+            <IonInput type="email" value={email} onIonChange={handleEmail}></IonInput>
+          </IonItem>
+          <IonItem color="light">
+            <IonLabel position="floating">Password</IonLabel>
+            <IonInput type="password" value={password} onIonChange={handlePassword}></IonInput>
+          </IonItem>
+          <IonButton color="success" fill="outline" className="login-btn" onClick={submit}>
+            LogIn
+              <IonIcon slot="end" ios={arrowForward} md={arrowForward} />
+          </IonButton>
+          <IonItem routerLink="/register" className="register-route">
+            <IonLabel color="secondary">Don't have an account? Register</IonLabel>
+          </IonItem>
+        </IonList>
       </IonContent>
     </IonPage>
   );
