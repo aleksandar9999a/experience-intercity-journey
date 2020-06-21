@@ -16,19 +16,19 @@ const Outlet: React.FC = () => {
     const history = useHistory();
 
     useEffect(() => {
-        if(loading) { return; }
-        
-        if(!user && !unauthorizedRoutes.includes(pathname)) {
+        if (loading) { return; }
+
+        if (!user && !unauthorizedRoutes.includes(pathname)) {
             history.push('/login');
             return;
         }
 
-        if(user && unauthorizedRoutes.includes(pathname)) {
+        if (user && unauthorizedRoutes.includes(pathname)) {
             history.push('/search');
             return;
         }
-        
-    }, [loading, user])
+
+    }, [loading, user, history, pathname, unauthorizedRoutes])
 
     function generateRoute({ path, component }: ICustomRoute, index: number) {
         return <Route key={index} path={path} component={component} exact />
