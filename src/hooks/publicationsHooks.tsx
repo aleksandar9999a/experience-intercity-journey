@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import IPublication from '../interfaces/IPublication';
-import { firestore } from '../config/firebase';
 import IGetPublications from '../interfaces/IGetPublications';
 import { submitError } from '../services/toast';
-import { getPublications } from '../services';
+import { getPublications, getPublication } from '../services';
 
 interface IPublicationState {
     from?: string,
@@ -20,7 +19,7 @@ export function usePublication(id: string) {
     useEffect(() => {
         if (!id) { setPublication(null); return; }
         setloading(true);
-        firestore.collection('publications').doc(id).get().then(doc => {
+        getPublication(id).then(doc => {
             if (!doc.exists) { setPublication(null); return; }
             const data = doc.data() as IPublication;
             setPublication(data);

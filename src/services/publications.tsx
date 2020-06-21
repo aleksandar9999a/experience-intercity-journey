@@ -26,3 +26,7 @@ export function deletePublication(id: string) {
 export function getPublications({ search = '', opStr = '>=', searchBy = 'to' }: IGetPublications) {
     return firestore.collection('publications').where(searchBy, opStr, search).get();
 }
+
+export function getPublication(id: string) {
+    return firestore.collection('publications').doc(id).get();
+}
