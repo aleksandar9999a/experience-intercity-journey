@@ -37,6 +37,7 @@ export function usePublication(id: string) {
 
 export function useAllPublications({ search = '', opStr = '>=', searchBy = 'to' }: IGetPublications) {
     const [publications, setPublication] = useState<IPublication[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
     const [searchOp, setSearchOp] = useState<IGetPublications>({ search, opStr, searchBy });
 
     function changeOptions({ search = '', opStr = '>=', searchBy = 'to' }: IGetPublications) {
@@ -44,6 +45,7 @@ export function useAllPublications({ search = '', opStr = '>=', searchBy = 'to' 
     }
 
     useEffect(() => {
+        setLoading(true);
         firestore.collection('publications')
             .where(searchOp.searchBy as string, searchOp.opStr as any, searchOp.search as string)
             .get()
@@ -51,8 +53,9 @@ export function useAllPublications({ search = '', opStr = '>=', searchBy = 'to' 
                 const data = snapshot.docs.map(doc => doc.data() as IPublication);
                 setPublication(data);
             })
-            .catch(submitError);
+            .catch(submitError)
+            .finally(() => setLoading(false));
     }, [searchOp])
 
-    return { publications, changeOptions };
+    return { publications, loading, changeOptions };
 }
