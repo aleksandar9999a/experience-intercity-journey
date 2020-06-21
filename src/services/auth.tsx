@@ -2,7 +2,6 @@ import { auth, firestore } from './../config/firebase';
 import IRegistered from '../interfaces/IRegistered';
 import { submitMessage, submitError } from './toast';
 import IUser from '../interfaces/IUser';
-import { Observable } from 'rxjs';
 
 export function submitRegistered(data: IRegistered) {
     return auth.createUserWithEmailAndPassword(data.email, data.password)
@@ -39,13 +38,3 @@ export function getMultiplyUserdata(users: string[]) {
         .then(docs => Promise.all(docs.map(doc => doc.data() as IUser)))
         .catch(submitError)
 }
-
-export const myUserdata = new Observable<IUser | null>(sub => {
-    auth.onAuthStateChanged(user => {
-        if (!user) { sub.next(null); return; }
-        firestore.collection('users').doc(user.uid).onSnapshot(doc => {
-            if (!doc.exists) { sub.next(null); }
-            sub.next(doc.data() as IUser);
-        })
-    });
-})
