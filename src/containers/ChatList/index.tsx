@@ -3,22 +3,13 @@ import IMessage from '../../interfaces/IMessage';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../config/firebase';
 import ChatItemWrapper from '../../components/ChatItemWrapper';
-import IUser from '../../interfaces/IUser';
-import { getMultiplyUserdata } from '../../services';
+import { useMultipleUserdata } from '../../hooks';
 
 const ChatList: React.FC<{ messages: IMessage[], members: string[] }> = ({ messages, members }) => {
     const [list, setList] = useState<JSX.Element[]>([]);
     const [iUser] = useAuthState(auth);
-    const [users, setUsers] = useState<IUser[]>([]);
+    const users = useMultipleUserdata(members);
     const chatListEnd = useRef(null);
-
-    useEffect(() => {
-        if (!members) { return; }
-        getMultiplyUserdata(members).then(usersdata => {
-            if (!usersdata) { return; }
-            setUsers(usersdata)
-        })
-    }, [members])
 
     useEffect(() => {
         if (!messages || users.length < 2 || !iUser) { return; }

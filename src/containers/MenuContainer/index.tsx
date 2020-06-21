@@ -1,19 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Menu from '../../components/Menu';
 import FabMenu from '../../components/FabMenu';
 import Toast from '../../components/Toast';
-import IUser from '../../interfaces/IUser';
-import { myUserdata } from '../../services';
 import { useLocation } from 'react-router';
+import { useMyUserData } from '../../hooks';
 
 const MenuContainer: React.FC = () => {
-    const [user, setUser] = useState<IUser | null>();
+    const user = useMyUserData();
     const location = useLocation();
-
-    useEffect(() => {
-        const sub = myUserdata.subscribe((userdata) => setUser(userdata));
-        return () => { sub.unsubscribe(); }
-    }, [])
 
     if (!user) { return <Toast />; }
 

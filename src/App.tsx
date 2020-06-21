@@ -1,21 +1,18 @@
 import React, { useEffect } from 'react';
 import { IonApp, IonContent } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { myUserdata } from './services';
 import MenuContainer from './containers/MenuContainer';
 import Outlet from './containers/Outlet';
+import { useMyUserData } from './hooks';
 import './Styles';
 
 const App: React.FC = () => {
+  const user = useMyUserData();
 
   useEffect(() => {
-    const sub = myUserdata.subscribe((userdata) => {
-      if (!userdata) { return; };
-      document.body.classList.toggle('dark-mode', userdata.darkMode);
-    })
-
-    return () => { sub.unsubscribe(); }
-  }, [])
+    if (!user) { return; }
+    document.body.classList.toggle('dark-mode', user.darkMode);
+  }, [user])
 
   return (
     <IonApp>
