@@ -1,6 +1,6 @@
 import React from 'react';
-import Menu from '../../components/Menu';
-import FabMenu from '../../components/FabMenu';
+import Menu from './../Menu';
+import FabMenu from './../FabMenu';
 import Toast from '../../components/Toast';
 import { useLocation } from 'react-router';
 import { useMyUserData } from '../../hooks';

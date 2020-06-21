@@ -2,19 +2,10 @@ import { IonFab, IonFabButton, IonIcon, IonFabList } from '@ionic/react';
 import React from 'react';
 import { chevronBackOutline } from 'ionicons/icons';
 import fab_menu_config from '../../config/fab_menu_config';
-import IFabMenuItem from '../../interfaces/IFabMenuItem';
+import FabMenuItem from '../../components/FabMenuItem';
 
 const FabMenu: React.FC = () => {
-    const list = fab_menu_config.map(generateFabButton);
-
-    function generateFabButton(item: IFabMenuItem, index: number) {
-        return (
-            <IonFabButton key={index} routerLink={item.route} color="light">
-                <IonIcon ios={item.iosIcon} md={item.mdIcon}>
-                </IonIcon>
-            </IonFabButton>
-        )
-    }
+    const list = fab_menu_config.map((item, index) => <FabMenuItem key={index} route={item.route} iosIcon={item.iosIcon} mdIcon={item.mdIcon} />);
 
     return (
         <IonFab horizontal="end" vertical="bottom" slot="fixed">
