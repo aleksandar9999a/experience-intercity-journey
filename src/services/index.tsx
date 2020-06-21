@@ -1,7 +1,7 @@
 import { updateOneField, updateOneFieldFromMyProfile, updateMultiplyFieldsFromMyProfile } from './database';
 import { getChat, getMessages, submitNewMessage, openChatByMembers } from './messages';
 import { submitRegistered, submitLogin, logOut, getUserdata, getMultiplyUserdata } from './auth';
-import { setPublication, deletePublication } from './publications';
+import { setPublication, deletePublication, getPublications } from './publications';
 import { getImageByPlace } from './pixabay';
 import { uploadImage } from './images';
 
@@ -20,6 +20,7 @@ export {
     getMultiplyUserdata,
     setPublication,
     deletePublication,
+    getPublications,
     getImageByPlace,
     uploadImage
 }

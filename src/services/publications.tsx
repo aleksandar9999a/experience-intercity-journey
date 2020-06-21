@@ -2,6 +2,7 @@ import { auth, firestore } from './../config/firebase';
 import IPublication from '../interfaces/IPublication';
 import uid from 'uid';
 import { submitMessage, submitError } from './toast';
+import IGetPublications from '../interfaces/IGetPublications';
 
 export function setPublication(data: IPublication) {
     let newData = { ...data };
@@ -20,4 +21,8 @@ export function deletePublication(id: string) {
     return firestore.collection('publications').doc(id).delete()
         .then(res => submitMessage('Successfull deleted!'))
         .catch(submitError);
+}
+
+export function getPublications({ search = '', opStr = '>=', searchBy = 'to' }: IGetPublications) {
+    return firestore.collection('publications').where(searchBy, opStr, search).get();
 }

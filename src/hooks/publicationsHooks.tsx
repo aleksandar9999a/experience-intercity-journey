@@ -3,6 +3,7 @@ import IPublication from '../interfaces/IPublication';
 import { firestore } from '../config/firebase';
 import IGetPublications from '../interfaces/IGetPublications';
 import { submitError } from '../services/toast';
+import { getPublications } from '../services';
 
 interface IPublicationState {
     from?: string,
@@ -46,9 +47,7 @@ export function useAllPublications({ search = '', opStr = '>=', searchBy = 'to' 
 
     useEffect(() => {
         setLoading(true);
-        firestore.collection('publications')
-            .where(searchOp.searchBy as string, searchOp.opStr as any, searchOp.search as string)
-            .get()
+        getPublications(searchOp)
             .then(snapshot => {
                 const data = snapshot.docs.map(doc => doc.data() as IPublication);
                 setPublication(data);
