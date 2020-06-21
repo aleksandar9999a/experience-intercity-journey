@@ -1,5 +1,12 @@
 .profile-img {
     height: 50vh;
+    display: flex;
+}
+
+.profile-img img {
+    margin: auto;
+    height: inherit;
+    width: 100%;
     object-fit: cover;
 }
 
