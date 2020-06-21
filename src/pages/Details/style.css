@@ -1,5 +1,4 @@
 .details-preview {
-    width: 100vw;
     height: 40vh;
 }
 
@@ -26,16 +25,7 @@
     margin: auto;
 }
 
-.creator-info {
-    padding: 10px;
-}
-
-.creator-info p {
-    margin: 7px;
-}
-
-.details-creator-img {
-    object-fit: cover;
+.creator-avatar {
     width: 30vw;
-    height: 20vh;
+    height: 30vw;
 }
