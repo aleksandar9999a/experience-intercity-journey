@@ -4,10 +4,10 @@
     width: 100vw;
 }
 
-.chat {
-    height: 100vh;
-}
-
 .chat-title {
     text-align: center;
+}
+
+.chat-list {
+    padding-bottom: 50px;
 }

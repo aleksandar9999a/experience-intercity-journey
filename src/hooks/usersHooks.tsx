@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import IUser from '../interfaces/IUser';
 import { getMultiplyUserdata } from '../services';
 import { auth, firestore } from '../config/firebase';
+import { submitError } from '../services/toast';
 
 export function useMyUserData() {
     const [userdata, setUserdata] = useState<IUser | null>(null);
@@ -15,20 +16,23 @@ export function useMyUserData() {
             })
         });
     }, [])
-    
+
     return userdata;
 }
 
 export function useMultipleUserdata(users: string[]) {
     const [usersdata, setUsersdata] = useState<IUser[]>([]);
+    const [listOfUsers ] = useState<string[]>(users);
 
     useEffect(() => {
-        if (users.length === 0) { return; }
-        getMultiplyUserdata(users).then(usersdata => {
-            if (!usersdata) { return; }
-            setUsersdata(usersdata)
-        })
-    }, [users])
+        if (listOfUsers.length === 0) { return; }
+        getMultiplyUserdata(listOfUsers)
+            .then(data => {
+                if (!data) { return; }
+                setUsersdata(data);
+            })
+            .catch(submitError)
+    }, [listOfUsers])
 
-    return usersdata
+    return { usersdata, }
 }
