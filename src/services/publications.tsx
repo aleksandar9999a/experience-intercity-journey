@@ -2,7 +2,6 @@ import { auth, firestore } from './../config/firebase';
 import IPublication from '../interfaces/IPublication';
 import uid from 'uid';
 import { submitMessage, submitError } from './toast';
-import IGetPublications from '../interfaces/IGetPublications';
 
 export function setPublication(data: IPublication) {
     let newData = { ...data };
@@ -15,10 +14,6 @@ export function setPublication(data: IPublication) {
         })
         .then(res => submitMessage('Successful submited!'))
         .catch(submitError);
-}
-
-export function getPublications({ search = '', opStr = '>=', searchBy = 'to' }: IGetPublications) {
-    return firestore.collection('publications').where(searchBy, opStr, search).get();
 }
 
 export function deletePublication(id: string) {

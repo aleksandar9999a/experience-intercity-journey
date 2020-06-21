@@ -1,41 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { IonSearchbar, IonToolbar, IonList, IonSegment, IonSegmentButton, IonLabel, IonSelect, IonSelectOption, IonHeader, IonFab, IonFabButton, IonIcon, IonPage, IonContent } from '@ionic/react';
-import { getPublications } from '../../services';
-import IPublication from '../../interfaces/IPublication';
 import PublicationListItem from '../../components/PublicationListItem';
-import './style.css';
 import { refreshOutline } from 'ionicons/icons';
+import { useAllPublications } from '../../hooks';
+import './style.css';
 
 const Search: React.FC = () => {
   const [list, setList] = useState<JSX.Element[]>([]);
-  const [items, setItems] = useState<IPublication[]>([]);
+  const { publications, changeOptions } = useAllPublications({});
   const [search, setSearch] = useState<string>('');
   const [searchBy, setSearchBy] = useState<string>('to');
   const [opStr, setOpStr] = useState<firebase.firestore.WhereFilterOp>('>=');
 
   useEffect(() => {
-    const newList = items.map((x, i) => <PublicationListItem key={i} data={x} />);
+    const newList = publications.map((x, i) => <PublicationListItem key={i} data={x} />);
     setList(newList);
-  }, [items])
+  }, [publications])
 
-  useEffect(() => { getManuallyPublications() }, [search, opStr, searchBy])
+  useEffect(() => { changeOptions({ search, opStr, searchBy }) }, [search, opStr, searchBy])
 
-  function getManuallyPublications() {
-    return getPublications({ search, opStr, searchBy }).then(snapshot => snapshot.forEach(pushToItems));
-  }
-
-  function pushToItems(doc: firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>) {
-    setItems((oldItems) => {
-      let newItems = [...oldItems];
-      newItems.push(doc.data() as IPublication);
-      return newItems;
-    })
-  }
-
-  function handleSearch(e: any) { setItems([]); setSearch(e.target.value); }
-  function handleSearchBy(e: any) { setItems([]); setSearchBy(e.detail.value); }
-  function handleOpStr(e: any) { setItems([]); setOpStr(e.detail.value); }
-  function handleRefresh() { setItems([]); getManuallyPublications(); }
+  function handleSearch(e: any) { setSearch(e.target.value); }
+  function handleSearchBy(e: any) { setSearchBy(e.detail.value); }
+  function handleOpStr(e: any) { setOpStr(e.detail.value); }
+  function handleRefresh() { setSearch(''); setSearchBy('to'); setOpStr('>='); }
 
   return (
     <IonPage>
