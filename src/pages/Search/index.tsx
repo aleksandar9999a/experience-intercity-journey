@@ -1,21 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { IonSearchbar, IonToolbar, IonList, IonSegment, IonSegmentButton, IonLabel, IonSelect, IonSelectOption, IonHeader, IonFab, IonFabButton, IonIcon, IonPage, IonContent } from '@ionic/react';
-import PublicationListItem from '../../components/PublicationListItem';
+import { IonSearchbar, IonToolbar, IonSegment, IonSegmentButton, IonLabel, IonSelect, IonSelectOption, IonHeader, IonFab, IonFabButton, IonIcon, IonPage, IonContent } from '@ionic/react';
 import { refreshOutline } from 'ionicons/icons';
 import { useAllPublications } from '../../hooks';
+import PublicationList from '../../containers/PublicationList';
 import './style.css';
 
 const Search: React.FC = () => {
-  const [list, setList] = useState<JSX.Element[]>([]);
-  const { publications, changeOptions } = useAllPublications({});
+  const { publications, loading, changeOptions } = useAllPublications({});
   const [search, setSearch] = useState<string>('');
   const [searchBy, setSearchBy] = useState<string>('to');
   const [opStr, setOpStr] = useState<firebase.firestore.WhereFilterOp>('>=');
-
-  useEffect(() => {
-    const newList = publications.map((x, i) => <PublicationListItem key={i} data={x} />);
-    setList(newList);
-  }, [publications])
 
   useEffect(() => { changeOptions({ search, opStr, searchBy }) }, [search, opStr, searchBy])
 
@@ -48,7 +42,7 @@ const Search: React.FC = () => {
             </IonSelect>
           </IonToolbar>
         </IonHeader>
-        <IonList>{list}</IonList>
+        <PublicationList publications={publications} isLoading={loading} />
         <IonFab vertical="bottom" horizontal="start">
           <IonFabButton onClick={handleRefresh}>
             <IonIcon ios={refreshOutline} md={refreshOutline}></IonIcon>
