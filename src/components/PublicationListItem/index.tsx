@@ -8,7 +8,10 @@ const PublicationListItem: React.FC<{ data: IPublication }> = ({ data }) => {
     const [date, setDate] = useState<string>('');
     const [image, setImage] = useState<IPixabayImage>();
 
-    useEffect(() => { setDate(new Date(data.date).toLocaleDateString()); }, [data.date])
+    useEffect(() => {
+        setDate(new Date(data.date).toLocaleDateString());
+    }, [data.date])
+
     useEffect(() => {
         getImageByPlace(data.to).then((res) => {
             if (!res) { return; }
@@ -19,7 +22,7 @@ const PublicationListItem: React.FC<{ data: IPublication }> = ({ data }) => {
     return (
         <IonItem routerLink={`/details/${data.id}`}>
             <IonAvatar slot="start">
-                {!!image && <img src={image?.previewURL} alt="preview-img" />}
+                {!!image && <img src={image.previewURL} alt="preview-img" />}
             </IonAvatar>
             <IonLabel>
                 <IonLabel>From: {data.from}</IonLabel>
