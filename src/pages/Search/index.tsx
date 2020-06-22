@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { IonSearchbar, IonToolbar, IonSegment, IonSegmentButton, IonLabel, IonSelect, IonSelectOption, IonHeader, IonFab, IonFabButton, IonIcon, IonPage, IonContent } from '@ionic/react';
 import { refreshOutline } from 'ionicons/icons';
 import { useAllPublications } from '../../hooks';
-import PublicationList from '../../containers/PublicationList';
+import PublicationListWrapper from '../../containers/PublicationListWrapper';
 import './style.css';
+
 
 const Search: React.FC = () => {
   const { publications, loading, changeOptions } = useAllPublications({});
@@ -42,7 +43,7 @@ const Search: React.FC = () => {
             </IonSelect>
           </IonToolbar>
         </IonHeader>
-        <PublicationList publications={publications} isLoading={loading} />
+        <PublicationListWrapper publications={publications} isLoading={loading} />
         <IonFab vertical="bottom" horizontal="start">
           <IonFabButton onClick={handleRefresh}>
             <IonIcon ios={refreshOutline} md={refreshOutline}></IonIcon>

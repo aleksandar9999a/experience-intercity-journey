@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { IonList, IonSpinner } from '@ionic/react';
+import { IonList } from '@ionic/react';
 import PublicationListItem from '../../components/PublicationListItem';
-import IPublication from '../../interfaces/IPublication';
-import './style.css';
+import IPublicationList from '../../interfaces/IPublicationList';
 
-const PublicationList: React.FC<{ publications: IPublication[], isLoading: boolean }> = ({ publications, isLoading }) => {
+const PublicationList: React.FC<IPublicationList> = ({ publications }) => {
     const [list, setList] = useState<JSX.Element[]>([]);
 
     useEffect(() => {
-        const newList = publications.map((x, i) => <PublicationListItem key={i} data={x} />);
+        const newList = publications.map(x => <PublicationListItem key={x.id} data={x} />);
         setList(newList);
     }, [publications])
 
-    if(isLoading) { return <div className="loading-publications"><IonSpinner className="spinner" /></div>}
     return <IonList>{list}</IonList>;
 };
 
