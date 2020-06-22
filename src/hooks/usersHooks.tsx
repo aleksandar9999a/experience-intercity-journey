@@ -4,7 +4,7 @@ import { getMultiplyUserdata } from '../services';
 import { auth, firestore } from '../config/firebase';
 import { submitError } from '../services/toast';
 
-export function useMyUserData() {
+export function useMyUserData(): IUser | null {
     const [userdata, setUserdata] = useState<IUser | null>(null);
 
     useEffect(() => {
@@ -20,9 +20,9 @@ export function useMyUserData() {
     return userdata;
 }
 
-export function useMultipleUserdata(users: string[]) {
+export function useMultipleUserdata(users: string[]): IUser[] {
     const [usersdata, setUsersdata] = useState<IUser[]>([]);
-    const [listOfUsers ] = useState<string[]>(users);
+    const [listOfUsers] = useState<string[]>(users);
 
     useEffect(() => {
         if (listOfUsers.length === 0) { return; }
@@ -34,5 +34,5 @@ export function useMultipleUserdata(users: string[]) {
             .catch(submitError)
     }, [listOfUsers])
 
-    return { usersdata, }
+    return usersdata;
 }

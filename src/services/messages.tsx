@@ -2,16 +2,13 @@ import { auth, firestore } from "../config/firebase";
 import uid from "uid";
 import { submitError } from "./toast";
 import { updateOneField } from "./database";
+import IChat from "../interfaces/IChat";
 
-export function getChat(id: string) {
-    return firestore.collection('chat').doc(id);
-}
-
-export function getMessages(id: string) {
+export function getMessages(id: string): firebase.firestore.Query<firebase.firestore.DocumentData> {
     return firestore.collection('chat').doc(id).collection('messages').orderBy('created');
 }
 
-export function submitNewMessage(id: string, message: string) {
+export function submitNewMessage(id: string, message: string): Promise<void> {
     const created = new Date();
     return Promise.all([auth.currentUser])
         .then(([user]) => {
@@ -25,7 +22,7 @@ export function submitNewMessage(id: string, message: string) {
         .catch(submitError)
 }
 
-function createNewChat(members: string[]) {
+function createNewChat(members: string[]): Promise<IChat | void> {
     return Promise.all([auth.currentUser])
         .then(([user]) => {
             if (!user) { return Promise.reject(new Error('Unauthorized')) };
@@ -34,16 +31,16 @@ function createNewChat(members: string[]) {
         .then(data => {
             return Promise.all([firestore.doc(`chat/${data.id}`).set(data), data]);
         })
-        .then(([promise, data]) => {
+        .then(([_, data]) => {
             return data;
         })
         .catch(submitError)
 }
 
-export function openChatByMembers(members: string[]) {
+export function openChatByMembers(members: string[]): Promise<IChat | void> {
     return firestore.collection('chat').where('members', 'in', [[members[0], members[1]], [members[1], members[0]]]).get()
         .then(shot => {
             if (shot.docs.length === 0) { return createNewChat(members); }
-            return shot.docs[0].data();
+            return shot.docs[0].data() as IChat;
         })
 }

@@ -14,7 +14,7 @@ const Messages: React.FC = () => {
                     <IonListHeader>
                         <h2 className="chat-box-title">Messages</h2>
                     </IonListHeader>
-                    <MessagesList messages={messages || []}/>
+                    <MessagesList messages={messages}/>
                 </IonList>
             </IonContent>
         </IonPage>

@@ -3,7 +3,7 @@ import IRegistered from '../interfaces/IRegistered';
 import { submitMessage, submitError } from './toast';
 import IUser from '../interfaces/IUser';
 
-export function submitRegistered(data: IRegistered) {
+export function submitRegistered(data: IRegistered): Promise<void> {
     return auth.createUserWithEmailAndPassword(data.email, data.password)
         .then(res => {
             const userdata = {
@@ -20,19 +20,19 @@ export function submitRegistered(data: IRegistered) {
         .catch(submitError);
 }
 
-export function submitLogin(email: string, password: string) {
+export function submitLogin(email: string, password: string): Promise<void | firebase.auth.UserCredential> {
     return auth.signInWithEmailAndPassword(email, password).then(res => submitMessage('Successful Login!')).catch(submitError);
 }
 
-export function logOut() {
+export function logOut(): Promise<void> {
     return auth.signOut().then(res => submitMessage('Successful Logout!')).catch(submitError);
 }
 
-export function getUserdata(id: string) {
+export function getUserdata(id: string): firebase.firestore.DocumentReference<firebase.firestore.DocumentData> {
     return firestore.collection('users').doc(id);
 }
 
-export function getMultiplyUserdata(users: string[]) {
+export function getMultiplyUserdata(users: string[]): Promise<void | IUser[]> {
     return Promise.all(users.map(getUserdata))
         .then(docs => Promise.all(docs.map(doc => doc.get())))
         .then(docs => Promise.all(docs.map(doc => doc.data() as IUser)))

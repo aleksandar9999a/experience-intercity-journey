@@ -1,27 +1,20 @@
 import { useState, useEffect } from 'react';
 import IPublication from '../interfaces/IPublication';
 import IGetPublications from '../interfaces/IGetPublications';
-import { submitError } from '../services/toast';
 import { getPublications, getPublication } from '../services';
+import IPublicationState from '../interfaces/IPublicationState';
+import IUsePublication from '../interfaces/IUsePublication';
+import IUseAllPublications from '../interfaces/IUseAllPublications';
 
-interface IPublicationState {
-    from?: string,
-    to?: string,
-    date?: string,
-    time?: string,
-    type?: string
-}
-
-export function usePublication(id: string) {
+export function usePublication(id: string): IUsePublication {
     let [publication, setPublication] = useState<IPublication | null>(null);
     let [loading, setloading] = useState<boolean>(false);
 
     useEffect(() => {
         if (!id) { setPublication(null); return; }
         setloading(true);
-        getPublication(id).then(doc => {
-            if (!doc.exists) { setPublication(null); return; }
-            const data = doc.data() as IPublication;
+        getPublication(id).then(data => {
+            if (!data) { return; }
             setPublication(data);
         }).finally(() => setloading(false));
     }, [id])
@@ -35,7 +28,7 @@ export function usePublication(id: string) {
     return { publication, loading, setParams };
 }
 
-export function useAllPublications({ search = '', opStr = '>=', searchBy = 'to' }: IGetPublications) {
+export function useAllPublications({ search = '', opStr = '>=', searchBy = 'to' }: IGetPublications): IUseAllPublications {
     const [publications, setPublication] = useState<IPublication[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [searchOp, setSearchOp] = useState<IGetPublications>({ search, opStr, searchBy });
@@ -47,11 +40,10 @@ export function useAllPublications({ search = '', opStr = '>=', searchBy = 'to' 
     useEffect(() => {
         setLoading(true);
         getPublications(searchOp)
-            .then(snapshot => {
-                const data = snapshot.docs.map(doc => doc.data() as IPublication);
+            .then(data => {
+                if (!data) { return; }
                 setPublication(data);
             })
-            .catch(submitError)
             .finally(() => setLoading(false));
     }, [searchOp])
 

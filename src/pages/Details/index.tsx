@@ -63,10 +63,13 @@ const Details: React.FC = () => {
 
     function openChatBox() {
         if (loading || !publication || !publication.creatorId || !creatorData || !user) { return; }
-        openChatByMembers([user.uid, publication.creatorId]).then(data => history.push(`/chat/${data.id}`));
+        openChatByMembers([user.uid, publication.creatorId]).then(data => {
+            if (!data) { return; }
+            history.push(`/chat/${data.id}`);
+        });
     }
 
-    if(loading) { return <LoadingPage isOpen={loading}/>}
+    if (loading) { return <LoadingPage isOpen={loading} /> }
     if (!publication) { return null; }
 
     return (

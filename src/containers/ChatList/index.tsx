@@ -9,7 +9,7 @@ import LoadingPage from '../../pages/LoadingPage';
 const ChatList: React.FC<{ messages: IMessage[] }> = ({ messages }) => {
     const [list, setList] = useState<JSX.Element[]>([]);
     const [iUser, loading] = useAuthState(auth);
-    const { usersdata } = useMultipleUserdata(messages.map(x => x.creatorId));
+    const usersdata  = useMultipleUserdata(messages.map(x => x.creatorId));
     const chatListEnd = useRef(null);
 
     useEffect(() => {
