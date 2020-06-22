@@ -6,9 +6,11 @@ import CreatePublication from "../pages/CreatePublication";
 import Messages from "../pages/Messages";
 import Details from "../pages/Details";
 import Chat from "../pages/Chat";
+import MyPublications from "../pages/MyPublications";
 
 const route_config = [
     { path: '/account', component: Account},
+    { path: '/myPublications', component: MyPublications},
     { path: '/login', component: Login },
     { path: '/register', component: Register  },
     { path: '/search', component: Search },
