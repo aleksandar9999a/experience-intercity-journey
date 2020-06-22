@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "experienceInterCityJourney",
+  "appId": "com.experience.intercityJourney",
+  "appName": "InterCity Journey",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "build",
