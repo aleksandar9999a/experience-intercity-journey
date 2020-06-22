@@ -10,7 +10,7 @@ const MyPublications: React.FC = () => {
             <IonContent>
                 <IonHeader>
                     <IonToolbar>
-                        <IonTitle className="chat-title">My Publications</IonTitle>
+                        <IonTitle className="title">My Publications</IonTitle>
                     </IonToolbar>
                 </IonHeader>
                 <PublicationListWrapper publications={publications} isLoading={loading} />
