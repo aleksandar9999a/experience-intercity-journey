@@ -1,6 +1,6 @@
 <img src="https://firebasestorage.googleapis.com/v0/b/experience-intercity-jouney.appspot.com/o/splash.png?alt=media&token=385f3b25-5895-4394-a254-5ca988444bdc" height="250" />
 
-# Experience InterCIty Journey
+# Experience InterCity Journey
 
 
 ## What is this?
