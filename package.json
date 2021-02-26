@@ -24,6 +24,8 @@
     "firebase": "^7.15.1",
     "inversify": "^5.0.5",
     "ionicons": "^5.0.0",
+    "mobx": "^6.1.7",
+    "mobx-react": "^7.1.0",
     "qs": "^6.9.6",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",

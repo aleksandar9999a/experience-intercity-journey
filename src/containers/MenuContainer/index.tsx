@@ -9,15 +9,18 @@ const MenuContainer: React.FC = () => {
     const user = useMyUserData();
     const location = useLocation();
 
-    if (!user) { return <Toast />; }
+    return user
+        ? (
+            <div>
+                <Menu firstName={user.firstName} lastName={user.lastName} image={user.image} />
 
-    return (
-        <div>
-            <Menu firstName={user.firstName} lastName={user.lastName} image={user.image} />
-            {!location.pathname.includes('chat') && <FabMenu />}
+                {!location.pathname.includes('chat') && <FabMenu />}
+                <Toast />
+            </div>
+        )
+        : (
             <Toast />
-        </div>
-    );
+        )
 };
 
 export default MenuContainer;

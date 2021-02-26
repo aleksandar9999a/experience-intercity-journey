@@ -1,48 +1,19 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { IonRouterOutlet } from '@ionic/react';
-import { Redirect, Route, useLocation, useHistory } from 'react-router-dom';
-import route_config from '../../config/route_config';
-import ICustomRoute from '../../interfaces/ICustomRoute';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../../config/firebase';
-import LoadingPage from '../../pages/LoadingPage';
-import ErrorPage from '../../pages/ErrorPage';
+import { Redirect, Route } from 'react-router-dom';
+import { RouterManager } from '../../services/RouterManager';
+import { observer } from 'mobx-react';
 
-const Outlet: React.FC = () => {
-    const [user, loading, error] = useAuthState(auth);
-    const routes = route_config.map(generateRoute);
-    const unauthorizedRoutes = ['/login', '/register'];
-    const { pathname } = useLocation();
-    const history = useHistory();
-
-    useEffect(() => {
-        if (loading) { return; }
-
-        if (!user && !unauthorizedRoutes.includes(pathname)) {
-            history.push('/login');
-            return;
-        }
-
-        if (user && unauthorizedRoutes.includes(pathname)) {
-            history.push('/search');
-            return;
-        }
-
-    }, [loading, user, history, pathname, unauthorizedRoutes])
-
-    function generateRoute({ path, component }: ICustomRoute, index: number) {
-        return <Route key={index} path={path} component={component} exact />
-    }
-
-    if (loading) { return <LoadingPage isOpen={loading} /> }
-    if (error) { return <ErrorPage message={error.message} /> }
-
+const Outlet = observer(({ routerManager }: { routerManager: RouterManager }) => {
     return (
         <IonRouterOutlet id="main">
-            {routes}
-            <Redirect exact path="/" to={!!user ? '/search' : '/login'} />
+            {routerManager.routes.map(({ id, path, Component, props }) => {
+                return <Route key={id} path={path} component={() => <Component {...(props || {})} />} exact />
+            })}
+
+            <Redirect exact path="/" to={routerManager.isAuth ? '/search' : '/login'} />
         </IonRouterOutlet>
     )
-};
+})
 
 export default Outlet;

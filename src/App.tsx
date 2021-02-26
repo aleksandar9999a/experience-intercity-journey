@@ -1,25 +1,30 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { IonApp, IonContent } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import MenuContainer from './containers/MenuContainer';
 import Outlet from './containers/Outlet';
 import { useMyUserData } from './hooks';
-import './Styles';
+import { RouterManager } from './services/RouterManager';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from './config/firebase';
+import LoadingPage from './pages/LoadingPage';
+import ErrorPage from './pages/ErrorPage';
 
-const App: React.FC = () => {
-  const user = useMyUserData();
-
-  useEffect(() => {
-    if (!user) { return; }
-    document.body.classList.toggle('dark-mode', user.darkMode);
-  }, [user])
+const App = ({ routerManager }: { routerManager: RouterManager }) => {
+  const userdata = useMyUserData();
+  const [user, loading, error] = useAuthState(auth);
 
   return (
-    <IonApp>
+    <IonApp className={userdata && userdata.darkMode ? 'dark-mode' : ''}>
       <IonReactRouter>
         <IonContent>
           <MenuContainer />
-          <Outlet />
+
+          <Outlet routerManager={routerManager} />
+
+          {loading && <LoadingPage isOpen={loading} />}
+
+          {error && <ErrorPage message={error.message} />}
         </IonContent>
       </IonReactRouter>
     </IonApp>
