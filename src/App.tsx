@@ -9,14 +9,18 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from './config/firebase';
 import LoadingPage from './pages/LoadingPage';
 import ErrorPage from './pages/ErrorPage';
+import { observer } from 'mobx-react';
+import { createBrowserHistory } from 'history';
+export const history = createBrowserHistory();
 
-const App = ({ routerManager }: { routerManager: RouterManager }) => {
+
+export const App = observer(({ routerManager }: { routerManager: RouterManager }) => {
   const userdata = useMyUserData();
   const [user, loading, error] = useAuthState(auth);
 
   return (
     <IonApp className={userdata && userdata.darkMode ? 'dark-mode' : ''}>
-      <IonReactRouter>
+      <IonReactRouter history={history}>
         <IonContent>
           <MenuContainer />
 
@@ -28,7 +32,5 @@ const App = ({ routerManager }: { routerManager: RouterManager }) => {
         </IonContent>
       </IonReactRouter>
     </IonApp>
-  );
-};
-
-export default App;
+  ); 
+})
