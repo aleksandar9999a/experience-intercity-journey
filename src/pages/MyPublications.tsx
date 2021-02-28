@@ -21,7 +21,7 @@ export const MyPublications = observer(({ authManager, publicationsManager }: IM
     const [publications, setPublications] = useState<IPublication[]>([]);
 
     useEffect(() => {
-        publicationsManager.getPublications({ searchBy: 'creatorId', opStr: '==', search: authManager.user!.uid })
+        publicationsManager.getMany({ searchBy: 'creatorId', opStr: '==', search: authManager.user!.uid })
             .then(items => {
                 setPublications(items as IPublication[]);
             })

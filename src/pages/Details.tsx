@@ -86,7 +86,7 @@ export const Details = observer(({ routerManager, validationManager, messageMana
 	}
 
 	useEffect(() => {
-		publicationsManager.getPublication(id)
+		publicationsManager.get(id)
 			.then(publication => {
 				setPublication(publication as IPublication);
 				const isCreator = (publication as IPublication).creatorId === authManager.user!.uid;

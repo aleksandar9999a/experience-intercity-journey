@@ -39,7 +39,7 @@ export const Search = observer(({ publicationsManager }: ISearchProps) => {
   }, [])
 
   function loadPublications () {
-    return publicationsManager.getPublications({ search, opStr, searchBy })
+    return publicationsManager.getMany({ search, opStr, searchBy })
       .then(items => {
         setPublications(items as IPublication[]);
 

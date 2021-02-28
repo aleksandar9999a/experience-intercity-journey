@@ -56,7 +56,7 @@ export class PublicationsManager {
   }
 
   @action
-  getPublication (id: string) {
+  get (id: string) {
     this.startLoading();
 
     return firestore
@@ -79,7 +79,7 @@ export class PublicationsManager {
   }
 
   @action
-  getPublications ({ search = '', opStr = '>=', searchBy = 'to' }: IGetPublications) {
+  getMany ({ search = '', opStr = '>=', searchBy = 'to' }: IGetPublications) {
     this.startLoading();
 
     return firestore
