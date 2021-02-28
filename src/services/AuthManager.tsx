@@ -39,8 +39,8 @@ export class AuthManager {
     this.startLoading();
 
     auth.onAuthStateChanged(user => {
-      this.authChange(user);
       this.stopLoading();
+      this.authChange(user);
     })
   }
 
@@ -67,6 +67,17 @@ export class AuthManager {
   @action
   stopLoading () {
     this.isLoading = false;
+  }
+
+  @action
+  getUserdata (uid: string) {
+    return firestore
+      .collection('users')
+      .doc(uid)
+      .get()
+      .then(user => {
+        return user.data() as IUser
+      })
   }
 
   @action
