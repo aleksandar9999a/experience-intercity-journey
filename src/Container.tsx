@@ -1,6 +1,7 @@
 import { Container } from 'inversify';
 import { PixabayConfig } from './config/PixabayConfig';
 import { AuthManager } from './services/AuthManager';
+import { ChatManager } from './services/ChatManager';
 import { ErrorManager } from './services/ErrorManager';
 import { MessageManager } from './services/MessageManager';
 import { PixabayManager } from './services/PixabayManager';
@@ -19,5 +20,6 @@ container.bind<AuthManager>(type.AuthManager).to(AuthManager).inSingletonScope()
 container.bind<MessageManager>(type.MessageManager).to(MessageManager).inSingletonScope();
 container.bind<ValidationManager>(type.ValidationManager).to(ValidationManager).inSingletonScope();
 container.bind<PublicationsManager>(type.PublicationsManager).to(PublicationsManager).inSingletonScope();
+container.bind<ChatManager>(type.ChatManager).to(ChatManager).inSingletonScope();
 
 export const routerManager = container.resolve(RouterManager)

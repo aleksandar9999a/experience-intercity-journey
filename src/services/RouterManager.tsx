@@ -41,6 +41,7 @@ import {
   personOutline,
   personSharp
 } from 'ionicons/icons';
+import { ChatManager } from './ChatManager';
 
 
 @injectable()
@@ -71,6 +72,9 @@ export class RouterManager {
 
   @inject(type.PixabayManager)
   pixabayManager!: PixabayManager;
+
+  @inject(type.ChatManager)
+  chatManager!: ChatManager;
 
   authPage = '/search';
   unauthPage = '/login';
@@ -186,7 +190,9 @@ export class RouterManager {
         path: '/messages',
         Component: Messages,
         props: {
-          routerManager: this
+          routerManager: this,
+          chatManager: this.chatManager,
+          authManager: this.authManager
         }
       },
       {

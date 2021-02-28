@@ -6,5 +6,6 @@ export default {
   AuthManager: Symbol.for('AuthManager'),
   MessageManager: Symbol.for('MessageManager'),
   ValidationManager: Symbol.for('ValidationManager'),
-  PublicationsManager: Symbol.for('PublicationsManager')
+  PublicationsManager: Symbol.for('PublicationsManager'),
+  ChatManager: Symbol.for('ChatManager')
 }

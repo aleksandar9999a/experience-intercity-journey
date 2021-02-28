@@ -1,4 +1,5 @@
 import { AuthManager } from '../services/AuthManager';
+import { ChatManager } from '../services/ChatManager';
 import { MessageManager } from '../services/MessageManager';
 import { PixabayManager } from '../services/PixabayManager';
 import { PublicationsManager } from '../services/PublicationsManager';
@@ -71,6 +72,12 @@ export interface IAccountProps {
   messageManager: MessageManager
 }
 
+export interface IMessagesProps {
+  routerManager: RouterManager,
+  chatManager: ChatManager,
+  authManager: AuthManager,
+}
+
 export interface IAppProps {
   routerManager: RouterManager
 }
@@ -79,6 +86,12 @@ export interface IMessage {
   id: number | string,
   message: string,
   type: 'danger' | 'warning' | 'success' | ''
+}
+
+export interface IChatItem {
+  id: string,
+  members: string[],
+  creatorId: string
 }
 
 export interface IUser {
