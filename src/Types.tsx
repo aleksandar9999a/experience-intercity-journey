@@ -1,5 +1,5 @@
 export default {
-  Pixabay: Symbol.for('Pixabay'),
+  PixabayManager: Symbol.for('PixabayManager'),
   PixabayConfig: Symbol.for('PixabayConfig'),
   ErrorManager: Symbol.for('ErrorManager'),
   RouterManager: Symbol.for('RouterManager'),

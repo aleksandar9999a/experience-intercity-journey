@@ -1,13 +1,21 @@
 import Axios from 'axios';
 import { inject, injectable } from 'inversify';
 import qs from 'qs';
+
+// Configs
 import { PixabayConfig } from '../config/PixabayConfig';
+
+// Interfaces
 import { IQuery } from '../interfaces/interfaces';
+
+// Managers
 import { ErrorManager } from './ErrorManager';
+
+// Types
 import type from './../Types';
 
 @injectable()
-export class Pixabay {
+export class PixabayManager {
     @inject(type.PixabayConfig) private config!: PixabayConfig;
     @inject(type.ErrorManager) private errorMananger!: ErrorManager;
 
