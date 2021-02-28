@@ -5,19 +5,14 @@ import { getImageByPlace } from '../../services';
 import IPixabayImage from '../../interfaces/IPixabayImage';
 
 const PublicationListItem: React.FC<{ data: IPublication }> = ({ data }) => {
-    const [date, setDate] = useState<string>('');
     const [image, setImage] = useState<IPixabayImage>();
-
-    useEffect(() => {
-        setDate(new Date(data.date).toLocaleDateString());
-    }, [data.date])
 
     useEffect(() => {
         getImageByPlace(data.to).then((res) => {
             if (!res) { return; }
             setImage(res.data.hits[0])
         })
-    }, [data.to])
+    }, [data.to, data.date])
 
     return (
         <IonItem routerLink={`/details/${data.id}`}>
@@ -30,7 +25,7 @@ const PublicationListItem: React.FC<{ data: IPublication }> = ({ data }) => {
             </IonLabel>
             <IonLabel>
                 <IonLabel>Type: {data.type}</IonLabel>
-                <IonLabel>Date: {date}</IonLabel>
+                <IonLabel>Date: {new Date(data.date).toLocaleDateString()}</IonLabel>
             </IonLabel>
         </IonItem>
     );
