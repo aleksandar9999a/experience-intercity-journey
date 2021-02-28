@@ -85,8 +85,20 @@ export class ChatManager {
   }
 
   @action
+  getMessage (id: string) {
+    return firestore
+      .collection('chat')
+      .doc(id)
+      .get()
+      .then(shot => {
+        return shot.data();
+      })
+  }
+
+  @action
   getMessages () {
-    return firestore.collection('chat')
+    return firestore
+      .collection('chat')
       .where('members', 'array-contains-any', [this.authManager.user!.uid])
       .orderBy('lastUpdate', 'desc')
       .get()

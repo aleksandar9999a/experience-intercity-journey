@@ -129,12 +129,35 @@ export class AuthManager {
 
   @action
   getUserdata (uid: string) {
+    this.startLoading();
     return firestore
       .collection('users')
       .doc(uid)
       .get()
       .then(user => {
         return user.data() as IUser
+      })
+      .catch(err => {
+        this.messageManager.addErrorMessage(err.message);
+
+        return err;
+      })
+      .finally(() => {
+        this.stopLoading();
+      })
+  }
+
+  @action
+  getMultiplyUserdata (users: string[]) {
+    this.startLoading();
+    return Promise.all(users.map(this.getUserdata.bind(this)))
+      .catch(err => {
+        this.messageManager.addErrorMessage(err.message);
+
+        return err;
+      })
+      .finally(() => {
+        this.stopLoading();
       })
   }
 

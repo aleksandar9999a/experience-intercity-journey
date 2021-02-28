@@ -3,8 +3,13 @@ import { useParams } from 'react-router';
 import { observer } from 'mobx-react';
 
 // Interfaces
-import { IDetailsProps, IPublication, IUser, IPixabayImage } from '../interfaces/interfaces';
-import IChat from '../interfaces/IChat';
+import {
+	IDetailsProps,
+	IPublication,
+	IUser,
+	IPixabayImage,
+	IChat
+} from '../interfaces/interfaces';
 
 // Components
 import {
