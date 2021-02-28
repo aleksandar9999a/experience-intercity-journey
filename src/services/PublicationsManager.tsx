@@ -96,4 +96,22 @@ export class PublicationsManager {
         this.stopLoading()
       })
   }
+
+  @action
+  delete (id: string) {
+    return firestore.collection('publications')
+      .doc(id)
+      .delete()
+      .then(res => {
+        this.messageManager.addMessage('Successfull deleted!');
+
+        return res;
+      })
+      .catch(err => {
+        this.messageManager.addErrorMessage(err.message);
+      })
+      .finally(() => {
+        this.stopLoading()
+      })
+  }
 }
