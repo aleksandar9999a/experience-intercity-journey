@@ -88,6 +88,7 @@ export class RouterManager {
   init() {
     this.setRoutes();
     this.setMenu();
+    this.pathname = history.location.pathname
 
     history.listen(location => {
       this.setPathname(location.pathname);
@@ -215,7 +216,9 @@ export class RouterManager {
         path: '/chat/:id',
         Component: Chat,
         props: {
-          routerManager: this
+          routerManager: this,
+          authManager: this.authManager,
+          chatManager: this.chatManager
         }
       }
     ];
