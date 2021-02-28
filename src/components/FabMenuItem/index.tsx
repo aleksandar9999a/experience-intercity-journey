@@ -1,6 +1,10 @@
-import { IonFabButton, IonIcon } from '@ionic/react';
 import React from 'react';
-import IFabMenuItem from '../../interfaces/IFabMenuItem';
+
+// Components
+import { IonFabButton, IonIcon } from '@ionic/react';
+
+// Interfaces
+import { IFabMenuItem } from '../../interfaces/interfaces';
 
 const FabMenuItem: React.FC<IFabMenuItem> = ({ route, iosIcon, mdIcon }) => {
     return (

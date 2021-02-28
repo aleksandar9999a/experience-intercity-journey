@@ -1,5 +1,8 @@
-import IFabMenuItem from "../interfaces/IFabMenuItem";
-import { searchOutline, addOutline, personOutline } from "ionicons/icons";
+// Icons
+import { searchOutline, addOutline, personOutline } from 'ionicons/icons';
+
+// Interfaces
+import { IFabMenuItem } from '../interfaces/interfaces';
 
 const fab_menu_config: IFabMenuItem[] = [
     {

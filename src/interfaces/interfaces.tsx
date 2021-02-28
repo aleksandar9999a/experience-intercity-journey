@@ -202,3 +202,15 @@ export interface IGetPublications {
   opStr?: firebase.firestore.WhereFilterOp,
   searchBy?: string
 }
+
+export interface IMemberItems {
+  image?: string, 
+  firstName: string, 
+  lastName: string
+}
+
+export interface IFabMenuItem {
+  route: string;
+  iosIcon: string;
+  mdIcon: string;
+}
