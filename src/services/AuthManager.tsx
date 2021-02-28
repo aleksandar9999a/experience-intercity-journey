@@ -1,7 +1,8 @@
 import { injectable, inject } from 'inversify';
 import { action, makeObservable, observable } from 'mobx';
 import { BehaviorSubject } from 'rxjs';
-import { auth, firestore } from './../config/firebase';
+import { auth, firestore, storage } from './../config/firebase';
+import { v4 as uuidv4 } from 'uuid';
 
 // Interfaces
 import IRegistered from '../interfaces/IRegistered';
@@ -67,6 +68,64 @@ export class AuthManager {
   @action
   stopLoading () {
     this.isLoading = false;
+  }
+
+  @action
+  updateOneFieldFromMyProfile (key: string, value: any) {
+    this.startLoading();
+
+    return firestore
+      .collection('users')
+      .doc(this.user!.uid)
+      .update({ [key]: value })
+      .then(data => {
+        this.messageManager.addMessage('Successful saved!');
+        return data
+      })
+      .catch(err => {
+        this.messageManager.addErrorMessage(err.message);
+
+        return err;
+      })
+      .finally(() => {
+        this.stopLoading();
+      })
+  }
+
+  @action
+  saveProfileImage (file: File) {
+    this.startLoading();
+
+    return storage.ref(`images/${uuidv4()}`)
+      .put(file)
+      .then(shot => {
+        return shot.ref.getDownloadURL();
+      })
+      .then(url => {
+        return this.updateOneFieldFromMyProfile('image', url);
+      })
+      .catch(err => {
+        this.messageManager.addErrorMessage(err.message);
+
+        return err;
+      })
+      .finally(() => {
+        this.stopLoading();
+      })
+  }
+
+  @action
+  updateMultiplyFieldsFromMyProfile (fields: { field: string, value: any }[]) {
+    return Promise.all(fields.map(field => this.updateOneFieldFromMyProfile(field.field, field.value)))
+      .then(data => {
+        this.messageManager.addMessage('Successful Updated!');
+        return data
+      })
+      .catch(err => {
+        this.messageManager.addErrorMessage(err.message);
+
+        return err;
+      })
   }
 
   @action

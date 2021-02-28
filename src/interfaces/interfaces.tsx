@@ -64,6 +64,13 @@ export interface IDetailsProps {
   pixabayManager: PixabayManager
 }
 
+export interface IAccountProps {
+  routerManager: RouterManager,
+  authManager: AuthManager,
+  validationManager: ValidationManager,
+  messageManager: MessageManager
+}
+
 export interface IAppProps {
   routerManager: RouterManager
 }

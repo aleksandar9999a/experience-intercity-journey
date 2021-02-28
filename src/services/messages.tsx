@@ -1,6 +1,5 @@
 import { auth, firestore } from "../config/firebase";
 import uid from "uid";
-import { updateOneField } from "./database";
 import IChat from "../interfaces/IChat";
 
 export function getMessages(id: string): firebase.firestore.Query<firebase.firestore.DocumentData> {
@@ -16,7 +15,7 @@ export function submitNewMessage(id: string, message: string): Promise<void> {
             return firestore.doc(`chat/${id}/messages/${docId}`).set({ id: docId, creatorId: user.uid, message, created })
         })
         .then(res => {
-            return updateOneField('chat', id, 'lastUpdate', created);
+            // return updateOneField('chat', id, 'lastUpdate', created);
         })
         .catch(console.error)
 }

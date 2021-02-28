@@ -5,7 +5,7 @@ import isEmail from 'validator/lib/isEmail';
 import isAfter from 'validator/lib/isAfter';
 
 // Interfaces
-import { IPublication } from '../interfaces/interfaces';
+import { IPublication, IUser } from '../interfaces/interfaces';
 
 
 @injectable()
@@ -56,7 +56,7 @@ export class ValidationManager {
     if (!publication) {
         return 'Invalid publication.';
     }
-    
+
     if (publication.from.length < 3 || publication.to.length < 3) {
         return 'Invalid locations. Minimum chars are 3!';
     }
@@ -67,6 +67,22 @@ export class ValidationManager {
 
     if (!typesOfTransport.includes(publication.type)) {
         return 'Invalid type of transport!';
+    }
+
+    return false;
+  }
+
+  getUserdataError ({ firstName, lastName, city }: { firstName: string, lastName: string, city: string }) {
+    if (city.length < 3 || city.length > 20) {
+      return 'City is invalid.';
+    }
+
+    if (firstName.length < 4 || firstName.length > 20) {
+      return 'First name is invalid. Minimum length is 4 chars, max - 20 chars.';
+    }
+
+    if (lastName.length < 4 || lastName.length > 20) {
+      return 'Last name is invalid. Minimum length is 4 chars, max - 20 chars.';
     }
 
     return false;

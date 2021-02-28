@@ -122,7 +122,10 @@ export class RouterManager {
         path: '/account',
         Component: Account,
         props: {
-          routerManager: this
+          routerManager: this,
+          messageManager: this.messageManager,
+          validationManager: this.validationManager,
+          authManager: this.authManager
         }
       },
       {
