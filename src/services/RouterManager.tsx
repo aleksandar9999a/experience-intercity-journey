@@ -35,6 +35,9 @@ export class RouterManager {
   @observable
   isAuth: boolean = true;
 
+  @observable
+  pathname: string = '';
+
   @inject(type.ValidationManager)
   validationManager!: ValidationManager;
 
@@ -55,14 +58,16 @@ export class RouterManager {
   init () {
     this.setRoutes();
 
-    this.authManager.userObserver.subscribe(user => {
-      const route = window.location.pathname
+    history.listen(location => {
+      this.pathname = location.pathname;
+    })
 
-      if (user && this.unauthPages.includes(route)) {
+    this.authManager.userObserver.subscribe(user => {
+      if (user && this.unauthPages.includes(this.pathname)) {
         history.push(this.authPage);
       }
 
-      if (!user && !this.unauthPages.includes(route)) {
+      if (!user && !this.unauthPages.includes(this.pathname)) {
         history.push(this.unauthPage);
       }
     })

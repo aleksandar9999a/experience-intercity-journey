@@ -1,12 +1,11 @@
 import { IonContent, IonList, IonListHeader, IonMenu, IonNote, IonMenuToggle, IonItem, IonIcon, IonLabel } from '@ionic/react';
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import menu_config from '../../config/menu_config';
+import menu_config from '../config/menu_config';
 import { chevronBackOutline, chevronBackSharp } from 'ionicons/icons';
-import assets from './../../config/assets';
-import IMenu from '../../interfaces/IMenu';
-import './style.css';
-import MenuItem from '../../components/MenuItem';
+import assets from '../config/assets';
+import IMenu from '../interfaces/IMenu';
+import MenuItem from './MenuItem';
 
 const Menu: React.FC<IMenu> = ({ firstName = 'unknown', lastName = 'unknown', image = assets.anonym }) => {
   const location = useLocation();
