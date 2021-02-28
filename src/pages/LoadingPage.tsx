@@ -1,7 +1,14 @@
 import React from 'react';
-import { IonPage, IonContent, IonLoading } from '@ionic/react';
 
-const LoadingPage: React.FC<{ isOpen: boolean }> = ({ isOpen }) => {
+// Components
+import {
+    IonPage,
+    IonContent,
+    IonLoading
+} from '@ionic/react';
+
+
+export const LoadingPage: React.FC<{ isOpen: boolean }> = ({ isOpen }) => {
     return isOpen
         ? (
             <IonPage>
@@ -16,5 +23,3 @@ const LoadingPage: React.FC<{ isOpen: boolean }> = ({ isOpen }) => {
         )
         : <div></div>
 };
-
-export default LoadingPage;

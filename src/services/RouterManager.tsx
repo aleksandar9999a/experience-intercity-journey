@@ -12,11 +12,11 @@ import { Login } from '../pages/Login';
 import { Register } from '../pages/Register';
 import { Search } from '../pages/Search';
 import { MyPublications } from '../pages/MyPublications';
-import Account from '../pages/Account';
-import Chat from '../pages/Chat';
-import CreatePublication from '../pages/CreatePublication';
-import Details from '../pages/Details';
-import Messages from '../pages/Messages';
+import { Details } from '../pages/Details';
+import { Messages } from '../pages/Messages';
+import { CreatePublication } from '../pages/CreatePublication';
+import { Chat } from '../pages/Chat';
+import { Account } from '../pages/Account';
 
 // DI Types
 import type from '../Types';

@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { getMessages, submitNewMessage } from '../../services';
-import IMessage from '../../interfaces/IMessage';
+import { getMessages, submitNewMessage } from '../services';
+import IMessage from '../interfaces/IMessage';
 import { IonList, IonItem, IonInput, IonIcon, IonHeader, IonToolbar, IonTitle, IonPage, IonContent } from '@ionic/react';
 import { sendOutline } from 'ionicons/icons';
-import ChatList from '../../containers/ChatList';
-import ErrorPage from './../ErrorPage';
-import LoadingPage from './../LoadingPage';
-import './style.css';
+import ChatList from '../containers/ChatList';
+import { ErrorPage } from './ErrorPage';
+import { LoadingPage } from './LoadingPage';
 
-const Chat: React.FC = () => {
-    const { id } = useParams()
+
+export const Chat: React.FC = () => {
+    const { id } = useParams<any>()
     const [messages, loadingMessages, errMessages] = useCollectionData<IMessage>(getMessages(id));
     const [newMessage, setNewMessage] = useState<string>('');
 
@@ -49,5 +49,3 @@ const Chat: React.FC = () => {
         </IonPage>
     );
 };
-
-export default Chat;

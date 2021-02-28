@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { IonPage, IonItem, IonLabel, IonInput, IonToggle, IonButton, IonContent, IonList } from '@ionic/react';
-import { uploadImage, updateOneFieldFromMyProfile, updateMultiplyFieldsFromMyProfile } from '../../services';
-import TProfileState from '../../types/TProfileState';
-import assets from '../../config/assets';
-import './style.css';
-import LoadingPage from '../LoadingPage';
-import { useMyUserData } from '../../hooks';
+import { uploadImage, updateOneFieldFromMyProfile, updateMultiplyFieldsFromMyProfile } from '../services';
+import TProfileState from '../types/TProfileState';
+import assets from '../config/assets';
+import { LoadingPage } from './LoadingPage';
+import { useMyUserData } from '../hooks';
 
-const Account: React.FC = () => {
+export const Account: React.FC = () => {
   const user = useMyUserData();
   const [firstName, setFirstName] = useState<string>('');
   const [lastName, setLastName] = useState<string>('');
@@ -126,7 +125,3 @@ const Account: React.FC = () => {
     </IonPage>
   );
 };
-
-
-
-export default Account;

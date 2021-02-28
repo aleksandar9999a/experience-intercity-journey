@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { IonItem, IonLabel, IonInput, IonDatetime, IonSlides, IonSlide, IonButton, IonIcon, IonSelect, IonSelectOption, IonPage, IonContent } from '@ionic/react';
 import { arrowForward } from 'ionicons/icons';
-import TCreateState from '../../types/TCreateState';
+import TCreateState from '../types/TCreateState';
 import isAfter from 'validator/lib/isAfter';
-import { setPublication } from '../../services';
-import assets from './../../config/assets';
+import { setPublication } from '../services';
+import assets from '../config/assets';
 import { useHistory } from 'react-router';
-import './style.css';
 
-const CreatePublication: React.FC = () => {
+
+export const CreatePublication: React.FC = () => {
   const [from, setFrom] = useState<string>('');
   const [to, setTo] = useState<string>('');
   const [date, setDate] = useState<string>('');
@@ -144,5 +144,3 @@ const CreatePublication: React.FC = () => {
     </IonPage>
   );
 };
-
-export default CreatePublication;

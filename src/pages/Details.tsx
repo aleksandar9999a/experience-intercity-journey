@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router';
-import { auth } from './../../config/firebase';
+import { auth } from '../config/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import IPixabayImage from '../../interfaces/IPixabayImage';
-import { getImageByPlace, setPublication, deletePublication, getUserdata, openChatByMembers } from '../../services';
+import IPixabayImage from '../interfaces/IPixabayImage';
+import { getImageByPlace, setPublication, deletePublication, getUserdata, openChatByMembers } from '../services';
 import { IonItem, IonLabel, IonInput, IonDatetime, IonSelect, IonSelectOption, IonButton, IonPage, IonList, IonAvatar, IonContent } from '@ionic/react';
 import isAfter from 'validator/lib/isAfter';
-import { IUser } from '../../interfaces/interfaces';
-import assets from '../../config/assets';
-import { usePublication } from '../../hooks';
-import './style.css';
-import LoadingPage from '../LoadingPage';
+import { IUser } from '../interfaces/interfaces';
+import assets from '../config/assets';
+import { usePublication } from '../hooks';
+import { LoadingPage } from './LoadingPage';
 
-const Details: React.FC = () => {
+export const Details: React.FC = () => {
     const [user] = useAuthState(auth);
     const { id } = useParams<{ id: string }>();
     let { publication, loading, setParams } = usePublication(id);
@@ -124,5 +123,3 @@ const Details: React.FC = () => {
         </IonPage>
     );
 };
-
-export default Details;

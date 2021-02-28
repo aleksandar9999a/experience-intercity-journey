@@ -1,7 +1,10 @@
 import React from 'react';
+
+// Components
 import { IonPage, IonContent } from '@ionic/react';
 
-const ErrorPage: React.FC<{ message: string }> = ({ message }) => {
+
+export const ErrorPage: React.FC<{ message: string }> = ({ message }) => {
     return (
         <IonPage>
             <IonContent>
@@ -12,5 +15,3 @@ const ErrorPage: React.FC<{ message: string }> = ({ message }) => {
         </IonPage>
     )
 };
-
-export default ErrorPage;
