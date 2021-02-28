@@ -2,6 +2,10 @@ import { injectable } from 'inversify';
 
 // Validations
 import isEmail from 'validator/lib/isEmail';
+import isAfter from 'validator/lib/isAfter';
+
+// Interfaces
+import { IPublication } from '../interfaces/interfaces';
 
 
 @injectable()
@@ -41,6 +45,28 @@ export class ValidationManager {
 
     if (lastName.length < 4 || lastName.length > 20) {
       return 'Last name is invalid. Minimum length is 4 chars, max - 20 chars.';
+    }
+
+    return false;
+  }
+
+  getPublicationError (publication: IPublication | null) {
+    const typesOfTransport = ['transport', 'drive'];
+
+    if (!publication) {
+        return 'Invalid publication.';
+    }
+    
+    if (publication.from.length < 3 || publication.to.length < 3) {
+        return 'Invalid locations. Minimum chars are 3!';
+    }
+
+    if (!isAfter(publication.date)) {
+        return 'You must enter a date after today!';
+    }
+
+    if (!typesOfTransport.includes(publication.type)) {
+        return 'Invalid type of transport!';
     }
 
     return false;
