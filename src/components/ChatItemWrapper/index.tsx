@@ -1,5 +1,5 @@
 import React from 'react';
-import IUser from '../../interfaces/IUser';
+import { IUser } from '../../interfaces/interfaces';
 import ChatItem from '../../components/ChatItem';
 import IChatItemWrapper from '../../interfaces/IChatItemWrapper';
 

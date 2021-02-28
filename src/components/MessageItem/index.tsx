@@ -3,7 +3,7 @@ import { IonItem, IonAvatar, IonLabel, IonSpinner } from '@ionic/react';
 import { getUserdata } from '../../services';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../config/firebase';
-import IUser from '../../interfaces/IUser';
+import { IUser } from '../../interfaces/interfaces';
 import assets from '../../config/assets';
 import IMessageItem from '../../interfaces/IMessageItem';
 

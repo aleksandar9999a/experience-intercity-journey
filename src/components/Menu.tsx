@@ -1,22 +1,37 @@
-import { IonContent, IonList, IonListHeader, IonMenu, IonNote, IonMenuToggle, IonItem, IonIcon, IonLabel } from '@ionic/react';
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import menu_config from '../config/menu_config';
-import { chevronBackOutline, chevronBackSharp } from 'ionicons/icons';
+import React from 'react';
+import { observer } from 'mobx-react';
+
+// Components
+import {
+  IonContent,
+  IonList,
+  IonListHeader,
+  IonMenu,
+  IonNote,
+  IonMenuToggle,
+  IonItem,
+  IonIcon,
+  IonLabel
+} from '@ionic/react';
+
+// Icons
+import {
+  chevronBackOutline,
+  chevronBackSharp
+} from 'ionicons/icons';
+
+// Assets
 import assets from '../config/assets';
-import IMenu from '../interfaces/IMenu';
-import MenuItem from './MenuItem';
 
-const Menu: React.FC<IMenu> = ({ firstName = 'unknown', lastName = 'unknown', image = assets.anonym }) => {
-  const location = useLocation();
-  const [list, setList] = useState<JSX.Element[]>([]);
+// Interfaces
+import { IMenuProps, IUser } from '../interfaces/interfaces';
 
-  useEffect(() => {
-    const newList = menu_config.map((appPage, index) => <MenuItem key={index} page={appPage} location={location} />);
-    setList(newList);
-  }, [location])
+
+export const Menu = observer(({ menu, authManager, routerManager }: IMenuProps) => {
+  const userdata = authManager.userdata as IUser;
 
   function out() {
+    authManager.logout();
   }
 
   return (
@@ -24,15 +39,35 @@ const Menu: React.FC<IMenu> = ({ firstName = 'unknown', lastName = 'unknown', im
       <IonContent>
         <IonList id="inbox-list">
           <IonListHeader>
-            <img src={image} className="menu-avatar" alt="avatar" />
+            <img src={userdata.image || assets.anonym} className="menu-avatar" alt="avatar" />
           </IonListHeader>
+
           <IonNote className="menu-info">
-            <p>{firstName} {lastName}</p>
+            <p>{userdata.firstName} {userdata.lastName}</p>
           </IonNote>
-          {list}
+
+          {menu.map(page => {
+            return (
+              <IonMenuToggle key={page.id} autoHide={false}>
+                <IonItem
+                  className={routerManager.pathname === page.url ? 'selected' : ''}
+                  routerLink={page.url}
+                  routerDirection="none"
+                  lines="none"
+                  detail={false}
+                >
+                    <IonIcon slot="start" ios={page.iosIcon} md={page.mdIcon} />
+
+                    <IonLabel>{page.title}</IonLabel>
+                </IonItem>
+              </IonMenuToggle>
+            )
+          })}
+
           <IonMenuToggle autoHide={false}>
             <IonItem routerDirection="none" lines="none" detail={false} onClick={out}>
               <IonIcon slot="start" ios={chevronBackOutline} md={chevronBackSharp} />
+
               <IonLabel>Log Out</IonLabel>
             </IonItem>
           </IonMenuToggle>
@@ -40,6 +75,4 @@ const Menu: React.FC<IMenu> = ({ firstName = 'unknown', lastName = 'unknown', im
       </IonContent>
     </IonMenu>
   );
-};
-
-export default Menu;
+})

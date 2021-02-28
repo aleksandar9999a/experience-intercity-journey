@@ -1,5 +1,5 @@
 import { firestore } from './../config/firebase';
-import IUser from '../interfaces/IUser';
+import { IUser } from '../interfaces/interfaces';
 
 
 export function getUserdata(id: string): firebase.firestore.DocumentReference<firebase.firestore.DocumentData> {

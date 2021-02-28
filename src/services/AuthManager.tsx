@@ -2,7 +2,7 @@ import { injectable, inject } from 'inversify';
 import { action, makeObservable, observable } from 'mobx';
 import { BehaviorSubject } from 'rxjs';
 import IRegistered from '../interfaces/IRegistered';
-import IUser from '../interfaces/IUser';
+import { IUser } from '../interfaces/interfaces';
 import Types from '../Types';
 import { auth, firestore } from './../config/firebase';
 import { MessageManager } from './MessageManager';

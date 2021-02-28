@@ -6,7 +6,7 @@ import IPixabayImage from '../../interfaces/IPixabayImage';
 import { getImageByPlace, setPublication, deletePublication, getUserdata, openChatByMembers } from '../../services';
 import { IonItem, IonLabel, IonInput, IonDatetime, IonSelect, IonSelectOption, IonButton, IonPage, IonList, IonAvatar, IonContent } from '@ionic/react';
 import isAfter from 'validator/lib/isAfter';
-import IUser from '../../interfaces/IUser';
+import { IUser } from '../../interfaces/interfaces';
 import assets from '../../config/assets';
 import { usePublication } from '../../hooks';
 import './style.css';

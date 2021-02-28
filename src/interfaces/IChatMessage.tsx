@@ -1,5 +1,5 @@
 import IMessage from "./IMessage";
-import IUser from "./IUser";
+import { IUser } from "./interfaces";
 
 export default interface IChatMessage {
     chat: IMessage

@@ -5,7 +5,7 @@ import { makeObservable, observable } from 'mobx';
 import { history } from '../App';
 
 // Interfaces
-import { IRoute } from '../interfaces/interfaces';
+import { IRoute, IAppPage } from '../interfaces/interfaces';
 
 // Components
 import { Login } from '../pages/Login';
@@ -26,11 +26,28 @@ import { AuthManager } from './AuthManager';
 import { ValidationManager } from './ValidationManager';
 import { MessageManager } from './MessageManager';
 
+// Icons
+import {
+  searchOutline,
+  searchSharp,
+  addOutline,
+  addSharp,
+  albumsOutline,
+  albumsSharp,
+  chatbubbleEllipsesOutline,
+  chatbubbleEllipsesSharp,
+  personOutline,
+  personSharp
+} from 'ionicons/icons';
+
 
 @injectable()
 export class RouterManager {
   @observable
   routes: IRoute[] = [];
+
+  @observable
+  menu: IAppPage[] = []
 
   @observable
   isAuth: boolean = true;
@@ -51,12 +68,13 @@ export class RouterManager {
   unauthPage = '/login';
   unauthPages = ['/login', '/register'];
 
-  constructor () {
+  constructor() {
     makeObservable(this);
   }
 
-  init () {
+  init() {
     this.setRoutes();
+    this.setMenu();
 
     history.listen(location => {
       this.pathname = location.pathname;
@@ -73,7 +91,7 @@ export class RouterManager {
     })
   }
 
-  setRoutes () {
+  setRoutes() {
     this.routes = [
       {
         id: 1,
@@ -154,5 +172,45 @@ export class RouterManager {
         }
       }
     ];
+  }
+
+  setMenu() {
+    this.menu = [
+      {
+        id: 1,
+        title: 'Search',
+        url: '/search',
+        iosIcon: searchOutline,
+        mdIcon: searchSharp
+      },
+      {
+        id: 2,
+        title: 'Create Publication',
+        url: '/createPublication',
+        iosIcon: addOutline,
+        mdIcon: addSharp
+      },
+      {
+        id: 3,
+        title: 'My Publications',
+        url: '/myPublications',
+        iosIcon: albumsOutline,
+        mdIcon: albumsSharp
+      },
+      {
+        id: 4,
+        title: 'Messages',
+        url: '/messages',
+        iosIcon: chatbubbleEllipsesOutline,
+        mdIcon: chatbubbleEllipsesSharp
+      },
+      {
+        id: 5,
+        title: 'Account',
+        url: '/account',
+        iosIcon: personOutline,
+        mdIcon: personSharp
+      }
+    ]
   }
 }

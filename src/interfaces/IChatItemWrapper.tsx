@@ -1,4 +1,4 @@
-import IUser from "./IUser";
+import { IUser } from "./interfaces";
 import IMessage from "./IMessage";
 
 export default interface IChatItemWrapper {

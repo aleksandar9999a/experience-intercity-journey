@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import IUser from '../interfaces/IUser';
+import { IUser } from '../interfaces/interfaces';
 import { getMultiplyUserdata } from '../services';
 import { auth, firestore } from '../config/firebase';
 
