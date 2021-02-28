@@ -8,15 +8,6 @@ import { IonReactRouter } from '@ionic/react-router';
 import { Outlet } from './containers/Outlet';
 import MenuContainer from './containers/MenuContainer';
 import LoadingPage from './pages/LoadingPage';
-import ErrorPage from './pages/ErrorPage';
-
-// Hooks
-import { useMyUserData } from './hooks';
-import { useAuthState } from 'react-firebase-hooks/auth';
-
-
-// Auth
-import { auth } from './config/firebase';
 
 // Interfaces
 import { IAppProps } from './interfaces/interfaces';
@@ -26,35 +17,28 @@ export const history = createBrowserHistory();
 
 
 export const App = observer(({ routerManager }: IAppProps) => {
-  const userdata = useMyUserData();
-  const [user, loading, error] = useAuthState(auth);
-
   return (
-    <IonApp className={userdata && userdata.darkMode ? 'dark-mode' : ''}>
+    <IonApp className={routerManager.authManager.userdata && routerManager.authManager.userdata.darkMode ? 'dark-mode' : ''}>
       <IonReactRouter history={history}>
         <IonContent>
           <MenuContainer />
 
           <Outlet routerManager={routerManager} />
 
-          {loading && <LoadingPage isOpen={loading} />}
+          <LoadingPage isOpen={routerManager.authManager.isLoading} />
 
-          {error && <ErrorPage message={error.message} />}
-
-          {
-            routerManager.messageManager.messages.map(message => {
-              return (
-                <IonToast
-                  key={message.id}
-                  isOpen={true}
-                  color={message.type}
-                  onDidDismiss={() => routerManager.messageManager.remove(message.id)}
-                  message={message.message}
-                  duration={routerManager.messageManager.duration}
-                />
-              )
-            })
-          }
+          {routerManager.messageManager.messages.map(message => {
+            return (
+              <IonToast
+                key={message.id}
+                isOpen={true}
+                color={message.type}
+                onDidDismiss={() => routerManager.messageManager.remove(message.id)}
+                message={message.message}
+                duration={routerManager.messageManager.duration}
+              />
+            )
+          })}
         </IonContent>
       </IonReactRouter>
     </IonApp>
