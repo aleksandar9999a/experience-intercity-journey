@@ -1,6 +1,5 @@
 import { auth, firestore } from "../config/firebase";
 import uid from "uid";
-import { submitError } from "./toast";
 import { updateOneField } from "./database";
 import IChat from "../interfaces/IChat";
 
@@ -19,7 +18,7 @@ export function submitNewMessage(id: string, message: string): Promise<void> {
         .then(res => {
             return updateOneField('chat', id, 'lastUpdate', created);
         })
-        .catch(submitError)
+        .catch(console.error)
 }
 
 function createNewChat(members: string[]): Promise<IChat | void> {
@@ -34,7 +33,7 @@ function createNewChat(members: string[]): Promise<IChat | void> {
         .then(([_, data]) => {
             return data;
         })
-        .catch(submitError)
+        .catch(console.error)
 }
 
 export function openChatByMembers(members: string[]): Promise<IChat | void> {

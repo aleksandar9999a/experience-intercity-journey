@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { IonPage, IonItem, IonLabel, IonInput, IonToggle, IonButton, IonContent, IonList } from '@ionic/react';
 import { uploadImage, updateOneFieldFromMyProfile, updateMultiplyFieldsFromMyProfile } from '../../services';
 import TProfileState from '../../types/TProfileState';
-import { submitMessage } from '../../services/toast';
 import assets from '../../config/assets';
 import './style.css';
 import LoadingPage from '../LoadingPage';
@@ -44,7 +43,7 @@ const Account: React.FC = () => {
       types[type](value);
       return;
     }
-    submitMessage('Invalid input format!');
+    console.debug('Invalid input format!');
   }
 
   function handleImmediatelyUpdatedField(type: string, value: string) {
@@ -59,7 +58,7 @@ const Account: React.FC = () => {
       updateOneFieldFromMyProfile(type, value).finally(() => setUploading(false));
       return;
     }
-    submitMessage('Invalid input format!');
+    console.debug('Invalid input format!');
   }
 
   function handleFirstName(e: any) { return handleChanges('firstName', e.target.value); }
@@ -68,14 +67,14 @@ const Account: React.FC = () => {
   function handleDarkMode(e: any) { return handleImmediatelyUpdatedField('darkMode', e.detail.checked); }
 
   function handleFile(e: any) {
-    if (!e.target || !e.target.files || !e.target.files[0].type.includes('image')) { submitMessage('Invalid Image!'); return; }
+    if (!e.target || !e.target.files || !e.target.files[0].type.includes('image')) { console.debug('Invalid Image!'); return; }
     setFile(e.target.files[0])
   }
 
   function validate() {
-    if (city.length < 3 || city.length > 20) { submitMessage('City is invalid.'); return false; }
-    if (firstName.length < 4 || firstName.length > 20) { submitMessage('First name is invalid. Minimum length is 4 chars, max - 20 chars.'); return false; }
-    if (lastName.length < 4 || lastName.length > 20) { submitMessage('Last name is invalid. Minimum length is 4 chars, max - 20 chars.'); return false; }
+    if (city.length < 3 || city.length > 20) { console.debug('City is invalid.'); return false; }
+    if (firstName.length < 4 || firstName.length > 20) { console.debug('First name is invalid. Minimum length is 4 chars, max - 20 chars.'); return false; }
+    if (lastName.length < 4 || lastName.length > 20) { console.debug('Last name is invalid. Minimum length is 4 chars, max - 20 chars.'); return false; }
 
     return true;
   }

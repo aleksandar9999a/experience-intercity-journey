@@ -5,7 +5,6 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import IPixabayImage from '../../interfaces/IPixabayImage';
 import { getImageByPlace, setPublication, deletePublication, getUserdata, openChatByMembers } from '../../services';
 import { IonItem, IonLabel, IonInput, IonDatetime, IonSelect, IonSelectOption, IonButton, IonPage, IonList, IonAvatar, IonContent } from '@ionic/react';
-import { submitMessage } from '../../services/toast';
 import isAfter from 'validator/lib/isAfter';
 import IUser from '../../interfaces/IUser';
 import assets from '../../config/assets';
@@ -30,16 +29,16 @@ const Details: React.FC = () => {
 
     function validate() {
         const typesOfTransport = ['transport', 'drive'];
-        if (!publication) { submitMessage('Invalid publication.'); return false; }
-        if (publication.from.length < 3 || publication.to.length < 3) { submitMessage('Invalid locations. Minimum chars are 3!'); return false; }
-        if (!isAfter(publication.date)) { submitMessage('You must enter a date after today!'); return false; }
-        if (!typesOfTransport.includes(publication.type)) { submitMessage('Invalid type of transport!'); return false; }
+        if (!publication) { console.debug('Invalid publication.'); return false; }
+        if (publication.from.length < 3 || publication.to.length < 3) { console.debug('Invalid locations. Minimum chars are 3!'); return false; }
+        if (!isAfter(publication.date)) { console.debug('You must enter a date after today!'); return false; }
+        if (!typesOfTransport.includes(publication.type)) { console.debug('Invalid type of transport!'); return false; }
         return true;
     }
 
     function submit() { if (!validate() || !publication) { return; } setPublication(publication); }
     function remove() {
-        if (!isAuth) { submitMessage('Sorry, but this post is not your. You can not delete it!'); return; }
+        if (!isAuth) { console.debug('Sorry, but this post is not your. You can not delete it!'); return; }
         deletePublication(id).then(() => history.push(`/search`));
     }
 

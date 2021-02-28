@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import IUser from '../interfaces/IUser';
 import { getMultiplyUserdata } from '../services';
 import { auth, firestore } from '../config/firebase';
-import { submitError } from '../services/toast';
 
 export function useMyUserData(): IUser | null {
     const [userdata, setUserdata] = useState<IUser | null>(null);
@@ -31,7 +30,9 @@ export function useMultipleUserdata(users: string[]): IUser[] {
                 if (!data) { return; }
                 setUsersdata(data);
             })
-            .catch(submitError)
+            .catch(err => {
+                console.error(err.message)
+            })
     }, [listOfUsers])
 
     return usersdata;

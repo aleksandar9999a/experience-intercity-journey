@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { IonItem, IonLabel, IonInput, IonDatetime, IonSlides, IonSlide, IonButton, IonIcon, IonSelect, IonSelectOption, IonPage, IonContent } from '@ionic/react';
 import { arrowForward } from 'ionicons/icons';
 import TCreateState from '../../types/TCreateState';
-import { submitMessage } from '../../services/toast';
 import isAfter from 'validator/lib/isAfter';
 import { setPublication } from '../../services';
 import assets from './../../config/assets';
@@ -27,7 +26,7 @@ const CreatePublication: React.FC = () => {
     }
 
     if (typeof types[type] === 'function') { types[type](value); return; }
-    submitMessage('Invalid input format!');
+    console.debug('Invalid input format!');
   }
 
   function handleFrom(e: any) { return handleChanges('from', e.target.value); }
@@ -38,9 +37,9 @@ const CreatePublication: React.FC = () => {
 
   function validate() {
     const typesOfTransport = ['transport', 'drive'];
-    if (from.length < 3 || to.length < 3) { submitMessage('Invalid locations. Minimum chars are 3!'); return false; }
-    if (!isAfter(date)) { submitMessage('You must enter a date after today!'); return false; }
-    if (!typesOfTransport.includes(type)) { submitMessage('Invalid type of transport!'); return false; }
+    if (from.length < 3 || to.length < 3) { console.debug('Invalid locations. Minimum chars are 3!'); return false; }
+    if (!isAfter(date)) { console.debug('You must enter a date after today!'); return false; }
+    if (!typesOfTransport.includes(type)) { console.debug('Invalid type of transport!'); return false; }
     return true;
   }
 

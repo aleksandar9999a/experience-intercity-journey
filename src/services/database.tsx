@@ -1,5 +1,4 @@
 import { firestore, auth } from "../config/firebase";
-import { submitMessage } from "./toast";
 import IField from "../interfaces/IField";
 
 export function updateOneField(collection: string, doc: string, field: string, value: string | boolean | Date): Promise<void> {
@@ -11,11 +10,11 @@ export function updateOneFieldFromMyProfile(field: string, value: string | boole
         .then(([user]) => {
             if (!user) { Promise.reject(new Error('Unauthorized')); return; }
             return updateOneField('users', user.uid, field, value);
-        }).catch(err => submitMessage(err.message))
+        }).catch(err => console.error(err.message))
 }
 
 export function updateMultiplyFieldsFromMyProfile(fields: IField[]): Promise<void> {
     return Promise.all(fields.map(field => updateOneFieldFromMyProfile(field.field, field.value)))
-        .then(() => submitMessage('Successful Updated!'))
-        .catch(err => submitMessage(err.message))
+        .then(() => console.debug('Successful Updated!'))
+        .catch(err => console.error(err.message))
 }
