@@ -14,37 +14,21 @@ import {
   IonList
 } from '@ionic/react';
 
-import { submitMessage } from '../services/toast';
-
-// Validations
-import isEmail from 'validator/lib/isEmail';
-
 // Icons
 import { arrowForward } from 'ionicons/icons';
 
 // Interfaces
 import { ILoginProps } from '../interfaces/interfaces';
 
-export const Login = observer(({ authManager }: ILoginProps) => {
+export const Login = observer(({ authManager, validationManager, messageManager }: ILoginProps) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  function validate() {
-    if (!isEmail(email)) {
-      submitMessage('Email format is invalid!');
-      return false;
-    }
-
-    if (password.length < 8 || password.length > 20) {
-      submitMessage('Password is invalid. Minimum length is 8 chars, max - 20 chars.');
-      return false;
-    }
-
-    return true;
-  }
-
   function submit() {
-    if (!validate()) {
+    const error = validationManager.getLoginError(email, password);
+
+    if (error) {
+      messageManager.addErrorMessage(error);
       return;
     }
 

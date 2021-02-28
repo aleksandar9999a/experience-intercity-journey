@@ -1,5 +1,7 @@
 import { AuthManager } from "../services/AuthManager";
+import { MessageManager } from "../services/MessageManager";
 import { RouterManager } from "../services/RouterManager";
+import { ValidationManager } from "../services/ValidationManager";
 
 export interface IQuery {
   per_page?: number,
@@ -18,7 +20,17 @@ export interface IRoute {
 }
 
 export interface ILoginProps {
-  authManager: AuthManager
+  authManager: AuthManager,
+  validationManager: ValidationManager,
+  routerManager: RouterManager,
+  messageManager: MessageManager
+}
+
+export interface IRegisterProps {
+  authManager: AuthManager,
+  validationManager: ValidationManager,
+  routerManager: RouterManager,
+  messageManager: MessageManager
 }
 
 export interface IAppProps {

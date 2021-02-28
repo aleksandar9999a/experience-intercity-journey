@@ -8,14 +8,14 @@ import { history } from '../App';
 import { IRoute } from '../interfaces/interfaces';
 
 // Components
+import { Login } from '../pages/Login';
+import { Register } from '../pages/Register';
 import Account from '../pages/Account';
 import Chat from '../pages/Chat';
 import CreatePublication from '../pages/CreatePublication';
 import Details from '../pages/Details';
-import { Login } from '../pages/Login';
 import Messages from '../pages/Messages';
 import MyPublications from '../pages/MyPublications';
-import Register from '../pages/Register';
 import Search from '../pages/Search';
 
 // DI Types
@@ -23,6 +23,8 @@ import type from '../Types';
 
 // Managers
 import { AuthManager } from './AuthManager';
+import { ValidationManager } from './ValidationManager';
+import { MessageManager } from './MessageManager';
 
 
 @injectable()
@@ -32,6 +34,12 @@ export class RouterManager {
 
   @observable
   isAuth: boolean = true;
+
+  @inject(type.ValidationManager)
+  validationManager!: ValidationManager;
+
+  @inject(type.MessageManager)
+  messageManager!: MessageManager;
 
   @inject(type.AuthManager)
   authManager!: AuthManager;
@@ -84,7 +92,9 @@ export class RouterManager {
         Component: Login,
         props: {
           authManager: this.authManager,
-          routerManager: this
+          routerManager: this,
+          validationManager: this.validationManager,
+          messageManager: this.messageManager
         }
       },
       {
@@ -93,7 +103,9 @@ export class RouterManager {
         Component: Register,
         props: {
           authManager: this.authManager,
-          routerManager: this
+          routerManager: this,
+          validationManager: this.validationManager,
+          messageManager: this.messageManager
         }
       },
       {
