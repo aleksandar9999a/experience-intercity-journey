@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { observer } from 'mobx-react';
 
 // Components
 import {
@@ -15,8 +16,7 @@ import {
 // Assets
 import assets from '../config/assets';
 
-// Hooks
-import { observer } from 'mobx-react';
+// Interfaces
 import { IAccountProps } from '../interfaces/interfaces';
 
 
