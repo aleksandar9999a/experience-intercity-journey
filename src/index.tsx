@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import './Styles';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
@@ -9,9 +10,6 @@ import { App } from './App';
 
 // Routes Manager - inject routes, components, dependencies
 import { routerManager } from './Container';
-
-// Styles
-import './Styles';
 
 // Init routes
 routerManager.init();
