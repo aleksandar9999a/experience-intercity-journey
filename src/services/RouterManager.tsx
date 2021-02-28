@@ -139,7 +139,8 @@ export class RouterManager {
         props: {
           routerManager: this,
           publicationsManager: this.publicationsManager,
-          authManager: this.authManager
+          authManager: this.authManager,
+          pixabayManager: this.pixabayManager
         }
       },
       {
@@ -170,7 +171,8 @@ export class RouterManager {
         Component: Search,
         props: {
           routerManager: this,
-          publicationsManager: this.publicationsManager
+          publicationsManager: this.publicationsManager,
+          pixabayManager: this.pixabayManager
         }
       },
       {

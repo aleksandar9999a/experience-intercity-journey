@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
 
 // Components
-import PublicationListItem from '../components/PublicationListItem';
+import { PublicationListItem } from '../components/PublicationListItem';
 import {
   IonSearchbar,
   IonToolbar,
@@ -28,7 +28,7 @@ import { refreshOutline } from 'ionicons/icons';
 import { IPublication, ISearchProps } from '../interfaces/interfaces';
 
 
-export const Search = observer(({ publicationsManager }: ISearchProps) => {
+export const Search = observer(({ publicationsManager, pixabayManager }: ISearchProps) => {
   const [publications, setPublications] = useState<IPublication[]>([]);
   const [search, setSearch] = useState<string>('');
   const [searchBy, setSearchBy] = useState<string>('to');
@@ -117,7 +117,7 @@ export const Search = observer(({ publicationsManager }: ISearchProps) => {
         {!publicationsManager.isLoading && (
           <IonList>
             {publications.map(x => {
-              return <PublicationListItem key={x.id} data={x} />
+              return <PublicationListItem key={x.id} data={x} pixabayManager={pixabayManager} />
             })}
           </IonList>
         )}

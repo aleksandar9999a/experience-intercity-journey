@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
 
 // Components
-import PublicationListItem from '../components/PublicationListItem';
+import { PublicationListItem } from '../components/PublicationListItem';
 import {
     IonPage,
     IonContent,
@@ -17,7 +17,7 @@ import {
 import { IMyPublicationsProps, IPublication } from '../interfaces/interfaces';
 
 
-export const MyPublications = observer(({ authManager, publicationsManager }: IMyPublicationsProps) => {
+export const MyPublications = observer(({ authManager, publicationsManager, pixabayManager }: IMyPublicationsProps) => {
     const [publications, setPublications] = useState<IPublication[]>([]);
 
     useEffect(() => {
@@ -47,7 +47,7 @@ export const MyPublications = observer(({ authManager, publicationsManager }: IM
                 {!publicationsManager.isLoading && (
                     <IonList>
                         {publications.map(x => {
-                            return <PublicationListItem key={x.id} data={x} />
+                            return <PublicationListItem key={x.id} data={x} pixabayManager={pixabayManager} />
                         })}
                     </IonList>
                 )}

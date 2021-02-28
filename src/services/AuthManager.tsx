@@ -5,8 +5,7 @@ import { auth, firestore, storage } from './../config/firebase';
 import { v4 as uuidv4 } from 'uuid';
 
 // Interfaces
-import IRegistered from '../interfaces/IRegistered';
-import { IUser } from '../interfaces/interfaces';
+import { IUser, IRegistered } from '../interfaces/interfaces';
 
 // Types
 import Types from '../Types';
