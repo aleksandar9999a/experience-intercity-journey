@@ -98,7 +98,8 @@ export interface IDetailsProps {
   publicationsManager: PublicationsManager,
   validationManager: ValidationManager,
   messageManager: MessageManager,
-  pixabayManager: PixabayManager
+  pixabayManager: PixabayManager,
+  chatManager: ChatManager
 }
 
 export interface IAccountProps {

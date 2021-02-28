@@ -6,9 +6,6 @@ import { observer } from 'mobx-react';
 import { IDetailsProps, IPublication, IUser, IPixabayImage } from '../interfaces/interfaces';
 import IChat from '../interfaces/IChat';
 
-// Services
-import { openChatByMembers } from '../services';
-
 // Components
 import {
 	IonItem,
@@ -28,7 +25,7 @@ import {
 import assets from '../config/assets';
 
 
-export const Details = observer(({ routerManager, validationManager, messageManager, publicationsManager, authManager, pixabayManager }: IDetailsProps) => {
+export const Details = observer(({ routerManager, validationManager, messageManager, publicationsManager, authManager, pixabayManager, chatManager }: IDetailsProps) => {
 	const { id } = useParams<{ id: string }>();
 	const [publication, setPublication] = useState<IPublication | null>(null);
 	const [image, setImage] = useState<IPixabayImage>();
@@ -78,7 +75,7 @@ export const Details = observer(({ routerManager, validationManager, messageMana
 	}
 
 	function openChatBox() {
-		return openChatByMembers([authManager.user!.uid, publication!.creatorId as string])
+		return chatManager.openChatByMembers([authManager.user!.uid, publication!.creatorId as string])
 			.then(data => {
 				routerManager.push(`/chat/${(data as IChat).id}`)
 			});

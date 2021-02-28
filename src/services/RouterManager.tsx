@@ -208,7 +208,8 @@ export class RouterManager {
           publicationsManager: this.publicationsManager,
           validationManager: this.validationManager,
           messageManager: this.messageManager,
-          pixabayManager: this.pixabayManager
+          pixabayManager: this.pixabayManager,
+          chatManager: this.chatManager
         }
       },
       {
