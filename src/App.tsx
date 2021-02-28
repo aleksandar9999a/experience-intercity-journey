@@ -34,7 +34,7 @@ export const App = observer(({ routerManager }: IAppProps) => {
 
           <Outlet routerManager={routerManager} />
 
-          <LoadingPage isOpen={routerManager.authManager.isLoading} />
+          <LoadingPage isOpen={routerManager.authManager.isLoading || routerManager.publicationsManager.isLoading} />
 
           {!routerManager.pathname.includes('chat') && <FabMenu />}
 
