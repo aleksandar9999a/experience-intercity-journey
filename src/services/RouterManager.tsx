@@ -25,6 +25,8 @@ import type from '../Types';
 import { AuthManager } from './AuthManager';
 import { ValidationManager } from './ValidationManager';
 import { MessageManager } from './MessageManager';
+import { PublicationsManager } from './PublicationsManager';
+import { PixabayManager } from './PixabayManager';
 
 // Icons
 import {
@@ -39,7 +41,6 @@ import {
   personOutline,
   personSharp
 } from 'ionicons/icons';
-import { PublicationsManager } from './PublicationsManager';
 
 
 @injectable()
@@ -68,6 +69,9 @@ export class RouterManager {
   @inject(type.PublicationsManager)
   publicationsManager!: PublicationsManager;
 
+  @inject(type.PixabayManager)
+  pixabayManager!: PixabayManager;
+
   authPage = '/search';
   unauthPage = '/login';
   unauthPages = ['/login', '/register'];
@@ -86,6 +90,10 @@ export class RouterManager {
     })
 
     this.authManager.userObserver.subscribe(user => {
+      if (this.authManager.isLoading) {
+        return;
+      }
+
       if (user && this.unauthPages.includes(this.pathname)) {
         history.push(this.authPage);
       }
@@ -99,6 +107,11 @@ export class RouterManager {
   @action
   setPathname (path: string) {
     this.pathname = path;
+  }
+
+  @action
+  push (route: string) {
+    history.push(route);
   }
 
   @action
@@ -174,7 +187,12 @@ export class RouterManager {
         path: '/details/:id',
         Component: Details,
         props: {
-          routerManager: this
+          routerManager: this,
+          authManager: this.authManager,
+          publicationsManager: this.publicationsManager,
+          validationManager: this.validationManager,
+          messageManager: this.messageManager,
+          pixabayManager: this.pixabayManager
         }
       },
       {
