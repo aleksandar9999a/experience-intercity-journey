@@ -1,5 +1,6 @@
 import { AuthManager } from '../services/AuthManager';
 import { MessageManager } from '../services/MessageManager';
+import { PublicationsManager } from '../services/PublicationsManager';
 import { RouterManager } from '../services/RouterManager';
 import { ValidationManager } from '../services/ValidationManager';
 
@@ -34,6 +35,17 @@ export interface IRegisterProps {
   messageManager: MessageManager
 }
 
+export interface ISearchProps {
+  routerManager: RouterManager,
+  publicationsManager: PublicationsManager
+}
+
+export interface IMyPublicationsProps {
+  routerManager: RouterManager,
+  publicationsManager: PublicationsManager,
+  authManager: AuthManager
+}
+
 export interface IAppProps {
   routerManager: RouterManager
 }
@@ -66,4 +78,20 @@ export interface IAppPage {
   iosIcon: string;
   mdIcon: string;
   title: string;
+}
+
+export interface IPublication {
+  id?: string,
+  creatorId?: string,
+  from: string,
+  to: string,
+  date: string,
+  time: string,
+  type: string
+}
+
+export interface IGetPublications {
+  search?: string,
+  opStr?: firebase.firestore.WhereFilterOp,
+  searchBy?: string
 }

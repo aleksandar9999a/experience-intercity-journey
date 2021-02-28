@@ -5,5 +5,6 @@ export default {
   RouterManager: Symbol.for('RouterManager'),
   AuthManager: Symbol.for('AuthManager'),
   MessageManager: Symbol.for('MessageManager'),
-  ValidationManager: Symbol.for('ValidationManager')
+  ValidationManager: Symbol.for('ValidationManager'),
+  PublicationsManager: Symbol.for('PublicationsManager')
 }

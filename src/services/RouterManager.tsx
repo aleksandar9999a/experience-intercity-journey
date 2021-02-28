@@ -1,5 +1,5 @@
 import { injectable, inject } from 'inversify';
-import { makeObservable, observable } from 'mobx';
+import { action, makeObservable, observable } from 'mobx';
 
 // React Router
 import { history } from '../App';
@@ -10,13 +10,13 @@ import { IRoute, IAppPage } from '../interfaces/interfaces';
 // Components
 import { Login } from '../pages/Login';
 import { Register } from '../pages/Register';
+import { Search } from '../pages/Search';
+import { MyPublications } from '../pages/MyPublications';
 import Account from '../pages/Account';
 import Chat from '../pages/Chat';
 import CreatePublication from '../pages/CreatePublication';
 import Details from '../pages/Details';
 import Messages from '../pages/Messages';
-import MyPublications from '../pages/MyPublications';
-import Search from '../pages/Search';
 
 // DI Types
 import type from '../Types';
@@ -39,6 +39,7 @@ import {
   personOutline,
   personSharp
 } from 'ionicons/icons';
+import { PublicationsManager } from './PublicationsManager';
 
 
 @injectable()
@@ -64,6 +65,9 @@ export class RouterManager {
   @inject(type.AuthManager)
   authManager!: AuthManager;
 
+  @inject(type.PublicationsManager)
+  publicationsManager!: PublicationsManager;
+
   authPage = '/search';
   unauthPage = '/login';
   unauthPages = ['/login', '/register'];
@@ -72,12 +76,13 @@ export class RouterManager {
     makeObservable(this);
   }
 
+  @action
   init() {
     this.setRoutes();
     this.setMenu();
 
     history.listen(location => {
-      this.pathname = location.pathname;
+      this.setPathname(location.pathname);
     })
 
     this.authManager.userObserver.subscribe(user => {
@@ -91,6 +96,12 @@ export class RouterManager {
     })
   }
 
+  @action
+  setPathname (path: string) {
+    this.pathname = path;
+  }
+
+  @action
   setRoutes() {
     this.routes = [
       {
@@ -106,7 +117,9 @@ export class RouterManager {
         path: '/myPublications',
         Component: MyPublications,
         props: {
-          routerManager: this
+          routerManager: this,
+          publicationsManager: this.publicationsManager,
+          authManager: this.authManager
         }
       },
       {
@@ -136,7 +149,8 @@ export class RouterManager {
         path: '/search',
         Component: Search,
         props: {
-          routerManager: this
+          routerManager: this,
+          publicationsManager: this.publicationsManager
         }
       },
       {
@@ -174,6 +188,7 @@ export class RouterManager {
     ];
   }
 
+  @action
   setMenu() {
     this.menu = [
       {

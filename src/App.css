@@ -192,3 +192,23 @@ ion-item.selected {
     width: 100%;
     text-align: center;
 }
+
+/* Search */
+.search-options-select {
+    margin: auto;
+    width: 55%;
+}
+
+.custom-searchbar {
+    padding: 20px !important;
+}
+
+.loading-publications {
+    width: 100vw;
+    height: 50vh;
+    display: flex;
+}
+
+.spinner {
+    margin: auto;
+}

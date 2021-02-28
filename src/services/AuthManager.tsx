@@ -1,10 +1,16 @@
 import { injectable, inject } from 'inversify';
 import { action, makeObservable, observable } from 'mobx';
 import { BehaviorSubject } from 'rxjs';
+import { auth, firestore } from './../config/firebase';
+
+// Interfaces
 import IRegistered from '../interfaces/IRegistered';
 import { IUser } from '../interfaces/interfaces';
+
+// Types
 import Types from '../Types';
-import { auth, firestore } from './../config/firebase';
+
+// Managers
 import { MessageManager } from './MessageManager';
 
 
