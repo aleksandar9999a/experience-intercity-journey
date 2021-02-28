@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { observer } from 'mobx-react';
 
 // Components
-import Logo from '../components/Logo';
+import { Logo } from '../components/Logo';
 import {
   IonInput,
   IonLabel,

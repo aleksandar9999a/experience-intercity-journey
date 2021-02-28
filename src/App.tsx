@@ -8,7 +8,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import { Outlet } from './components/Outlet';
 import { Menu } from './components/Menu';
 import { LoadingPage } from './pages/LoadingPage';
-import FabMenu from './containers/FabMenu';
+import { FabMenu } from './components/FabMenu';
 
 // Interfaces
 import { IAppProps } from './interfaces/interfaces';
