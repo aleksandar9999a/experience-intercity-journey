@@ -32,6 +32,26 @@ export interface IRoute {
   }
 }
 
+export interface IChatMessage {
+  created: Date,
+  creatorId: string,
+  id: string,
+  message: string
+}
+
+export interface IChat {
+  id: string;
+  creatorId: string;
+  members: string[];
+  lastUpdate: Date;
+}
+
+export interface IChatProps {
+  routerManager: RouterManager,
+  authManager: AuthManager,
+  chatManager: ChatManager
+}
+
 export interface ILoginProps {
   authManager: AuthManager,
   validationManager: ValidationManager,
