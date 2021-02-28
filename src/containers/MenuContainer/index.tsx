@@ -1,7 +1,6 @@
 import React from 'react';
 import Menu from './../Menu';
 import FabMenu from './../FabMenu';
-import Toast from '../../components/Toast';
 import { useLocation } from 'react-router';
 import { useMyUserData } from '../../hooks';
 
@@ -15,12 +14,9 @@ const MenuContainer: React.FC = () => {
                 <Menu firstName={user.firstName} lastName={user.lastName} image={user.image} />
 
                 {!location.pathname.includes('chat') && <FabMenu />}
-                <Toast />
             </div>
         )
-        : (
-            <Toast />
-        )
+        : <div></div>
 };
 
 export default MenuContainer;

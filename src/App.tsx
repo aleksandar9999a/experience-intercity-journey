@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import { createBrowserHistory } from 'history';
 
 // Components
-import { IonApp, IonContent } from '@ionic/react';
+import { IonApp, IonContent, IonToast } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Outlet } from './containers/Outlet';
 import MenuContainer from './containers/MenuContainer';
@@ -40,6 +40,21 @@ export const App = observer(({ routerManager }: IAppProps) => {
           {loading && <LoadingPage isOpen={loading} />}
 
           {error && <ErrorPage message={error.message} />}
+
+          {
+            routerManager.messageManager.messages.map(message => {
+              return (
+                <IonToast
+                  key={message.id}
+                  isOpen={true}
+                  color={message.type}
+                  onDidDismiss={() => routerManager.messageManager.remove(message.id)}
+                  message={message.message}
+                  duration={routerManager.messageManager.duration}
+                />
+              )
+            })
+          }
         </IonContent>
       </IonReactRouter>
     </IonApp>

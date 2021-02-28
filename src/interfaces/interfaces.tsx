@@ -36,3 +36,9 @@ export interface IRegisterProps {
 export interface IAppProps {
   routerManager: RouterManager
 }
+
+export interface IMessage {
+  id: number | string,
+  message: string,
+  type: 'danger' | 'warning' | 'success' | ''
+}
