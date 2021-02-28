@@ -1,5 +1,6 @@
 import { AuthManager } from '../services/AuthManager';
 import { MessageManager } from '../services/MessageManager';
+import { PixabayManager } from '../services/PixabayManager';
 import { PublicationsManager } from '../services/PublicationsManager';
 import { RouterManager } from '../services/RouterManager';
 import { ValidationManager } from '../services/ValidationManager';
@@ -44,6 +45,15 @@ export interface IMyPublicationsProps {
   routerManager: RouterManager,
   publicationsManager: PublicationsManager,
   authManager: AuthManager
+}
+
+export interface IDetailsProps {
+  routerManager: RouterManager,
+  authManager: AuthManager,
+  publicationsManager: PublicationsManager,
+  validationManager: ValidationManager,
+  messageManager: MessageManager,
+  pixabayManager: PixabayManager
 }
 
 export interface IAppProps {
