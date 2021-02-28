@@ -5,7 +5,7 @@ import { action, makeObservable, observable } from 'mobx';
 import { history } from '../App';
 
 // Interfaces
-import { IRoute, IAppPage } from '../interfaces/interfaces';
+import { IRoute, IAppPage, IFabMenuItem } from '../interfaces/interfaces';
 
 // Components
 import { Login } from '../pages/Login';
@@ -27,6 +27,7 @@ import { ValidationManager } from './ValidationManager';
 import { MessageManager } from './MessageManager';
 import { PublicationsManager } from './PublicationsManager';
 import { PixabayManager } from './PixabayManager';
+import { ChatManager } from './ChatManager';
 
 // Icons
 import {
@@ -41,7 +42,6 @@ import {
   personOutline,
   personSharp
 } from 'ionicons/icons';
-import { ChatManager } from './ChatManager';
 
 
 @injectable()
@@ -51,6 +51,9 @@ export class RouterManager {
 
   @observable
   menu: IAppPage[] = []
+
+  @observable
+  fabMenu: IFabMenuItem[] = []
 
   @observable
   isAuth: boolean = true;
@@ -88,6 +91,7 @@ export class RouterManager {
   init() {
     this.setRoutes();
     this.setMenu();
+    this.setFabMenu();
     this.pathname = history.location.pathname
 
     history.listen(location => {
@@ -110,12 +114,12 @@ export class RouterManager {
   }
 
   @action
-  setPathname (path: string) {
+  setPathname(path: string) {
     this.pathname = path;
   }
 
   @action
-  push (route: string) {
+  push(route: string) {
     history.push(route);
   }
 
@@ -262,6 +266,30 @@ export class RouterManager {
         url: '/account',
         iosIcon: personOutline,
         mdIcon: personSharp
+      }
+    ]
+  }
+
+  @action
+  setFabMenu() {
+    this.fabMenu = [
+      {
+        id: 1,
+        route: '/search',
+        iosIcon: searchOutline,
+        mdIcon: searchOutline
+      },
+      {
+        id: 2,
+        route: '/createPublication',
+        iosIcon: addOutline,
+        mdIcon: addOutline
+      },
+      {
+        id: 3,
+        route: '/account',
+        iosIcon: personOutline,
+        mdIcon: personOutline
       }
     ]
   }

@@ -5,7 +5,7 @@ import { createBrowserHistory } from 'history';
 // Components
 import { IonApp, IonContent, IonToast } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { Outlet } from './containers/Outlet';
+import { Outlet } from './components/Outlet';
 import { Menu } from './components/Menu';
 import { LoadingPage } from './pages/LoadingPage';
 import FabMenu from './containers/FabMenu';
@@ -36,7 +36,7 @@ export const App = observer(({ routerManager }: IAppProps) => {
 
           <LoadingPage isOpen={routerManager.authManager.isLoading || routerManager.publicationsManager.isLoading} />
 
-          {!routerManager.pathname.includes('chat') && <FabMenu />}
+          {!routerManager.pathname.includes('chat') && <FabMenu menu={routerManager.fabMenu} />}
 
           {routerManager.messageManager.messages.map(message => {
             return (

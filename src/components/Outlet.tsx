@@ -6,7 +6,7 @@ import { IonRouterOutlet } from '@ionic/react';
 import { Route } from 'react-router-dom';
 
 // Managers
-import { RouterManager } from '../../services/RouterManager';
+import { RouterManager } from '../services/RouterManager';
 
 
 export const Outlet = observer(({ routerManager }: { routerManager: RouterManager }) => {
