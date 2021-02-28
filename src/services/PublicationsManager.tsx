@@ -1,6 +1,7 @@
 import { inject, injectable } from 'inversify';
 import { action, makeObservable, observable } from 'mobx';
 import { firestore } from '../config/firebase';
+import { v4 as uuidv4 } from 'uuid';
 
 // Interfaces
 import { IPublication, IGetPublications } from '../interfaces/interfaces';
@@ -10,12 +11,16 @@ import Types from '../Types';
 
 // Managers
 import { MessageManager } from './MessageManager';
+import { AuthManager } from './AuthManager';
 
 
 @injectable()
 export class PublicationsManager {
   @inject(Types.MessageManager)
   messageManager!: MessageManager;
+
+  @inject(Types.AuthManager)
+  authManager!: AuthManager;
 
   @observable
   isLoading: boolean = false;
@@ -35,13 +40,33 @@ export class PublicationsManager {
   }
 
   @action
-  savePublication (data: IPublication) {
+  save (data: IPublication) {
     this.startLoading();
+
+    const newData = { ...data };
+
+    if (!newData.id) {
+      newData.id = uuidv4()
+    }
+
+    if (newData.creatorId && newData.creatorId !== this.authManager.user!.uid) {
+      return Promise.reject(new Error('You dont have permissions to edit publication!'))
+        .catch(err => {
+          this.messageManager.addErrorMessage(err.message);
+        })
+        .finally(() => {
+          this.stopLoading()
+        })
+    }
+
+    if (!newData.creatorId) {
+      newData.creatorId = this.authManager.user!.uid;
+    }
 
     return firestore
       .collection('publications')
-      .doc(data.id)
-      .set(data)
+      .doc(newData.id)
+      .set(newData)
       .then(res => {
         this.messageManager.addMessage('Successful submited!');
 

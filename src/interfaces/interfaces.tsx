@@ -47,6 +47,14 @@ export interface IMyPublicationsProps {
   authManager: AuthManager
 }
 
+export interface ICreatePublicationProps {
+  routerManager: RouterManager,
+  publicationsManager: PublicationsManager,
+  authManager: AuthManager,
+  validationManager: ValidationManager,
+  messageManager: MessageManager
+}
+
 export interface IDetailsProps {
   routerManager: RouterManager,
   authManager: AuthManager,

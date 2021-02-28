@@ -171,7 +171,11 @@ export class RouterManager {
         path: '/createPublication',
         Component: CreatePublication,
         props: {
-          routerManager: this
+          routerManager: this,
+          authManager: this.authManager,
+          publicationsManager: this.publicationsManager,
+          validationManager: this.validationManager,
+          messageManager: this.messageManager
         }
       },
       {

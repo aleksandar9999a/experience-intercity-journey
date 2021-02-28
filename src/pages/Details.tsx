@@ -68,7 +68,7 @@ export const Details = observer(({ routerManager, validationManager, messageMana
 			return;
 		}
 
-		return publicationsManager.savePublication(publication as IPublication);
+		return publicationsManager.save(publication as IPublication);
 	}
 
 	function remove() {
