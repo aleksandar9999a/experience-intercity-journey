@@ -5,13 +5,16 @@ import { defineCustomElements } from '@ionic/pwa-elements/loader';
 import * as serviceWorker from './serviceWorker';
 
 // Main Component
-import App from './App';
+import { App } from './App';
 
 // Routes Manager - inject routes, components, dependencies
 import { routerManager } from './Container';
 
 // Styles
 import './Styles';
+
+// Init routes
+routerManager.init();
 
 // Define ionic web components
 defineCustomElements(window);
