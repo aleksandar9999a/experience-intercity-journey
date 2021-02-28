@@ -1,11 +1,15 @@
 import React from 'react';
-import { IonRouterOutlet } from '@ionic/react';
-import { Route } from 'react-router-dom';
-import { RouterManager } from '../../services/RouterManager';
 import { observer } from 'mobx-react';
 
+// Components
+import { IonRouterOutlet } from '@ionic/react';
+import { Route } from 'react-router-dom';
 
-const Outlet = observer(({ routerManager }: { routerManager: RouterManager }) => {
+// Managers
+import { RouterManager } from '../../services/RouterManager';
+
+
+export const Outlet = observer(({ routerManager }: { routerManager: RouterManager }) => {
     return (
         <IonRouterOutlet id="main">
             {routerManager.routes.map(({ id, path, Component, props }) => {
@@ -14,5 +18,3 @@ const Outlet = observer(({ routerManager }: { routerManager: RouterManager }) =>
         </IonRouterOutlet>
     )
 })
-
-export default Outlet;

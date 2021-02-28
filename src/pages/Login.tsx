@@ -1,13 +1,29 @@
 import React, { useState } from 'react';
-import { IonInput, IonLabel, IonItem, IonButton, IonIcon, IonPage, IonContent, IonList } from '@ionic/react';
-import { submitLogin } from '../../services/auth';
-import { submitMessage } from '../../services/toast';
-import isEmail from 'validator/lib/isEmail';
-import { arrowForward } from 'ionicons/icons';
-import Logo from '../../components/Logo';
-import './style.css';
-import { ILoginProps } from '../../interfaces/interfaces';
 import { observer } from 'mobx-react';
+
+// Components
+import Logo from '../components/Logo';
+import {
+  IonInput,
+  IonLabel,
+  IonItem,
+  IonButton,
+  IonIcon,
+  IonPage,
+  IonContent,
+  IonList
+} from '@ionic/react';
+
+import { submitMessage } from '../services/toast';
+
+// Validations
+import isEmail from 'validator/lib/isEmail';
+
+// Icons
+import { arrowForward } from 'ionicons/icons';
+
+// Interfaces
+import { ILoginProps } from '../interfaces/interfaces';
 
 export const Login = observer(({ authManager }: ILoginProps) => {
   const [email, setEmail] = useState<string>('');
@@ -62,7 +78,7 @@ export const Login = observer(({ authManager }: ILoginProps) => {
               Password
             </IonLabel>
 
-            <IonInput type="password" value={password} onIonChange={handlePassword}></IonInput>
+            <IonInput type="password" value={password} onIonChange={handlePassword} />
           </IonItem>
 
           <IonButton color="success" fill="outline" className="login-btn" onClick={submit}>

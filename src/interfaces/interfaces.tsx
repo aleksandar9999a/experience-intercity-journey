@@ -1,4 +1,5 @@
 import { AuthManager } from "../services/AuthManager";
+import { RouterManager } from "../services/RouterManager";
 
 export interface IQuery {
   per_page?: number,
@@ -18,4 +19,8 @@ export interface IRoute {
 
 export interface ILoginProps {
   authManager: AuthManager
+}
+
+export interface IAppProps {
+  routerManager: RouterManager
 }

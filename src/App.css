@@ -17,3 +17,23 @@
 .title {
     text-align: center;
 }
+
+.login-list {
+    position: relative;
+}
+
+.register-route {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 0;
+    display: flex;
+}
+
+.login-btn {
+   display: flex;
+    --border-width: 0;
+    font-size: 20px;
+    left: 0;
+    right: 0;
+    margin: 50px;
+}
