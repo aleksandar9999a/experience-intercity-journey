@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
 
 // Components
-import MessageItem from '../components/MessageItem';
+import { MessageItem } from '../components/MessageItem';
 import {
     IonList,
     IonListHeader,
@@ -38,7 +38,7 @@ export const Messages = observer(({ authManager, chatManager }: IMessagesProps) 
 
                     <div>
                         {messages.map(chat => {
-                            return <MessageItem key={chat.id} id={chat.id} members={chat.members} />
+                            return <MessageItem key={chat.id} id={chat.id} members={chat.members} authManager={authManager} />
                         })}
                     </div>
                 </IonList>

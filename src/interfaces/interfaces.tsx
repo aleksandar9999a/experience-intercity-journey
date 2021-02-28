@@ -94,6 +94,13 @@ export interface IChatItem {
   creatorId: string
 }
 
+export interface IMessageItem {
+  id: string, 
+  creatorId?: string, 
+  members: string[],
+  authManager: AuthManager
+}
+
 export interface IUser {
   firstName: string,
   lastName: string,
