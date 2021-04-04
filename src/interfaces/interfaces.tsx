@@ -1,8 +1,8 @@
-import { AuthManager } from '../services/AuthManager';
-import { ChatManager } from '../services/ChatManager';
-import { MessageManager } from '../services/MessageManager';
-import { PixabayManager } from '../services/PixabayManager';
-import { PublicationsManager } from '../services/PublicationsManager';
+import { UserService } from '../services/user-service';
+import { ChatService } from '../services/chat-service';
+import { MessageService } from '../services/message-service';
+import { PixabayService } from '../services/pixabay-service';
+import { PublicationsService } from '../services/publications-service';
 import { RouterManager } from '../services/RouterManager';
 import { ValidationManager } from '../services/ValidationManager';
 
@@ -48,71 +48,71 @@ export interface IChat {
 
 export interface IChatProps {
   routerManager: RouterManager,
-  authManager: AuthManager,
-  chatManager: ChatManager
+  userService: UserService,
+  chatService: ChatService
 }
 
 export interface ILoginProps {
-  authManager: AuthManager,
+  userService: UserService,
   validationManager: ValidationManager,
   routerManager: RouterManager,
-  messageManager: MessageManager
+  messageService: MessageService
 }
 
 export interface IRegisterProps {
-  authManager: AuthManager,
+  userService: UserService,
   validationManager: ValidationManager,
   routerManager: RouterManager,
-  messageManager: MessageManager
+  messageService: MessageService
 }
 
 export interface ISearchProps {
   routerManager: RouterManager,
-  publicationsManager: PublicationsManager
-  pixabayManager: PixabayManager
+  publicationsService: PublicationsService
+  pixabayService: PixabayService
 }
 
 export interface IMyPublicationsProps {
   routerManager: RouterManager,
-  publicationsManager: PublicationsManager,
-  authManager: AuthManager,
-  pixabayManager: PixabayManager
+  publicationsService: PublicationsService,
+  userService: UserService,
+  pixabayService: PixabayService
 }
 
 export interface IPublicationListItemProps {
   data: IPublication,
-  pixabayManager: PixabayManager
+  pixabayService: PixabayService
 }
 
 export interface ICreatePublicationProps {
   routerManager: RouterManager,
-  publicationsManager: PublicationsManager,
-  authManager: AuthManager,
+  publicationsService: PublicationsService,
+  userService: UserService,
   validationManager: ValidationManager,
-  messageManager: MessageManager
+  messageService: MessageService
 }
 
 export interface IDetailsProps {
   routerManager: RouterManager,
-  authManager: AuthManager,
-  publicationsManager: PublicationsManager,
+  userService: UserService,
+  publicationsService: PublicationsService,
   validationManager: ValidationManager,
-  messageManager: MessageManager,
-  pixabayManager: PixabayManager,
-  chatManager: ChatManager
+  messageService: MessageService,
+  pixabayService: PixabayService,
+  chatService: ChatService
 }
 
 export interface IAccountProps {
   routerManager: RouterManager,
-  authManager: AuthManager,
+  userService: UserService,
   validationManager: ValidationManager,
-  messageManager: MessageManager
+  messageService: MessageService
 }
 
 export interface IMessagesProps {
   routerManager: RouterManager,
-  chatManager: ChatManager,
-  authManager: AuthManager,
+  chatService: ChatService,
+  userService: UserService,
 }
 
 export interface IAppProps {
@@ -160,7 +160,7 @@ export interface IMessageItem {
   id: string, 
   creatorId?: string, 
   members: string[],
-  authManager: AuthManager
+  userService: UserService
 }
 
 export interface IUser {
@@ -175,7 +175,7 @@ export interface IUser {
 
 export interface IMenuProps {
   menu: IAppPage[],
-  authManager: AuthManager,
+  userService: UserService,
   routerManager: RouterManager
 }
 

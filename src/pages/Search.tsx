@@ -28,7 +28,7 @@ import { refreshOutline } from 'ionicons/icons';
 import { IPublication, ISearchProps } from '../interfaces/interfaces';
 
 
-export const Search = observer(({ publicationsManager, pixabayManager }: ISearchProps) => {
+export const Search = observer(({ publicationsService, pixabayService }: ISearchProps) => {
   const [publications, setPublications] = useState<IPublication[]>([]);
   const [search, setSearch] = useState<string>('');
   const [searchBy, setSearchBy] = useState<string>('to');
@@ -39,7 +39,7 @@ export const Search = observer(({ publicationsManager, pixabayManager }: ISearch
   }, [])
 
   function loadPublications () {
-    return publicationsManager.getMany({ search, opStr, searchBy })
+    return publicationsService.getMany({ search, opStr, searchBy })
       .then(items => {
         setPublications(items as IPublication[]);
 
@@ -108,16 +108,16 @@ export const Search = observer(({ publicationsManager, pixabayManager }: ISearch
           </IonToolbar>
         </IonHeader>
 
-        {publicationsManager.isLoading && (
+        {publicationsService.isLoading && (
           <div className="loading-publications">
             <IonSpinner className="spinner" />
           </div>
         )}
 
-        {!publicationsManager.isLoading && (
+        {!publicationsService.isLoading && (
           <IonList>
             {publications.map(x => {
-              return <PublicationListItem key={x.id} data={x} pixabayManager={pixabayManager} />
+              return <PublicationListItem key={x.id} data={x} pixabayService={pixabayService} />
             })}
           </IonList>
         )}

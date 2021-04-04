@@ -14,7 +14,7 @@ import {
 import { IRegisterProps } from '../interfaces/interfaces';
 
 
-export const Register = observer(({ authManager, validationManager, messageManager }: IRegisterProps) => {
+export const Register = observer(({ userService, validationManager, messageService }: IRegisterProps) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [rePassword, setRePassword] = useState<string>('');
@@ -23,14 +23,13 @@ export const Register = observer(({ authManager, validationManager, messageManag
   const [lastName, setLastName] = useState<string>('');
 
   function submit() {
-    const error = validationManager.getRegisterError(email, password, rePassword, city, firstName, lastName);
-
-    if (error) {
-      messageManager.addErrorMessage(error);
-      return;
-    }
-
-    return authManager.registered({ email, password, city, firstName, lastName });
+    return validationManager.getRegisterError(email, password, rePassword, city, firstName, lastName)
+      .then(_ => {
+        return userService.registered({ email, password, city, firstName, lastName });
+      })
+      .catch(error => {
+        messageService.addErrorMessage(error.message);
+      })
   }
 
   function handleEmail(e: any) {

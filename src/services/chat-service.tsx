@@ -1,26 +1,22 @@
 import { injectable, inject } from 'inversify';
 import { action, makeObservable } from 'mobx';
-import { firestore } from './../config/firebase';
+import { firestore } from '../config/firebase';
 import { v4 as uuidv4 } from 'uuid';
 
 // Types
 import Types from '../Types';
 
 // Managers
-import { MessageManager } from './MessageManager';
-import { AuthManager } from './AuthManager';
+import { UserService } from './user-service';
 
 // Interfaces
 import { IChatItem, IChat } from '../interfaces/interfaces';
 
 
 @injectable()
-export class ChatManager {
-  @inject(Types.MessageManager)
-  messageManager!: MessageManager;
-
-  @inject(Types.AuthManager)
-  authManager!: AuthManager;
+export class ChatService {
+  @inject(Types.UserService)
+  userService!: UserService;
 
   constructor () {
     makeObservable(this);
@@ -30,7 +26,7 @@ export class ChatManager {
   createChat (members: string[]) {
     const chat = {
       id: uuidv4(),
-      creatorId: this.authManager.user!.uid,
+      creatorId: this.userService.user!.uid,
       members,
       lastUpdate: new Date()
     }
@@ -62,7 +58,7 @@ export class ChatManager {
   sendMessage (id: string, message: string) {
     const newMessage = {
       id: uuidv4(),
-      creatorId: this.authManager.user!.uid,
+      creatorId: this.userService.user!.uid,
       message,
       created: new Date()
     }
@@ -99,7 +95,7 @@ export class ChatManager {
   getMessages () {
     return firestore
       .collection('chat')
-      .where('members', 'array-contains-any', [this.authManager.user!.uid])
+      .where('members', 'array-contains-any', [this.userService.user!.uid])
       .orderBy('lastUpdate', 'desc')
       .get()
       .then(snapshot => {

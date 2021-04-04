@@ -10,21 +10,21 @@ import { IUser, IMessageItem } from '../interfaces/interfaces';
 import assets from '../config/assets';
 
 
-export const MessageItem: React.FC<IMessageItem> = ({ id, members, authManager }) => {
+export const MessageItem: React.FC<IMessageItem> = ({ id, members, userService }) => {
     const [userdata, setUserdate] = useState<IUser>();
 
     useEffect(() => {
-        if (!authManager.user) {
+        if (!userService.user) {
             return;
         }
 
-        const secondUser = members.find(member => member !== authManager.user!.uid) as string;
+        const secondUser = members.find(member => member !== userService.user!.uid) as string;
 
-        authManager.getUserdata(secondUser)
+        userService.getUserdata(secondUser)
             .then(data => {
                 setUserdate(data);
             })
-    }, [authManager.user, members])
+    }, [userService.user, members])
 
     return (
         <IonItem routerLink={`/chat/${id}`}>

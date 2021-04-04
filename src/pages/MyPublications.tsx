@@ -17,11 +17,11 @@ import {
 import { IMyPublicationsProps, IPublication } from '../interfaces/interfaces';
 
 
-export const MyPublications = observer(({ authManager, publicationsManager, pixabayManager }: IMyPublicationsProps) => {
+export const MyPublications = observer(({ userService, publicationsService, pixabayService }: IMyPublicationsProps) => {
     const [publications, setPublications] = useState<IPublication[]>([]);
 
     useEffect(() => {
-        publicationsManager.getMany({ searchBy: 'creatorId', opStr: '==', search: authManager.user!.uid })
+        publicationsService.getMany({ searchBy: 'creatorId', opStr: '==', search: userService.user!.uid })
             .then(items => {
                 setPublications(items as IPublication[]);
             })
@@ -38,16 +38,16 @@ export const MyPublications = observer(({ authManager, publicationsManager, pixa
                     </IonToolbar>
                 </IonHeader>
 
-                {publicationsManager.isLoading && (
+                {publicationsService.isLoading && (
                     <div className="loading-publications">
                         <IonSpinner className="spinner" />
                     </div>
                 )}
 
-                {!publicationsManager.isLoading && (
+                {!publicationsService.isLoading && (
                     <IonList>
                         {publications.map(x => {
-                            return <PublicationListItem key={x.id} data={x} pixabayManager={pixabayManager} />
+                            return <PublicationListItem key={x.id} data={x} pixabayService={pixabayService} />
                         })}
                     </IonList>
                 )}

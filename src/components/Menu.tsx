@@ -27,11 +27,11 @@ import assets from '../config/assets';
 import { IMenuProps, IUser } from '../interfaces/interfaces';
 
 
-export const Menu = observer(({ menu, authManager, routerManager }: IMenuProps) => {
-  const userdata = authManager.userdata as IUser;
+export const Menu = observer(({ menu, userService, routerManager }: IMenuProps) => {
+  const userdata = userService.userdata as IUser;
 
   function out() {
-    authManager.logout();
+    userService.logout();
   }
 
   return (

@@ -20,7 +20,7 @@ import assets from '../config/assets';
 import { IAccountProps } from '../interfaces/interfaces';
 
 
-export const Account = observer(({ authManager, validationManager, messageManager }: IAccountProps) => {
+export const Account = observer(({ userService, validationManager, messageService }: IAccountProps) => {
   const [firstName, setFirstName] = useState<string>('');
   const [lastName, setLastName] = useState<string>('');
   const [city, setCity] = useState<string>('');
@@ -28,18 +28,18 @@ export const Account = observer(({ authManager, validationManager, messageManage
   const [image, setImage] = useState<string>('');
 
   useEffect(() => {
-    if (!authManager.userdata) {
+    if (!userService.userdata) {
       return;
     };
 
-    const userdata = { ...authManager.userdata };
+    const userdata = { ...userService.userdata };
 
     setFirstName(userdata.firstName);
     setLastName(userdata.lastName);
     setCity(userdata.city);
     setDarkMode(userdata.darkMode);
     setImage(userdata.image || '');
-  }, [authManager.userdata]);
+  }, [userService.userdata]);
 
   function handleFirstName(e: any) {
     setFirstName(e.target.value);
@@ -54,33 +54,32 @@ export const Account = observer(({ authManager, validationManager, messageManage
   }
   
   function handleDarkMode(e: any) {
-    return authManager.updateOneFieldFromMyProfile('darkMode', e.target.checked)
+    return userService.updateOneFieldFromMyProfile('darkMode', e.target.checked)
   }
 
   function handleFile(e: any) {
     if (!e.target || !e.target.files || !e.target.files[0].type.includes('image')) {
-      messageManager.addErrorMessage('Invalid Image!');
+      messageService.addErrorMessage('Invalid Image!');
       return;
     }
 
-    return authManager.saveProfileImage(e.target.files[0] as File);
+    return userService.saveProfileImage(e.target.files[0] as File);
   }
 
   function submit() {
-    const error = validationManager.getUserdataError({ firstName, lastName, city });
-
-    if (error) {
-      messageManager.addErrorMessage(error);
-      return;
-    }
-
-    const data = [
-      { field: 'firstName', value: firstName },
-      { field: 'lastName', value: lastName },
-      { field: 'city', value: city },
-    ]
-
-    return authManager.updateMultiplyFieldsFromMyProfile(data);
+    return validationManager.getUserdataError({ firstName, lastName, city })
+      .then(_ => {
+        const data = [
+          { field: 'firstName', value: firstName },
+          { field: 'lastName', value: lastName },
+          { field: 'city', value: city },
+        ]
+    
+        return userService.updateMultiplyFieldsFromMyProfile(data);
+      })
+      .catch(err => {
+        messageService.addErrorMessage(err.message);
+      })
   }
 
   return (

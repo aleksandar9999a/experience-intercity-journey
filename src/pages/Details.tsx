@@ -30,7 +30,7 @@ import {
 import assets from '../config/assets';
 
 
-export const Details = observer(({ routerManager, validationManager, messageManager, publicationsManager, authManager, pixabayManager, chatManager }: IDetailsProps) => {
+export const Details = observer(({ routerManager, validationManager, messageService, publicationsService, userService, pixabayService, chatService }: IDetailsProps) => {
 	const { id } = useParams<{ id: string }>();
 	const [publication, setPublication] = useState<IPublication | null>(null);
 	const [image, setImage] = useState<IPixabayImage>();
@@ -62,45 +62,44 @@ export const Details = observer(({ routerManager, validationManager, messageMana
 	}
 
 	function submit() {
-		const error = validationManager.getPublicationError(publication);
-
-		if (error) {
-			messageManager.addErrorMessage(error);
-			return;
-		}
-
-		return publicationsManager.save(publication as IPublication);
+		return validationManager.getPublicationError(publication)
+			.then(_ => {
+				return publicationsService.save(publication as IPublication);
+			})
+			.catch(error => {
+				messageService.addErrorMessage(error.message);
+			})
 	}
 
 	function remove() {
-		return publicationsManager.delete(id)
+		return publicationsService.delete(id)
 			.then(() => {
 				routerManager.push(`/search`);
 			});
 	}
 
 	function openChatBox() {
-		return chatManager.openChatByMembers([authManager.user!.uid, publication!.creatorId as string])
+		return chatService.openChatByMembers([userService.user!.uid, publication!.creatorId as string])
 			.then(data => {
 				routerManager.push(`/chat/${(data as IChat).id}`)
 			});
 	}
 
 	useEffect(() => {
-		publicationsManager.get(id)
+		publicationsService.get(id)
 			.then(publication => {
 				setPublication(publication as IPublication);
-				const isCreator = (publication as IPublication).creatorId === authManager.user!.uid;
+				const isCreator = (publication as IPublication).creatorId === userService.user!.uid;
 				setIsCreator(isCreator);
 
 				if (!isCreator) {
-					authManager.getUserdata((publication as IPublication).creatorId as string)
+					userService.getUserdata((publication as IPublication).creatorId as string)
 						.then(user => {
 							setCreatorData(user);
 						})
 				}
 
-				pixabayManager.getImage({ q: (publication as IPublication).to })
+				pixabayService.getImage({ q: (publication as IPublication).to })
 					.then(res => {
 						if (!res) {
 							return;

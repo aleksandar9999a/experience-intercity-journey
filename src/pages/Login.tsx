@@ -20,19 +20,18 @@ import { arrowForward } from 'ionicons/icons';
 // Interfaces
 import { ILoginProps } from '../interfaces/interfaces';
 
-export const Login = observer(({ authManager, validationManager, messageManager }: ILoginProps) => {
+export const Login = observer(({ userService, validationManager, messageService }: ILoginProps) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
   function submit() {
-    const error = validationManager.getLoginError(email, password);
-
-    if (error) {
-      messageManager.addErrorMessage(error);
-      return;
-    }
-
-    authManager.login(email, password);
+    return validationManager.getLoginError(email, password)
+      .then(_ => {
+        return userService.login(email, password);
+      })
+      .catch(error => {
+        messageService.addErrorMessage(error.message);
+      })
   }
 
   function handleEmail(e: any) {

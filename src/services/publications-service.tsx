@@ -10,17 +10,17 @@ import { IPublication, IGetPublications } from '../interfaces/interfaces';
 import Types from '../Types';
 
 // Managers
-import { MessageManager } from './MessageManager';
-import { AuthManager } from './AuthManager';
+import { MessageService } from './message-service';
+import { UserService } from './user-service';
 
 
 @injectable()
-export class PublicationsManager {
-  @inject(Types.MessageManager)
-  messageManager!: MessageManager;
+export class PublicationsService {
+  @inject(Types.MessageService)
+  messageService!: MessageService;
 
-  @inject(Types.AuthManager)
-  authManager!: AuthManager;
+  @inject(Types.UserService)
+  userService!: UserService;
 
   @observable
   isLoading: boolean = false;
@@ -49,10 +49,10 @@ export class PublicationsManager {
       newData.id = uuidv4()
     }
 
-    if (newData.creatorId && newData.creatorId !== this.authManager.user!.uid) {
+    if (newData.creatorId && newData.creatorId !== this.userService.user!.uid) {
       return Promise.reject(new Error('You dont have permissions to edit publication!'))
         .catch(err => {
-          this.messageManager.addErrorMessage(err.message);
+          this.messageService.addErrorMessage(err.message);
         })
         .finally(() => {
           this.stopLoading()
@@ -60,7 +60,7 @@ export class PublicationsManager {
     }
 
     if (!newData.creatorId) {
-      newData.creatorId = this.authManager.user!.uid;
+      newData.creatorId = this.userService.user!.uid;
     }
 
     return firestore
@@ -68,12 +68,12 @@ export class PublicationsManager {
       .doc(newData.id)
       .set(newData)
       .then(res => {
-        this.messageManager.addMessage('Successful submited!');
+        this.messageService.addMessage('Successful submited!');
 
         return res
       })
       .catch(err => {
-        this.messageManager.addErrorMessage(err.message);
+        this.messageService.addErrorMessage(err.message);
       })
       .finally(() => {
         this.stopLoading()
@@ -96,7 +96,7 @@ export class PublicationsManager {
           return doc.data() as IPublication;
       })
       .catch(err => {
-        this.messageManager.addErrorMessage(err.message);
+        this.messageService.addErrorMessage(err.message);
       })
       .finally(() => {
         this.stopLoading()
@@ -115,7 +115,7 @@ export class PublicationsManager {
           return snapshot.docs.map(doc => doc.data() as IPublication) as IPublication[];
       })
       .catch(err => {
-        this.messageManager.addErrorMessage(err.message);
+        this.messageService.addErrorMessage(err.message);
       })
       .finally(() => {
         this.stopLoading()
@@ -128,12 +128,12 @@ export class PublicationsManager {
       .doc(id)
       .delete()
       .then(res => {
-        this.messageManager.addMessage('Successfull deleted!');
+        this.messageService.addMessage('Successfull deleted!');
 
         return res;
       })
       .catch(err => {
-        this.messageManager.addErrorMessage(err.message);
+        this.messageService.addErrorMessage(err.message);
       })
       .finally(() => {
         this.stopLoading()

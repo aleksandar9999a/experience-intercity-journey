@@ -22,12 +22,12 @@ import { Account } from '../pages/Account';
 import type from '../Types';
 
 // Managers
-import { AuthManager } from './AuthManager';
+import { UserService } from './user-service';
 import { ValidationManager } from './ValidationManager';
-import { MessageManager } from './MessageManager';
-import { PublicationsManager } from './PublicationsManager';
-import { PixabayManager } from './PixabayManager';
-import { ChatManager } from './ChatManager';
+import { MessageService } from './message-service';
+import { PublicationsService } from './publications-service';
+import { PixabayService } from './pixabay-service';
+import { ChatService } from './chat-service';
 
 // Icons
 import {
@@ -64,24 +64,25 @@ export class RouterManager {
   @inject(type.ValidationManager)
   validationManager!: ValidationManager;
 
-  @inject(type.MessageManager)
-  messageManager!: MessageManager;
+  @inject(type.MessageService)
+  messageService!: MessageService;
 
-  @inject(type.AuthManager)
-  authManager!: AuthManager;
+  @inject(type.UserService)
+  userService!: UserService;
 
-  @inject(type.PublicationsManager)
-  publicationsManager!: PublicationsManager;
+  @inject(type.PublicationsService)
+  publicationsService!: PublicationsService;
 
-  @inject(type.PixabayManager)
-  pixabayManager!: PixabayManager;
+  @inject(type.PixabayService)
+  pixabayService!: PixabayService;
 
-  @inject(type.ChatManager)
-  chatManager!: ChatManager;
+  @inject(type.ChatService)
+  chatService!: ChatService;
 
   authPage = '/search';
   unauthPage = '/login';
   unauthPages = ['/login', '/register'];
+  routesWithoutFabMenu = ['chat', 'login', 'register'];
 
   constructor() {
     makeObservable(this);
@@ -98,8 +99,8 @@ export class RouterManager {
       this.setPathname(location.pathname);
     })
 
-    this.authManager.userObserver.subscribe(user => {
-      if (this.authManager.isLoading) {
+    this.userService.userObserver.subscribe(user => {
+      if (this.userService.isLoading) {
         return;
       }
 
@@ -132,9 +133,9 @@ export class RouterManager {
         Component: Account,
         props: {
           routerManager: this,
-          messageManager: this.messageManager,
+          messageService: this.messageService,
           validationManager: this.validationManager,
-          authManager: this.authManager
+          userService: this.userService
         }
       },
       {
@@ -143,9 +144,9 @@ export class RouterManager {
         Component: MyPublications,
         props: {
           routerManager: this,
-          publicationsManager: this.publicationsManager,
-          authManager: this.authManager,
-          pixabayManager: this.pixabayManager
+          publicationsService: this.publicationsService,
+          userService: this.userService,
+          pixabayService: this.pixabayService
         }
       },
       {
@@ -153,10 +154,10 @@ export class RouterManager {
         path: '/login',
         Component: Login,
         props: {
-          authManager: this.authManager,
+          userService: this.userService,
           routerManager: this,
           validationManager: this.validationManager,
-          messageManager: this.messageManager
+          messageService: this.messageService
         }
       },
       {
@@ -164,10 +165,10 @@ export class RouterManager {
         path: '/register',
         Component: Register,
         props: {
-          authManager: this.authManager,
+          userService: this.userService,
           routerManager: this,
           validationManager: this.validationManager,
-          messageManager: this.messageManager
+          messageService: this.messageService
         }
       },
       {
@@ -176,8 +177,8 @@ export class RouterManager {
         Component: Search,
         props: {
           routerManager: this,
-          publicationsManager: this.publicationsManager,
-          pixabayManager: this.pixabayManager
+          publicationsService: this.publicationsService,
+          pixabayService: this.pixabayService
         }
       },
       {
@@ -186,10 +187,10 @@ export class RouterManager {
         Component: CreatePublication,
         props: {
           routerManager: this,
-          authManager: this.authManager,
-          publicationsManager: this.publicationsManager,
+          userService: this.userService,
+          publicationsService: this.publicationsService,
           validationManager: this.validationManager,
-          messageManager: this.messageManager
+          messageService: this.messageService
         }
       },
       {
@@ -198,8 +199,8 @@ export class RouterManager {
         Component: Messages,
         props: {
           routerManager: this,
-          chatManager: this.chatManager,
-          authManager: this.authManager
+          chatService: this.chatService,
+          userService: this.userService
         }
       },
       {
@@ -208,12 +209,12 @@ export class RouterManager {
         Component: Details,
         props: {
           routerManager: this,
-          authManager: this.authManager,
-          publicationsManager: this.publicationsManager,
+          userService: this.userService,
+          publicationsService: this.publicationsService,
           validationManager: this.validationManager,
-          messageManager: this.messageManager,
-          pixabayManager: this.pixabayManager,
-          chatManager: this.chatManager
+          messageService: this.messageService,
+          pixabayService: this.pixabayService,
+          chatService: this.chatService
         }
       },
       {
@@ -222,8 +223,8 @@ export class RouterManager {
         Component: Chat,
         props: {
           routerManager: this,
-          authManager: this.authManager,
-          chatManager: this.chatManager
+          userService: this.userService,
+          chatService: this.chatService
         }
       }
     ];

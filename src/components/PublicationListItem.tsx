@@ -7,11 +7,11 @@ import { IonItem, IonLabel, IonAvatar } from '@ionic/react';
 import { IPublicationListItemProps, IPixabayImage } from '../interfaces/interfaces';
 
 
-export const PublicationListItem: React.FC<IPublicationListItemProps> = ({ data, pixabayManager }) => {
+export const PublicationListItem: React.FC<IPublicationListItemProps> = ({ data, pixabayService }) => {
     const [image, setImage] = useState<IPixabayImage>();
 
     useEffect(() => {
-        pixabayManager.getImage({ q: data.to })
+        pixabayService.getImage({ q: data.to })
             .then((res) => {
                 if (!res) {
                     return;

@@ -7,7 +7,7 @@ import { IMessage } from '../interfaces/interfaces';
 
 
 @injectable()
-export class MessageManager {
+export class MessageService {
   duration = 3000;
 
   @observable

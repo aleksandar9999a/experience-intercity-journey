@@ -1,11 +1,10 @@
 export default {
-  PixabayManager: Symbol.for('PixabayManager'),
+  PixabayService: Symbol.for('PixabayService'),
   PixabayConfig: Symbol.for('PixabayConfig'),
-  ErrorManager: Symbol.for('ErrorManager'),
   RouterManager: Symbol.for('RouterManager'),
-  AuthManager: Symbol.for('AuthManager'),
-  MessageManager: Symbol.for('MessageManager'),
+  UserService: Symbol.for('UserService'),
+  MessageService: Symbol.for('MessageService'),
   ValidationManager: Symbol.for('ValidationManager'),
-  PublicationsManager: Symbol.for('PublicationsManager'),
-  ChatManager: Symbol.for('ChatManager')
+  PublicationsService: Symbol.for('PublicationsService'),
+  ChatService: Symbol.for('ChatService')
 }

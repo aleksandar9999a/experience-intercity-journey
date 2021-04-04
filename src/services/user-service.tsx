@@ -1,7 +1,7 @@
 import { injectable, inject } from 'inversify';
 import { action, makeObservable, observable } from 'mobx';
 import { BehaviorSubject } from 'rxjs';
-import { auth, firestore, storage } from './../config/firebase';
+import { auth, firestore, storage } from '../config/firebase';
 import { v4 as uuidv4 } from 'uuid';
 
 // Interfaces
@@ -11,11 +11,11 @@ import { IUser, IRegistered } from '../interfaces/interfaces';
 import Types from '../Types';
 
 // Managers
-import { MessageManager } from './MessageManager';
+import { MessageService } from './message-service';
 
 
 @injectable()
-export class AuthManager {
+export class UserService {
   @observable
   isAuth: boolean = false;
 
@@ -30,8 +30,8 @@ export class AuthManager {
 
   userObserver = new BehaviorSubject<firebase.User | null>(null)
 
-  @inject(Types.MessageManager)
-  messageManager!: MessageManager;
+  @inject(Types.MessageService)
+  messageService!: MessageService;
 
   constructor () {
     makeObservable(this);
@@ -78,11 +78,11 @@ export class AuthManager {
       .doc(this.user!.uid)
       .update({ [key]: value })
       .then(data => {
-        this.messageManager.addMessage('Successful saved!');
+        this.messageService.addMessage('Successful saved!');
         return data
       })
       .catch(err => {
-        this.messageManager.addErrorMessage(err.message);
+        this.messageService.addErrorMessage(err.message);
 
         return err;
       })
@@ -104,7 +104,7 @@ export class AuthManager {
         return this.updateOneFieldFromMyProfile('image', url);
       })
       .catch(err => {
-        this.messageManager.addErrorMessage(err.message);
+        this.messageService.addErrorMessage(err.message);
 
         return err;
       })
@@ -117,11 +117,11 @@ export class AuthManager {
   updateMultiplyFieldsFromMyProfile (fields: { field: string, value: any }[]) {
     return Promise.all(fields.map(field => this.updateOneFieldFromMyProfile(field.field, field.value)))
       .then(data => {
-        this.messageManager.addMessage('Successful Updated!');
+        this.messageService.addMessage('Successful Updated!');
         return data
       })
       .catch(err => {
-        this.messageManager.addErrorMessage(err.message);
+        this.messageService.addErrorMessage(err.message);
 
         return err;
       })
@@ -138,7 +138,7 @@ export class AuthManager {
         return user.data() as IUser
       })
       .catch(err => {
-        this.messageManager.addErrorMessage(err.message);
+        this.messageService.addErrorMessage(err.message);
 
         return err;
       })
@@ -152,7 +152,7 @@ export class AuthManager {
     this.startLoading();
     return Promise.all(users.map(this.getUserdata.bind(this)))
       .catch(err => {
-        this.messageManager.addErrorMessage(err.message);
+        this.messageService.addErrorMessage(err.message);
 
         return err;
       })
@@ -179,12 +179,12 @@ export class AuthManager {
             return firestore.collection('users').doc(res.user?.uid).set(userdata);
         })
         .then(res => {
-          this.messageManager.addMessage('Successful Registered!');
+          this.messageService.addMessage('Successful Registered!');
 
           return res;
         })
         .catch(err => {
-          this.messageManager.addErrorMessage(err.message);
+          this.messageService.addErrorMessage(err.message);
 
           return err;
         })
@@ -199,12 +199,12 @@ export class AuthManager {
 
     return auth.signInWithEmailAndPassword(email, password)
       .then(res => {
-        this.messageManager.addMessage('Successful Login!');
+        this.messageService.addMessage('Successful Login!');
 
         return res;
       })
       .catch(err => {
-        this.messageManager.addErrorMessage(err.message);
+        this.messageService.addErrorMessage(err.message);
 
         return err;
       })
@@ -219,12 +219,12 @@ export class AuthManager {
 
     return auth.signOut()
       .then(res => {
-        this.messageManager.addMessage('Successful Logout!');
+        this.messageService.addMessage('Successful Logout!');
 
         return res;
       })
       .catch(err => {
-        this.messageManager.addErrorMessage(err.message);
+        this.messageService.addErrorMessage(err.message);
 
         return err;
       })

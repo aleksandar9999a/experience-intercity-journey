@@ -9,15 +9,15 @@ import { PixabayConfig } from '../config/PixabayConfig';
 import { IQuery } from '../interfaces/interfaces';
 
 // Managers
-import { ErrorManager } from './ErrorManager';
+import { MessageService } from './message-service';
 
 // Types
-import type from './../Types';
+import type from '../Types';
 
 @injectable()
-export class PixabayManager {
+export class PixabayService {
     @inject(type.PixabayConfig) private config!: PixabayConfig;
-    @inject(type.ErrorManager) private errorMananger!: ErrorManager;
+    @inject(type.MessageService) private messageService!: MessageService;
 
     getImage (query: IQuery = {}) {
         const newQuery = { ...query };
@@ -33,7 +33,7 @@ export class PixabayManager {
         return Axios
             .get(`${this.config.defaultURL}/?${qs.stringify(newQuery)}`)
             .catch(err => {
-                this.errorMananger.submitError(err);
+                this.messageService.addErrorMessage(err.message);
             })
     }
 }

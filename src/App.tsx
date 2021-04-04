@@ -18,7 +18,7 @@ export const history = createBrowserHistory();
 
 
 export const App = observer(({ routerManager }: IAppProps) => {
-  const userdata = routerManager.authManager.userdata
+  const userdata = routerManager.userService.userdata;
 
   return (
     <IonApp className={userdata && userdata.darkMode ? 'dark-mode' : ''}>
@@ -27,26 +27,26 @@ export const App = observer(({ routerManager }: IAppProps) => {
           {userdata && (
             <Menu
               menu={routerManager.menu}
-              authManager={routerManager.authManager}
+              userService={routerManager.userService}
               routerManager={routerManager}
             />
           )}
 
           <Outlet routerManager={routerManager} />
 
-          <LoadingPage isOpen={routerManager.authManager.isLoading || routerManager.publicationsManager.isLoading} />
+          <LoadingPage isOpen={routerManager.userService.isLoading || routerManager.publicationsService.isLoading} />
 
-          {!routerManager.pathname.includes('chat') && <FabMenu menu={routerManager.fabMenu} />}
+          {!routerManager.routesWithoutFabMenu.find(val => routerManager.pathname.includes(val)) && <FabMenu menu={routerManager.fabMenu} />}
 
-          {routerManager.messageManager.messages.map(message => {
+          {routerManager.messageService.messages.map(message => {
             return (
               <IonToast
                 key={message.id}
                 isOpen={true}
                 color={message.type}
-                onDidDismiss={() => routerManager.messageManager.remove(message.id)}
+                onDidDismiss={() => routerManager.messageService.remove(message.id)}
                 message={message.message}
-                duration={routerManager.messageManager.duration}
+                duration={routerManager.messageService.duration}
               />
             )
           })}

@@ -14,19 +14,19 @@ import {
 import { IMessagesProps, IChatItem } from '../interfaces/interfaces';
 
 
-export const Messages = observer(({ authManager, chatManager }: IMessagesProps) => {
+export const Messages = observer(({ userService, chatService }: IMessagesProps) => {
     const [messages, setMessages] = useState<IChatItem[]>([]);
 
     useEffect(() => {
-        if (!authManager.user) {
+        if (!userService.user) {
             return;
         }
 
-        chatManager.getMessages()
+        chatService.getMessages()
             .then(items => {
                 setMessages(items)
             })
-    }, [authManager.user])
+    }, [userService.user])
     
     return (
         <IonPage>
@@ -38,7 +38,7 @@ export const Messages = observer(({ authManager, chatManager }: IMessagesProps) 
 
                     <div>
                         {messages.map(chat => {
-                            return <MessageItem key={chat.id} id={chat.id} members={chat.members} authManager={authManager} />
+                            return <MessageItem key={chat.id} id={chat.id} members={chat.members} userService={userService} />
                         })}
                     </div>
                 </IonList>

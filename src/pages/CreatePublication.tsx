@@ -27,7 +27,7 @@ import assets from '../config/assets';
 import { ICreatePublicationProps } from './../interfaces/interfaces';
 
 
-export const CreatePublication = observer(({ validationManager, messageManager, publicationsManager, routerManager }: ICreatePublicationProps) => {
+export const CreatePublication = observer(({ validationManager, messageService, publicationsService, routerManager }: ICreatePublicationProps) => {
   const [from, setFrom] = useState<string>('');
   const [to, setTo] = useState<string>('');
   const [date, setDate] = useState<string>('');
@@ -56,17 +56,17 @@ export const CreatePublication = observer(({ validationManager, messageManager, 
 
   function submit() {
     const publication = { from, to, date, time, type };
-    const error = validationManager.getPublicationError(publication);
-    
-    if (error) {
-      messageManager.addErrorMessage(error);
-      return;
-    }
 
-    return publicationsManager.save(publication)
+    return validationManager.getPublicationError(publication)
+      .then(_ => {
+        return publicationsService.save(publication);
+      })
       .then(() => {
-        routerManager.push('/search')
-      });
+        routerManager.push('/search');
+      })
+      .catch(error => {
+        messageService.addErrorMessage(error.message);
+      })
   }
 
   return (

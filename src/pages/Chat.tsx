@@ -32,22 +32,22 @@ import { sendOutline } from 'ionicons/icons';
 import assets from '../config/assets';
 
 
-export const Chat = observer(({ chatManager, authManager }: IChatProps) => {
+export const Chat = observer(({ chatService, userService }: IChatProps) => {
 	const { id } = useParams<any>()
-	const chat = chatManager.getChat(id)
+	const chat = chatService.getChat(id)
 	const [messages, loadingMessages, errMessages] = useCollectionData<IChatMessage>(chat);
 	const [newMessage, setNewMessage] = useState<string>('');
 	const [users, setUsers] = useState<IUser[]>([]);
 	const chatListEnd = useRef(null);
 
 	useEffect(() => {
-		chatManager.getMessage(id)
+		chatService.getMessage(id)
 			.then(data => {
 				if (!data) {
 					return;
 				}
 
-				authManager.getMultiplyUserdata(data.members)
+				userService.getMultiplyUserdata(data.members)
 					.then(users => {
 						setUsers(users);
 						(chatListEnd.current as any).scrollIntoView({ behavior: 'smooth' })
@@ -74,7 +74,7 @@ export const Chat = observer(({ chatManager, authManager }: IChatProps) => {
 			return;
 		}
 
-		return chatManager.sendMessage(id, newMessage)
+		return chatService.sendMessage(id, newMessage)
 			.then(_ => {
 				setNewMessage('');
 			})
@@ -88,7 +88,7 @@ export const Chat = observer(({ chatManager, authManager }: IChatProps) => {
 		return <ErrorPage message={errMessages.message as string} />
 	}
 
-	if (!authManager.user) {
+	if (!userService.user) {
 		return null
 	}
 
@@ -105,7 +105,7 @@ export const Chat = observer(({ chatManager, authManager }: IChatProps) => {
 					{(messages || []).map(data => {
 						const currUser = users.find(y => y.uid === data.creatorId);
 						
-						const slot = currUser && currUser.uid === authManager.user!.uid
+						const slot = currUser && currUser.uid === userService.user!.uid
 							? 'end'
 							: 'start';
 
